@@ -1578,6 +1578,7 @@
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\List.js" />
     <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
+    <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
     <Content Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Detail.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Edit.aspx" />
@@ -1602,6 +1603,13 @@
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx.designer.cs">
       <DependentUpon>EnergyConsumptionPlan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx.cs">
       <DependentUpon>MasterSlaveMachinedescription.aspx</DependentUpon>
@@ -1673,6 +1681,7 @@
     <Folder Include="UI_BasicData\images\common\" />
     <Folder Include="UI_BasicData\images\page\" />
     <Folder Include="UI_BasicData\js\common\" />
+    <Folder Include="UI_BasicData\OperatorInfo\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicData.Service\BasicData.Service.csproj">

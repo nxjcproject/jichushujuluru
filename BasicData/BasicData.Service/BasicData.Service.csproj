@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BasicService\BasicDataHelper.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionPlan.cs" />
+    <Compile Include="MachineHaltReasons\MachineHaltReasonsService.cs" />
     <Compile Include="MasterSlaveMachine\MasterSlaveMachinedescription.cs" />
     <Compile Include="MasterSlaveMachine\OrganizationInstrumentation.cs" />
     <Compile Include="PeakValleyFlat\PeakValleyFlatService.cs" />
