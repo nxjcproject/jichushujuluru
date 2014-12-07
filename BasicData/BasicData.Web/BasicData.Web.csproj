@@ -40,7 +40,7 @@
   <ItemGroup>
     <Reference Include="EasyUIJsonParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\EasyUIJsonParser\EasyUIJsonParser\EasyUIJsonParser\bin\Debug\EasyUIJsonParser.dll</HintPath>
+      <HintPath>..\..\Lib\EasyUIJsonParser.dll</HintPath>
     </Reference>
     <Reference Include="InternalMemeryRestore">
       <HintPath>..\..\Lib\InternalMemeryRestore.dll</HintPath>

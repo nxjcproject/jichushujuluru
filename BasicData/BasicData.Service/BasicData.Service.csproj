@@ -35,7 +35,7 @@
       <HintPath>..\..\..\EasyUIJsonParser\EasyUIJsonParser\EasyUIJsonParser\bin\Debug\EasyUIJsonParser.dll</HintPath>
     </Reference>
     <Reference Include="SqlServerDataAdapter">
-      <HintPath>..\..\DataAdapter\DataAdapter\SqlServerDataAdapter\bin\Debug\SqlServerDataAdapter.dll</HintPath>
+      <HintPath>..\..\Lib\SqlServerDataAdapter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
