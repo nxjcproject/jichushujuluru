@@ -14,15 +14,17 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.InitComponts();
         }
 
         [WebMethod]
         public static string Save(string myJsonData)
         {
+            string organizationId = myJsonData.JsonPick("organizationId");
             string startUsing = myJsonData.JsonPick("tzStartDate");
             string[] dataDetails = myJsonData.JsonPickArray("dataDetail");
 
-            int result = PeakValleyFlatService.SavePVFData("123", startUsing, dataDetails);
+            int result = PeakValleyFlatService.SavePVFData(organizationId, startUsing, dataDetails);
 
             if (result == 1)
                 return "1";

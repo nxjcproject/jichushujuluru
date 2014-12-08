@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="/lib/ealib/themes/icon.css"/>
 
 	<script type="text/javascript" src="/lib/ealib/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/common/jquery.utility.js" charset="utf-8"></script>
+
 	<script type="text/javascript" src="/lib/ealib/jquery.easyui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="/lib/ealib/easyui-lang-zh_CN.js" charset="utf-8"></script>
 

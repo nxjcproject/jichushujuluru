@@ -22,6 +22,7 @@
     <title>班次班组定义</title>
 </head>
 <body>
+    <input type="checkbox" disabled="disabled" checked="checked" />
     <div class="easyui-layout" data-options="fit:true,border:false" style="padding: 5px;">
         <div data-options="region:'west',border:false,collapsible:false" style="width: 230px;">
             <uc1:OrganisationTree runat="server" ID="OrganisationTree" />

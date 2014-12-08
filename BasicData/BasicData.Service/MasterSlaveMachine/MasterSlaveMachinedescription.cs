@@ -86,7 +86,7 @@ namespace BasicData.Service.MasterSlaveMachine
             {
                 return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
             }
-            catch (Exception e)
+            catch
             {
                 return -1;
             }
@@ -203,7 +203,7 @@ namespace BasicData.Service.MasterSlaveMachine
             {
                 return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
             }
-            catch (Exception e)
+            catch
             {
                 return -1;
             }

@@ -14,6 +14,7 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.InitComponts();
         }
 
         [WebMethod]

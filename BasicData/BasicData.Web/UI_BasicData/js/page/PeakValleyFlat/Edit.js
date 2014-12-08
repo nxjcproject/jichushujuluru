@@ -1,5 +1,6 @@
 ﻿$(function () {
     //loadGridData('first');
+    pvfData.organizationId = $.getUrlParam('organizationId');
     InitializeGrid("");
     InitializePage();
 });
@@ -7,31 +8,32 @@
 var m_MsgData;
 
 var pvfData = {
+    organizationId:'',
     tzStartDate: '',
     dataDetail: []
 }
 
-function loadGridData(myLoadType) {
-    //parent.$.messager.progress({ text: '数据加载中....' });
-    $.ajax({
-        type: "POST",
-        url: "",//"EditFengGuPing.asmx/GetFGPValueForGrid",
-        data: "{companyId: '1'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            if (myLoadType == 'first') {
-                myLoadType = 'last';
-                m_MsgData = jQuery.parseJSON(msg.d);
-                InitializeGrid(m_MsgData);
-            }
-            else if (myLoadType == 'last') {
-                m_MsgData = jQuery.parseJSON(msg.d);
-                $('#dg').datagrid('loadData', m_MsgData);
-            }
-        }
-    });
-}
+//function loadGridData(myLoadType) {
+//    //parent.$.messager.progress({ text: '数据加载中....' });
+//    $.ajax({
+//        type: "POST",
+//        url: "",//"EditFengGuPing.asmx/GetFGPValueForGrid",
+//        data: "{companyId: '1'}",
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (msg) {
+//            if (myLoadType == 'first') {
+//                myLoadType = 'last';
+//                m_MsgData = jQuery.parseJSON(msg.d);
+//                InitializeGrid(m_MsgData);
+//            }
+//            else if (myLoadType == 'last') {
+//                m_MsgData = jQuery.parseJSON(msg.d);
+//                $('#dg').datagrid('loadData', m_MsgData);
+//            }
+//        }
+//    });
+//}
 
 function InitializePage() {
     $('#startUsing').datebox({

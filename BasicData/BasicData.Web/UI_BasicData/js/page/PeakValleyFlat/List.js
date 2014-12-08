@@ -1,6 +1,6 @@
 ﻿$(function () {
     InitializePage();  
-    publicData.organizationId = $.getUrlParam('organizationId');
+    //publicData.organizationId = $.getUrlParam('organizationId');
 
     loadGridData('first');
 });
@@ -11,7 +11,12 @@ var publicData = {
     editRow: {}
 }
 
-
+function onOrganisationTreeClick(node) {
+    publicData.organizationId = node.OrganizationId;
+    $('#organizationName').textbox('setText',node.text);
+    //alert(publicData.organizationName);
+    //InitializePage();
+}
 function InitializePage() {
     $('#endUsing').datebox({
         required: "true",
@@ -32,7 +37,7 @@ function loadGridData(myLoadType) {
     $.ajax({
         type: "POST",
         url: "List.aspx/GetPVFList",
-        data: "{organizationId: '123', startUsing: '" + selectedDate + "'}",
+        data: "{organizationId:'"+ publicData.organizationId + "', startUsing: '" + selectedDate + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -179,4 +184,12 @@ function deleteData(keyId) {
             }
         }
     });
+}
+function addItem() {
+    if (publicData.organizationId == "") {
+        alert("请选择生产线！");
+    }
+    else {
+        window.location.href = "Edit.aspx?organizationId=" + publicData.organizationId;
+    }
 }

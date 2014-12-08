@@ -25,18 +25,18 @@ namespace BasicData.Web.UI_BasicData.WorkingTeamAndShift
         }
 
         [WebMethod]
-        public static string GetChargeManComboboxValue()
+        public static string GetChargeManComboboxValue(string organizationId)
         {
-            DataTable dt = WorkingTeamAndShiftService.GetStaffInfo("123");
+            DataTable dt = WorkingTeamAndShiftService.GetStaffInfo(organizationId);
             string result = EasyUIJsonParser.ComboboxJsonParser.DataTableToJson(dt);
             return result;
         }
 
         [WebMethod]
-        public static string SaveShifts(string shifts)
+        public static string SaveShifts(string organizationId,string shifts)
         {
             string[] sourceData = shifts.JsonPickArray("rows");
-            int flag = WorkingTeamAndShiftService.SaveShiftInfo("123", sourceData);
+            int flag = WorkingTeamAndShiftService.SaveShiftInfo(organizationId, sourceData);
 
             if (flag == 1)
                 return "1";
@@ -45,11 +45,11 @@ namespace BasicData.Web.UI_BasicData.WorkingTeamAndShift
         }
 
         [WebMethod]
-        public static string SaveWorkingTeams(string workingTeams)
+        public static string SaveWorkingTeams(string organizationId,string workingTeams)
         {
             string[] souceData = workingTeams.JsonPickArray("rows");
 
-            int result = WorkingTeamAndShiftService.SaveWorkingTeamInfo("123", souceData);
+            int result = WorkingTeamAndShiftService.SaveWorkingTeamInfo(organizationId, souceData);
 
             if (result != -1)
                 return "1";
@@ -58,17 +58,15 @@ namespace BasicData.Web.UI_BasicData.WorkingTeamAndShift
         }
 
         [WebMethod]
-        public static string QueryShifts()//string organizationId)
+        public static string QueryShifts(string organizationId)
         {
-            string organizationId = "123";
             DataTable sourcedt = WorkingTeamAndShiftService.QueryShiftsInfo(organizationId);
             string result = EasyUIJsonParser.DataGridJsonParser.DataTableToJson(sourcedt);
             return result;
         }
         [WebMethod]
-        public static string QueryWorkingTeam()//string organizationId)
+        public static string QueryWorkingTeam(string organizationId)
         {
-            string organizationId = "123";
             DataTable sourcedt = WorkingTeamAndShiftService.QueryWorkingTeamInfo(organizationId);
             string result = EasyUIJsonParser.DataGridJsonParser.DataTableToJson(sourcedt);
             return result;

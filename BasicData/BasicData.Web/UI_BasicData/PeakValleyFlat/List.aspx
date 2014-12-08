@@ -29,9 +29,12 @@
         <div data-options="region:'center',border:false,collapsible:false" style="padding-left: 10px;">
             <table>
                 <tr>
-                    <td>启用时间</td>
+                    <td>产线名称:</td>
+                    <td><input id="organizationName" class="easyui-textbox" style="width:100px"/></td>
+                    <td>启用时间:</td>
                     <td>
-                        <input id="selectedDate" style="width: 100px;" /></td>
+                        <input id="selectedDate" style="width: 100px;" />
+                    </td>
                     <td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="loadGridData('first')">查询</a></td>
                 </tr>
             </table>
@@ -41,7 +44,7 @@
     </div>
 
     <div id="tb" style="padding: 5px; height: auto">
-        <a href="Edit.aspx" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItem()">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItem()">添加</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteItem()">删除</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editItem()">编辑</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="loadGridData('first')">刷新</a>

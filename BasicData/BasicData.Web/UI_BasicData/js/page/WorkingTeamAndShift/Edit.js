@@ -7,6 +7,7 @@
 });
 
 var publicData = {
+    organizationId:"",
     editIndex:"",
     editRow: {},
     comboboxValue:[]
@@ -18,25 +19,30 @@ function InitializePage() {
     loadWorkingTeamData();
 }
 
+function onOrganisationTreeClick(node) {
+    publicData.organizationId = node.OrganizationId;
+    InitializePage();
+}
+
 function loadShiftsData() {
     $.ajax({
         type: "POST",
         url: "Edit.aspx/QueryShifts",
-        data: "",
+        data: "{organizationId:'" + publicData.organizationId + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            var myData;
-            if (msg.d == "[]") {
-                myData = [{ "Shifts": "甲班" }, { "Shifts": "乙班" }, { "Shifts": "丙班" }];
+            var myData = jQuery.parseJSON(msg.d);;
+            if (myData.rows.length == 0) {
+                myData = { "total": 3, "rows": [{ "Shifts": "甲班" }, { "Shifts": "乙班" }, { "Shifts": "丙班" }] };
             }
             else {
-                myData = jQuery.parseJSON(msg.d);
+                //myData = jQuery.parseJSON(msg.d);
                 for (var i = myData.rows.length - 1; i >= 0; i--) {
                     myData.rows[i]["Flag"] = "True";
                 }
-                shiftInitializeGrid(myData);
             }
+            shiftInitializeGrid(myData);
         }
     });
 }
@@ -44,21 +50,21 @@ function loadWorkingTeamData() {
     $.ajax({
         type: "POST",
         url: "Edit.aspx/QueryWorkingTeam",
-        data: "",
+        data: "{organizationId:'" + publicData.organizationId + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            var myData;
-            if (msg.d == "[]") {
-                myData = [{ "Name": "A组" }, { "Name": "B组" }, { "Name": "C组" }, { "Name": "D组" }];
+            var myData = jQuery.parseJSON(msg.d);
+            if (myData.rows.length == 0) {
+                myData = { "total": 4, "rows": [{ "Name": "A组" }, { "Name": "B组" }, { "Name": "C组" }, { "Name": "D组" }] };
             }
             else {
                 myData = jQuery.parseJSON(msg.d);
                 for (var i = myData.rows.length - 1; i >= 0; i--) {
                     myData.rows[i]["Flag"] = "True";
                 }
-                workingteamInitializeGrid(myData);
             }
+            workingteamInitializeGrid(myData);
         }
     });
 }
@@ -67,7 +73,7 @@ function loadChargeManData() {
     $.ajax({
         type: "POST",
         url: "Edit.aspx/GetChargeManComboboxValue",
-        data: "",
+        data: "{organizationId:'" + publicData.organizationId + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -93,7 +99,7 @@ function shiftReload() {
     $.messager.defaults = { ok: "是", cancel: "否" };
     $.messager.confirm('提示', '确定要重置？', function (r) {
         if (r) {
-            var data = [{ "Shifts": "甲班" }, { "Shifts": "乙班" }, { "Shifts": "丙班" }];
+            var data = [{ "Flag": "false", "Shifts": "甲班" }, { "Flag": "false", "Shifts": "乙班" }, { "Flag": "false", "Shifts": "丙班" }];
             $('#dg_shift').datagrid('loadData', data);
         }
     });
@@ -107,13 +113,13 @@ function shiftInitializeGrid(myData) {
             {
                 field: 'Flag', title: '启用标志', width: '10%', align: 'center',
                 formatter: function (value) {
-                    return "<input type=\"checkbox\" checked=\"" + value +"\" >";
-                    //if (value == true || value == "True")
-                    //    return "启用";
-                    //else if (value == false || value == "False")
-                    //    return "禁用";
-                    //else
-                    //    return "";
+                    //return "<input type=\"checkbox\" disabled=\"true\" checked=\"" + "false" + "\" >";
+                    if (value == true || value == "True")
+                        return "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\" />";
+                    else if (value == false || value == "False")
+                        return "<input type=\"checkbox\" disabled=\"disabled\" />";
+                    else
+                        return "<input type=\"checkbox\" disabled=\"disabled\" />";
                 }
             },
             { field: 'Shifts', title: '班次名称', width: '10%', align: 'center' },
@@ -179,7 +185,7 @@ function shiftSave() {
     $.ajax({
         type: "POST",
         url: "Edit.aspx/SaveShifts",
-        data: "{shifts:'" + JSON.stringify(myjson) + "'}",
+        data: "{organizationId:'"+ publicData.organizationId +"', shifts:'" + JSON.stringify(myjson) + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
@@ -226,13 +232,13 @@ function workingteamInitializeGrid(myData) {
             {
                 field: 'Flag', title: '启用标志', width: '10%', align: 'center',
                 formatter: function (value) {
-                    return "<input type=\"checkbox\" checked=\"" + value + "\" >";
-                    //if (value == true || value == "True")
-                    //    return "启用";
-                    //else if (value == false || value == "False")
-                    //    return "禁用";
-                    //else
-                    //    return "";
+                    //return "<input type=\"checkbox\" disabled=\"true\" checked=\"" + value + "\" >";
+                    if (value == true || value == "True")
+                        return "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\" />";
+                    else if (value == false || value == "False")
+                        return "<input type=\"checkbox\" disabled=\"disabled\" />";
+                    else
+                        return "<input type=\"checkbox\" disabled=\"disabled\" />";
                 }
             },
             { field: 'Name', title: '班组名称', width: '10%', align: 'center' },
@@ -300,7 +306,7 @@ function workingteamSave() {
     $.ajax({
         type: "POST",
         url: "Edit.aspx/SaveWorkingTeams",
-        data: "{workingTeams:'" + JSON.stringify(myjson) + "'}",
+        data: "{organizationId:'" + publicData.organizationId +"',workingTeams:'" + JSON.stringify(myjson) + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
