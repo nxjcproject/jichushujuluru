@@ -37,7 +37,8 @@
     var LastBatchIndex = 1;                       //最近数据组索引
     var MsgDCSData;                                  //数据项列表
     var DcsDataBaseName;                         //标签数据库
-    var DcsOrganizationId;                   //当点击查找时DCS组织机构
+    var DcsOrganizationIdQuery;                   //当点击查找时DCS组织机构
+    var DcsDataBaseNameQuery                     //当点击查找时标签
     $(function () {
         LoadDcsOrganzation('first');
         //LoadLinesData();
@@ -77,7 +78,6 @@
             editable: false,
             onSelect: function (myRecord) {
                 DcsDataBaseName = myRecord.DcsProcessDatabase;
-                //alert(DcsDataBaseName);
             }
         }); //m_DataGridId
         //QueryDcsTagsFun(LastBatchIndex, 0, DefaultPageSize, 'first');
@@ -85,7 +85,8 @@
     }
     function ButtonQueryDcsTagsFun() {
         if (DcsDataBaseName != "" && DcsDataBaseName != null && DcsDataBaseName != undefined) {
-            DcsOrganizationId = $('#Combobox_TagsSelector_Dcs_DcsDataF').combobox('getValue');
+            DcsOrganizationIdQuery = $('#Combobox_TagsSelector_Dcs_DcsDataF').combobox('getValue');
+            DcsDataBaseNameQuery = DcsDataBaseName;
             QueryDcsTagsFun(LastBatchIndex, 0, DefaultPageSize, 'last');
         }
         else {
@@ -156,7 +157,7 @@
             }]],
             toolbar: '#ToolBar_TagsSelector_Dcs_DcsTags',
             onDblClickRow: function (rowIndex, rowData) {
-                GetTagInfo(rowData, DcsOrganizationId);
+                GetTagInfo(rowData, DcsDataBaseNameQuery, DcsOrganizationIdQuery);
             }
         });
         var p = $('#' + myGridId).datagrid('getPager');

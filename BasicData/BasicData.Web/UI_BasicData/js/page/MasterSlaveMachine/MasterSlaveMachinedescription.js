@@ -251,17 +251,17 @@ function LoadSelectDcsTagsDialog() {
     });
 }
 //////////////获得Tag信息，调用Web控件时必须定义该方法才能有效的传递双击事件
-function GetTagInfo(myRowData, DcsOrganizationId) {
+function GetTagInfo(myRowData, myDcsDataBaseName, myDcsOrganizationId) {
     //alert(myRowData.VariableName + "," + myRowData.VariableDescription + "," + myRowData.TableName + "," + myRowData.FieldName);
     if (CurrentMachineEditFoucs == 1) {
         $('#TextBox_MasterVariableName').textbox('setText', myRowData.VariableName);
         $('#TextBox_MasterVariableDescription').textbox('setText', myRowData.VariableDescription);
-        MasterOrganizationId = DcsOrganizationId;
+        MasterOrganizationId = myDcsOrganizationId;
     }
     else if (CurrentMachineEditFoucs == 2) {
         $('#TextBox_SlaveVariableName').textbox('setText', myRowData.VariableName);
         $('#TextBox_SlaveVariableDescription').textbox('setText', myRowData.VariableDescription);
-        SlaveOrganizationId = DcsOrganizationId;
+        SlaveOrganizationId = myDcsOrganizationId;
     }
 }
 function GetDcsTagsFun(myCurrentMachineEditFoucs) {
