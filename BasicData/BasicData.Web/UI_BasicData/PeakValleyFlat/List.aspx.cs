@@ -16,13 +16,9 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
         {
             base.InitComponts();
             ////////////////////调试用,自定义的数据授权
-            if (!mDataValidIdGroup.ContainsKey("ProductionOrganization"))
-            {
-                mDataValidIdGroup.Add("ProductionOrganization", new List<string>(1));
-                mDataValidIdGroup["ProductionOrganization"].Add("O0101");
-                mDataValidIdGroup["ProductionOrganization"].Add("O0102");
-            }
-            this.OrganisationTree.Organizations = mDataValidIdGroup["ProductionOrganization"];                 //向web用户控件传递数据授权参数
+            //List<string> m_DataValidIdItems = new List<string>(){"O0101", "O0102"};
+            //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+            this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "List.aspx";
         }
 

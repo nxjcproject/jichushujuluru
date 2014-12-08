@@ -16,19 +16,14 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
         protected void Page_Load(object sender, EventArgs e)
         {
             base.InitComponts();
-            ////////////////////调试用,自定义的数据授权
-            if (!mDataValidIdGroup.ContainsKey("ProductionOrganization"))
+            if (!IsPostBack)
             {
-                //mDataValidIdGroup.Add("ProductionOrganization", new List<string>(1));
-                //mDataValidIdGroup["ProductionOrganization"].Add("O0101");
-                //mDataValidIdGroup["ProductionOrganization"].Add("O0102");
-                this.OrganisationTree_ProductionLine.Organizations = null;
+                ////////////////////调试用,自定义的数据授权
+                //List<string> m_DataValidIdItems = new List<string>(){"O0101", "O0102"};
+                //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+                this.OrganisationTree_ProductionLine.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
+                this.OrganisationTree_ProductionLine.PageName = "EnergyConsumptionPlan.aspx";                                     //向web用户控件传递当前调用的页面名称
             }
-            else
-            {
-                this.OrganisationTree_ProductionLine.Organizations = mDataValidIdGroup["ProductionOrganization"];    //向web用户控件传递数据授权参数
-            }
-            this.OrganisationTree_ProductionLine.PageName = "EnergyConsumptionPlan.aspx";                                     //向web用户控件传递当前调用的页面名称
         }
 
         [WebMethod]
@@ -81,18 +76,32 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             return "{" + m_Rows + "," + m_Columns + "}";
         }
         [WebMethod]
-        public static string SetEnergyConsumptionInfo(string myOrganizationId, string myPlanYear, string myDataGridData)
+        public static string SetEnergyConsumptionInfo(string myOrganizationId, string myPlanYear, string myProductionLineType, string myDataGridData)
         {
             DataTable m_DataGridDataStruct = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.CreateTableStructure("plan_EnergyConsumptionYearlyPlan");
             //m_DataGridDataStruct.Columns.Remove("QuotasItemID");       //去掉ID列，此列的数据由数据库自动生成
             string[] m_DataGridDataGroup = EasyUIJsonParser.Utility.JsonPickArray(myDataGridData,"rows");
             DataTable m_DataGridData = EasyUIJsonParser.DataGridJsonParser.JsonToDataTable(m_DataGridDataGroup, m_DataGridDataStruct);
+            ///////////////tz表里查找是否已经存在////////////////
+            string m_KeyId = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myProductionLineType);
+            if (m_KeyId != "")               //表示计划已经存在
+            {
+                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
+            }
+            else
+            {
+                m_KeyId = Guid.NewGuid().ToString();
+                //添加TZ引领
+                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.InsertTzPlan(m_KeyId, myOrganizationId, myProductionLineType, myPlanYear, mUserId);
+            }
+
             for (int i = 0; i < m_DataGridData.Rows.Count; i++)
             {
-                m_DataGridData.Rows[i]["OrganizationID"] = myOrganizationId;
-                m_DataGridData.Rows[i]["PlanYear"] = myPlanYear;
+                m_DataGridData.Rows[i]["KeyID"] = m_KeyId;
+                m_DataGridData.Rows[i]["DisplayIndex"] = (i + 1).ToString();
+                m_DataGridData.Rows[i]["ProductionLineType"] = myProductionLineType;
             }
-            BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.DeleteEnergyConsumptionInfo(myPlanYear, myOrganizationId);
+            BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.DeleteEnergyConsumptionInfo(m_KeyId);
             int ReturnValue = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.SaveEnergyConsumptionInfo("plan_EnergyConsumptionYearlyPlan", m_DataGridData);
             ReturnValue = ReturnValue > 0 ? 1 : ReturnValue;
             return ReturnValue.ToString();

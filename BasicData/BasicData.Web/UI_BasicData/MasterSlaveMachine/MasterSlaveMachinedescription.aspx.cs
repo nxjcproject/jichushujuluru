@@ -15,15 +15,14 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
         protected void Page_Load(object sender, EventArgs e)
         {
             base.InitComponts();
-            ////////////////////调试用,自定义的数据授权
-            if (!mDataValidIdGroup.ContainsKey("ProductionOrganization"))
+            if (!IsPostBack)
             {
-                mDataValidIdGroup.Add("ProductionOrganization", new List<string>(1));
-                mDataValidIdGroup["ProductionOrganization"].Add("O0101");
-                mDataValidIdGroup["ProductionOrganization"].Add("O0102");
+                ////////////////////调试用,自定义的数据授权
+                //List<string> m_DataValidIdItems = new List<string>(){"O0101", "O0102"};
+                //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+                this.TagsSelector_DcsTags.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
+                this.TagsSelector_DcsTags.PageName = "MasterSlaveMachinedescription.aspx";                                     //向web用户控件传递当前调用的页面名称
             }
-            this.TagsSelector_DcsTags.Organizations = mDataValidIdGroup["ProductionOrganization"];                 //向web用户控件传递数据授权参数
-            this.TagsSelector_DcsTags.PageName = "MasterSlaveMachinedescription.aspx";                                     //向web用户控件传递当前调用的页面名称
         }
         [WebMethod]
         public static string GetMasterMachineInfo(string myDcsId)
@@ -158,10 +157,10 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
         [WebMethod]
         public static string GetDcsOrganization()
         {
-            DataTable m_DcsOrganization = BasicData.Service.MasterSlaveMachine.OrganizationInstrumentation.GetDcsOrganization(mDataValidIdGroup["ProductionOrganization"]);
+            DataTable m_DcsOrganization = BasicData.Service.MasterSlaveMachine.OrganizationInstrumentation.GetDcsOrganization(GetDataValidIdGroup("ProductionOrganization"));
             return EasyUIJsonParser.TreeJsonParser.DataTableToJsonByLevelCode(m_DcsOrganization, "LevelCode", "Name");
         }
 
-        
+
     }
 }

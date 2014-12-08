@@ -77,6 +77,7 @@
             editable: false,
             onSelect: function (myRecord) {
                 DcsDataBaseName = myRecord.DcsProcessDatabase;
+                //alert(DcsDataBaseName);
             }
         }); //m_DataGridId
         //QueryDcsTagsFun(LastBatchIndex, 0, DefaultPageSize, 'first');

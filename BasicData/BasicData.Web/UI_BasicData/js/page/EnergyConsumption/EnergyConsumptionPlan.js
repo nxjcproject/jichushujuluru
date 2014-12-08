@@ -1,6 +1,7 @@
 ﻿var editIndex = undefined;
 var PlanYearCurrentDataGrid;                //当前datagrid显示的计划年
 var OrganizationIdCurrentDataGrid;            //当前datagrid显示的组织机构
+var ProductionLineTypeCurrentDataGrid;        //当前datagrid显示的产线类型
 $(document).ready(function () {
     //LoadProductionType('first');
     //loadOrganisationTree('first');
@@ -28,6 +29,7 @@ function QueryEnergyConsumptionPlanInfoFun() {
     var m_OrganizationType = $('#TextBox_OrganizationType').textbox('getText');
     PlanYearCurrentDataGrid = m_PlanYear;
     OrganizationIdCurrentDataGrid = m_OrganizationId;
+    ProductionLineTypeCurrentDataGrid = m_OrganizationType;
     if (m_OrganizationType != "" && m_OrganizationId != "") {
         LoadEnergyConsumptionData('last');
     }
@@ -68,7 +70,7 @@ function SaveEnergyConsumptionPlanFun() {
         $.ajax({
             type: "POST",
             url: "EnergyConsumptionPlan.aspx/SetEnergyConsumptionInfo",
-            data: "{myOrganizationId:'" + OrganizationIdCurrentDataGrid + "',myPlanYear:'" + PlanYearCurrentDataGrid + "',myDataGridData:'" + m_DataGridDataJson + "'}",
+            data: "{myOrganizationId:'" + OrganizationIdCurrentDataGrid + "',myPlanYear:'" + PlanYearCurrentDataGrid + "',myProductionLineType:'" + ProductionLineTypeCurrentDataGrid + "',myDataGridData:'" + m_DataGridDataJson + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
