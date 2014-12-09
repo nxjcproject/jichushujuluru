@@ -55,6 +55,7 @@
     <Compile Include="MasterSlaveMachine\OrganizationInstrumentation.cs" />
     <Compile Include="PeakValleyFlat\PeakValleyFlatService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaffInfo\StaffInfoService.cs" />
     <Compile Include="WorkingTeamAndShift\WorkingTeamAndShiftService.cs" />
   </ItemGroup>
   <ItemGroup>

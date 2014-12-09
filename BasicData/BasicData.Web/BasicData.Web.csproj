@@ -1583,6 +1583,7 @@
     <Content Include="UI_BasicData\PeakValleyFlat\Detail.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Edit.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
+    <Content Include="UI_BasicData\StaffInfo\Edit.aspx" />
     <Content Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx" />
     <Content Include="UI_WebUserControls\OrganizationSelector\OrganisationTree.ascx" />
     <Content Include="UI_WebUserControls\TagsSelector\TagsSelector_Dcs.ascx" />
@@ -1639,6 +1640,13 @@
     <Compile Include="UI_BasicData\PeakValleyFlat\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UI_BasicData\StaffInfo\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\StaffInfo\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1681,7 +1689,6 @@
     <Folder Include="UI_BasicData\images\common\" />
     <Folder Include="UI_BasicData\images\page\" />
     <Folder Include="UI_BasicData\js\common\" />
-    <Folder Include="UI_BasicData\OperatorInfo\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicData.Service\BasicData.Service.csproj">

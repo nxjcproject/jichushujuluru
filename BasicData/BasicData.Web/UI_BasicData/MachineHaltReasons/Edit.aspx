@@ -265,6 +265,8 @@
             queryUrl = 'Edit.aspx/SaveMachineHaltReasons';
             dataToSend = '{"json":\'' + JSON.stringify($('#tgMachineHaltReasonsEditor').treegrid('getData')) + '\'}';
 
+            var dataToSend = '{organizationId: "' + organizationId + '"}';
+
             $.ajax({
                 type: "POST",
                 url: queryUrl,
