@@ -68,6 +68,9 @@
     <Reference Include="WebStyleBaseForEnergy">
       <HintPath>..\..\Lib\WebStyleBaseForEnergy.dll</HintPath>
     </Reference>
+    <Reference Include="WebUserContorls.Web">
+      <HintPath>..\..\Lib\WebUserContorls.Web.dll</HintPath>
+    </Reference>
     <Reference Include="WebUserControls.Infrastructure">
       <HintPath>..\..\Lib\WebUserControls.Infrastructure.dll</HintPath>
     </Reference>
@@ -1585,8 +1588,6 @@
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
     <Content Include="UI_BasicData\StaffInfo\Edit.aspx" />
     <Content Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx" />
-    <Content Include="UI_WebUserControls\OrganizationSelector\OrganisationTree.ascx" />
-    <Content Include="UI_WebUserControls\TagsSelector\TagsSelector_Dcs.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -1653,20 +1654,6 @@
     </Compile>
     <Compile Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UI_WebUserControls\OrganizationSelector\OrganisationTree.ascx.cs">
-      <DependentUpon>OrganisationTree.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI_WebUserControls\OrganizationSelector\OrganisationTree.ascx.designer.cs">
-      <DependentUpon>OrganisationTree.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UI_WebUserControls\TagsSelector\TagsSelector_Dcs.ascx.cs">
-      <DependentUpon>TagsSelector_Dcs.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI_WebUserControls\TagsSelector\TagsSelector_Dcs.ascx.designer.cs">
-      <DependentUpon>TagsSelector_Dcs.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
