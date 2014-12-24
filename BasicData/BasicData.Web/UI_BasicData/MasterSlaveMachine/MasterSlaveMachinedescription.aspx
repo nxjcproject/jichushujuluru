@@ -190,7 +190,7 @@
         <div>
             <asp:HiddenField ID="HiddenField_PageName" runat="server" />
             <asp:HiddenField ID="HiddenField_MasterMachineId" runat="server" />
-            <asp:HiddenField ID="HiddenField_SlaveMachineId" runat="server" />
+            <asp:HiddenField ID="HiddenField_SlaveMachineId" runat="server" />>
         </div>
     </form>
 </body>

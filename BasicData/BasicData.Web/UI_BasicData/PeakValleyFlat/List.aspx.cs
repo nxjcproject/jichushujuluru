@@ -16,7 +16,7 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
         {
             base.InitComponts();
             ////////////////////调试用,自定义的数据授权
-            //List<string> m_DataValidIdItems = new List<string>(){"O0101", "O0102"};
+            //List<string> m_DataValidIdItems = new List<string>() { "C41B1F47-A48A-495F-A890-0AABB2F3BFF7                            ", "43F1EA8C-FF77-4BC5-BACB-531DC56A2512                            " };
             //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
             this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "List.aspx";

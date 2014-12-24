@@ -26,12 +26,14 @@ namespace BasicData.Service.MasterSlaveMachine
                     B.Name as OrganizationName, 
                     A.VariableName as VariableName,
                     A.VariableDescription as VariableDescription,
+                    A.DataBaseName as DataBaseName, 
+                    A.TableName as TableName, 
                     A.Record as Record,
                     A.ValidValues as ValidValues,
                     A.Remarks as Remarks,
 					A.KeyID as KeyId  
-                    from system_MasterMachinedescription A 
-                    left join system_Organization_Instrumentation B on A.OrganizationID = B.LevelCode
+                    from system_MasterMachineDescription A 
+                    left join system_Organization_Instrumentation B on A.OrganizationID = B.OrganizationID
 					where A.OrganizationID=@OrganizationId";
             try
             {
@@ -52,11 +54,13 @@ namespace BasicData.Service.MasterSlaveMachine
                     B.Name as OrganizationName, 
                     A.VariableName as VariableName,
                     A.VariableDescription as VariableDescription,
+                    A.DataBaseName as DataBaseName, 
+                    A.TableName as TableName, 
                     A.Record as Record,
                     A.ValidValues as ValidValues,
                     A.Remarks as Remarks,
 					A.KeyID as KeyId  
-                    from system_MasterMachinedescription A 
+                    from system_MasterMachineDescription A 
                     left join system_Organization_Instrumentation B on A.OrganizationID = B.OrganizationID
 					where A.ID=@Id";
             try
@@ -70,15 +74,17 @@ namespace BasicData.Service.MasterSlaveMachine
                 return null;
             }
         }
-        public static int AddMasterMachineInfo(string myOrganizationId, string myVariableName, string myVariableDescription, string myRecord, string myValidValues, string myRemarks)
+        public static int AddMasterMachineInfo(string myOrganizationId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
-            string m_Sql = @" Insert into system_MasterMachinedescription 
-                ( OrganizationID, VariableName, VariableDescription, Record, ValidValues, Remarks) 
+            string m_Sql = @" Insert into system_MasterMachineDescription 
+                ( OrganizationID, VariableName, VariableDescription, DataBaseName, TableName, Record, ValidValues, Remarks) 
                 values
-                (@OrganizationID,@VariableName,@VariableDescription,@Record,@ValidValues,@Remarks)";
+                (@OrganizationID,@VariableName,@VariableDescription,@DataBaseName,@TableName,@Record,@ValidValues,@Remarks)";
             SqlParameter[] m_Parameters = { new SqlParameter("@OrganizationID", myOrganizationId),
                                           new SqlParameter("@VariableName", myVariableName),
                                           new SqlParameter("@VariableDescription", myVariableDescription),
+                                          new SqlParameter("@DataBaseName", myDataBaseName),
+                                          new SqlParameter("@TableName", myTableName),
                                           new SqlParameter("@Record", myRecord),
                                           new SqlParameter("@ValidValues", myValidValues),
                                           new SqlParameter("@Remarks", myRemarks)};
@@ -86,17 +92,19 @@ namespace BasicData.Service.MasterSlaveMachine
             {
                 return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
             }
-            catch
+            catch (Exception e)
             {
                 return -1;
             }
         }
-        public static int ModifyMasterMachineInfo(string myId, string myOrganizationId, string myVariableName, string myVariableDescription, string myRecord, string myValidValues, string myRemarks)
+        public static int ModifyMasterMachineInfo(string myId, string myOrganizationId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
-            string m_Sql = @"UPDATE system_MasterMachinedescription SET 
+            string m_Sql = @"UPDATE system_MasterMachineDescription SET 
                             OrganizationID=@OrganizationID, 
                             VariableName=@VariableName, 
                             VariableDescription=@VariableDescription, 
+                            DataBaseName=@DataBaseName,
+                            TableName=@TableName, 
                             Record=@Record, 
                             ValidValues=@ValidValues, 
                             Remarks=@Remarks
@@ -104,7 +112,9 @@ namespace BasicData.Service.MasterSlaveMachine
             SqlParameter[] m_Parameters = {new SqlParameter("@ID", myId),
                                           new SqlParameter("@OrganizationID", myOrganizationId),
                                           new SqlParameter("@VariableName", myVariableName),
-                                          new SqlParameter("@VariableDescription", myVariableDescription),
+                                          new SqlParameter("@VariableDescription", myVariableDescription),                       
+                                          new SqlParameter("@DataBaseName", myDataBaseName),
+                                          new SqlParameter("@TableName", myTableName),
                                           new SqlParameter("@Record", myRecord),
                                           new SqlParameter("@ValidValues", myValidValues),
                                           new SqlParameter("@Remarks", myRemarks)};
@@ -119,7 +129,7 @@ namespace BasicData.Service.MasterSlaveMachine
         }
         public static int DeleteMasterMachineInfo(string myId)
         {
-            string m_Sql = @"DELETE FROM system_MasterMachinedescription where ID=@ID";
+            string m_Sql = @"DELETE FROM system_MasterMachineDescription where ID=@ID";
             SqlParameter[] m_Parameters = {new SqlParameter("@ID", myId)};
             try
             {
@@ -140,12 +150,14 @@ namespace BasicData.Service.MasterSlaveMachine
                     C.VariableDescription as KeyName, 
                     A.VariableName as VariableName,
                     A.VariableDescription as VariableDescription,
+                    A.DataBaseName as DataBaseName, 
+                    A.TableName as TableName, 
                     A.ValidValues as ValidValues,
                     A.TimeDelay as TimeDelay,
                     A.Remarks as Remarks
-                    from system_SlaveMachinedescription A 
-                    left join system_Organization_Instrumentation B on A.OrganizationID = B.LevelCode 
-                    left join system_MasterMachinedescription C on A.KeyID = C.ID
+                    from system_SlaveMachineDescription A 
+                    left join system_Organization_Instrumentation B on A.OrganizationID = B.OrganizationID 
+                    left join system_MasterMachineDescription C on A.KeyID = C.ID
 					where A.KeyID=@KeyId";
             try
             {
@@ -168,12 +180,14 @@ namespace BasicData.Service.MasterSlaveMachine
                     C.VariableDescription as KeyName, 
                     A.VariableName as VariableName,
                     A.VariableDescription as VariableDescription,
+                    A.DataBaseName as DataBaseName, 
+                    A.TableName as TableName, 
                     A.ValidValues as ValidValues,
                     A.TimeDelay as TimeDelay,
                     A.Remarks as Remarks
-                    from system_SlaveMachinedescription A 
+                    from system_SlaveMachineDescription A 
                     left join system_Organization_Instrumentation B on A.OrganizationID = B.OrganizationID 
-                    left join system_MasterMachinedescription C on A.KeyID = C.ID
+                    left join system_MasterMachineDescription C on A.KeyID = C.ID
 					where A.ID=@Id";
             try
             {
@@ -186,16 +200,18 @@ namespace BasicData.Service.MasterSlaveMachine
                 return null;
             }
         }
-        public static int AddSlaveMachineInfo(string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myValidValues, string myTimeDelay, string myRemarks)
+        public static int AddSlaveMachineInfo(string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myValidValues, string myTimeDelay, string myRemarks)
         {
-            string m_Sql = @" Insert into system_SlaveMachinedescription 
-                ( OrganizationID, KeyID, VariableName, VariableDescription, ValidValues, TimeDelay, Remarks) 
+            string m_Sql = @" Insert into system_SlaveMachineDescription 
+                ( OrganizationID, KeyID, VariableName, VariableDescription, DataBaseName, TableName, ValidValues, TimeDelay, Remarks) 
                 values
-                (@OrganizationID, @KeyID, @VariableName, @VariableDescription, @ValidValues, @TimeDelay, @Remarks)";
+                (@OrganizationID, @KeyID, @VariableName, @VariableDescription, @DataBaseName, @TableName, @ValidValues, @TimeDelay, @Remarks)";
             SqlParameter[] m_Parameters = { new SqlParameter("@OrganizationID", myOrganizationId),
                                           new SqlParameter("@KeyID", myKeyId),
                                           new SqlParameter("@VariableName", myVariableName),
                                           new SqlParameter("@VariableDescription", myVariableDescription),
+                                          new SqlParameter("@DataBaseName", myDataBaseName),
+                                          new SqlParameter("@TableName", myTableName),
                                           new SqlParameter("@ValidValues", myValidValues),
                                           new SqlParameter("@TimeDelay", myTimeDelay),
                                           new SqlParameter("@Remarks", myRemarks)};
@@ -203,18 +219,20 @@ namespace BasicData.Service.MasterSlaveMachine
             {
                 return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
             }
-            catch
+            catch (Exception e)
             {
                 return -1;
             }
         }
-        public static int ModifySlaveMachineInfo(string myId, string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myValidValues, string myTimeDelay, string myRemarks)
+        public static int ModifySlaveMachineInfo(string myId, string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myValidValues, string myTimeDelay, string myRemarks)
         {
-            string m_Sql = @"UPDATE system_SlaveMachinedescription SET              
+            string m_Sql = @"UPDATE system_SlaveMachineDescription SET              
                 OrganizationID=@OrganizationID, 
                 KeyID=@KeyID, 
                 VariableName=@VariableName, 
                 VariableDescription=@VariableDescription, 
+                DataBaseName=@DataBaseName,
+                TableName=@TableName,
                 ValidValues=@ValidValues, 
                 TimeDelay=@TimeDelay, 
                 Remarks=@Remarks 
@@ -224,6 +242,8 @@ namespace BasicData.Service.MasterSlaveMachine
                                           new SqlParameter("@KeyID", myKeyId),
                                           new SqlParameter("@VariableName", myVariableName),
                                           new SqlParameter("@VariableDescription", myVariableDescription),
+                                          new SqlParameter("@DataBaseName", myDataBaseName),
+                                          new SqlParameter("@TableName", myTableName),
                                           new SqlParameter("@ValidValues", myValidValues),
                                           new SqlParameter("@TimeDelay", myTimeDelay),
                                           new SqlParameter("@Remarks", myRemarks)};
@@ -238,7 +258,7 @@ namespace BasicData.Service.MasterSlaveMachine
         }
         public static int DeleteSlaveMachineInfo(string myId)
         {
-            string m_Sql = @"DELETE FROM system_SlaveMachinedescription where ID=@ID";
+            string m_Sql = @"DELETE FROM system_SlaveMachineDescription where ID=@ID";
             SqlParameter[] m_Parameters = { new SqlParameter("@ID", myId) };
             try
             {
@@ -251,7 +271,7 @@ namespace BasicData.Service.MasterSlaveMachine
         }
         public static int DeleteAllSlaveMachineInfoByKeyId(string myKeyId)
         {
-            string m_Sql = @"DELETE FROM system_SlaveMachinedescription where KeyID=@KeyID";
+            string m_Sql = @"DELETE FROM system_SlaveMachineDescription where KeyID=@KeyID";
             SqlParameter[] m_Parameters = { new SqlParameter("@KeyID", myKeyId) };
             try
             {

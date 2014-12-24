@@ -61,7 +61,7 @@ namespace BasicData.Service.EnergyConsumption
                 DataTable m_Result = _dataFactory.Query(m_Sql, m_Parameters);
                 return m_Result;
             }
-            catch
+            catch (Exception e)
             {
                 return null;
             }

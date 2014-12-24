@@ -1,7 +1,11 @@
 ﻿var MasterMachineOpType;               //主机设备操作类型,1添加,2修改
 var SlaveMachineOpType;                //从机设备操作类型,1添加,2修改
 var MasterOrganizationId;              //主机组织机构代码,用于接收Web控件传递来的信息
+var MasterDataBaseName;                //主机变量数据库名称
+var MasterTableName = "ContrastTable";                   //主机变量表名
 var SlaveOrganizationId;               //从机组织机构代码,用于接收Web控件传递来的信息
+var SlaveDataBaseName;                 //从机变量数据库名称
+var SlaveTableName = "ContrastTable";                    //从机变量表名
 var CurrentMachineEditFoucs            //当前编辑的是主机还是从机1表示主机，2表示从机
 $(function () {
     LoadDcsOrganizationData('first');
@@ -59,6 +63,16 @@ function InitializeMaterMachineGrid(myData) {
             width: 150,
             title: '变量描述',
             field: 'VariableDescription'
+        }, {
+            width: '120',
+            title: '数据库名',
+            field: 'DataBaseName',
+            hidden: true
+        }, {
+            width: 120,
+            title: '表名',
+            field: 'TableName',
+            hidden: true
         }, {
             width: 110,
             title: '记录主机停机信息',
@@ -154,6 +168,16 @@ function InitializeSlaveMachineGrid(myData) {
             width: 150,
             title: '变量描述',
             field: 'VariableDescription'
+        }, {
+            width: '120',
+            title: '数据库名',
+            field: 'DataBaseName',
+            hidden: true
+        }, {
+            width: 120,
+            title: '表名',
+            field: 'TableName',
+            hidden: true
         }, {
             width: 60,
             title: '有效值',
@@ -257,11 +281,13 @@ function GetTagInfo(myRowData, myDcsDataBaseName, myDcsOrganizationId) {
         $('#TextBox_MasterVariableName').textbox('setText', myRowData.VariableName);
         $('#TextBox_MasterVariableDescription').textbox('setText', myRowData.VariableDescription);
         MasterOrganizationId = myDcsOrganizationId;
+        MasterDataBaseName = myDcsDataBaseName;
     }
     else if (CurrentMachineEditFoucs == 2) {
         $('#TextBox_SlaveVariableName').textbox('setText', myRowData.VariableName);
         $('#TextBox_SlaveVariableDescription').textbox('setText', myRowData.VariableDescription);
         SlaveOrganizationId = myDcsOrganizationId;
+        SlaveDataBaseName = myDcsDataBaseName;
     }
 }
 function GetDcsTagsFun(myCurrentMachineEditFoucs) {
@@ -272,12 +298,10 @@ function GetDcsTagsFun(myCurrentMachineEditFoucs) {
 function QueryMasterMachineInfoFun() {
     var m_SelectDcs = $('#Combobox_DCSF').combotree("getValue");
     if (m_SelectDcs != "" && m_SelectDcs != null && m_SelectDcs != undefined) {
-        if (m_SelectDcs.length == 7) {
-            LoadMaterMachineData('last', m_SelectDcs);
-        }
-        else {
-            alert('必须选择DCS节点!');
-        }
+        LoadMaterMachineData('last', m_SelectDcs);
+    }
+    else {
+        alert('请选择有效的DCS!');
     }
 }
 function RefreshMasterMachineFun() {
@@ -286,7 +310,7 @@ function RefreshMasterMachineFun() {
 //////////////////////////////增加主机/////////////////////////////////
 function AddMasterMachineFun() {
     
-    $('#HiddenField_MasterMachineId').attr('value', "");
+    $('#HiddenField_MasterMachineId').attr('value', "");   
     $('#TextBox_MasterVariableName').textbox('setText', '');
     $('#TextBox_MasterVariableDescription').textbox('setText', '');
     $('#TextBox_MasterRemark').attr('value', '');
@@ -294,6 +318,7 @@ function AddMasterMachineFun() {
     $('#Checkbox_MasterRecord').attr('checked', true);
     $('#Radio_MasterValidValueOff').attr('checked', 'checked');
     MasterOrganizationId = "";
+    MasterDataBaseName = "";
     MasterMachineOpType = 0;
 
     LoadSlaveMachineData('last', "");                       //刷新从机列表
@@ -316,6 +341,7 @@ function EditMasterMachineFun(myId) {
                 $('#TextBox_MasterVariableDescription').textbox('setText', data[0].VariableDescription);
                 $('#TextBox_MasterRemark').attr('value', data[0].Remarks);
                 MasterOrganizationId = data[0].OrganizationId;
+                MasterDataBaseName = data[0].DataBaseName;
                 if (data[0].Record.toLocaleLowerCase() == 'true') {
                     $('#Checkbox_MasterRecord').attr('checked', true);
                 }
@@ -342,6 +368,7 @@ function EditMasterMachineFun(myId) {
 function SaveMasterMachine() {
     var m_MasterMachineId = $('#HiddenField_MasterMachineId').val();
     var m_OrganizationId = MasterOrganizationId;                              //$('#TextBox_MasterVariableDescription').textbox('getValue');
+    var m_DataBaseName = MasterDataBaseName;
     var m_VariableName = $('#TextBox_MasterVariableName').textbox('getText');
     var m_VariableDescription = $('#TextBox_MasterVariableDescription').textbox('getText');
     var m_ValidValues = $("input[name='SelectRadio_MasterValidValues']:checked").val();
@@ -360,9 +387,9 @@ function SaveMasterMachine() {
     else if (m_OrganizationId == "" || m_OrganizationId == null || m_OrganizationId == undefined) {
         alert('请选择所属DCS!');
     }
-    else if (m_OrganizationId.length != 7) {
-        alert('请选择到DCS节点!');
-    }
+    //else if (m_OrganizationId.length != 7) {
+    //    alert('请选择到DCS节点!');
+    //}
     else {
         if (MasterMachineOpType == 0) {              //添加主机设备
 
@@ -370,7 +397,7 @@ function SaveMasterMachine() {
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/AddMasterMachineInfo",
                 data: "{myOrganizationId:'" + m_OrganizationId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
-                        + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
+                        + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + MasterTableName + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
@@ -397,7 +424,7 @@ function SaveMasterMachine() {
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/ModifyMasterMachineInfo",
                 data: "{myId:'" + m_MasterMachineId + "',myOrganizationId:'" + m_OrganizationId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
-                        + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
+                        + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + MasterTableName + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
@@ -471,6 +498,7 @@ function AddSlaveMachineFun(myKeyId, myVariableDescription) {
     $('#Text_TimeDelay').numberspinner('setValue', 1);
     $('#Radio_SlaveValidValueOff').attr('checked', 'checked');
     SlaveOrganizationId = "";
+    SlaveDataBaseName = "";
     SlaveMachineOpType = 0;
     LoadSlaveMachineData('last', myKeyId);                     //刷新从机列表
     $('#Text_SelectMasterMachine').attr('value', myVariableDescription);
@@ -499,6 +527,7 @@ function EditSlaveMachineFun(myId) {
                     $('#Radio_SlaveValidValueOff').attr('checked', true);
                 }
                 SlaveOrganizationId = data[0].OrganizationId;
+                SlaveDataBaseName = data[0].DataBaseName;
             }
         }
     });
@@ -511,6 +540,7 @@ function EditSlaveMachineFun(myId) {
 function SaveSlaveMachine() {
     var m_SlaveMachineId = $('#HiddenField_SlaveMachineId').val();
     var m_OrganizationId = SlaveOrganizationId;                              //$('#TextBox_MasterVariableDescription').textbox('getValue');
+    var m_DataBaseName = SlaveDataBaseName;
     var m_VariableName = $('#TextBox_SlaveVariableName').textbox('getText');
     var m_VariableDescription = $('#TextBox_SlaveVariableDescription').textbox('getText');
     var m_KeyId = $('#HiddenField_MasterMachineId').val();
@@ -525,16 +555,16 @@ function SaveSlaveMachine() {
     else if (m_OrganizationId == "" || m_OrganizationId == null || m_OrganizationId == undefined) {
         alert('请选择所属DCS!');
     }
-    else if (m_OrganizationId.length != 7) {
-        alert('请选择到DCS节点!');
-    }
+    //else if (m_OrganizationId.length != 7) {
+    //    alert('请选择到DCS节点!');
+    //}
     else {
         if (SlaveMachineOpType == 0) {              //添加主机设备
             $.ajax({
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/AddSlaveMachineInfo",
                 data: "{myOrganizationId:'" + m_OrganizationId + "',myKeyId:'" + m_KeyId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
-                        + "',myValidValues:'" + m_ValidValues + "',myTimeDelay:'" + m_TimeDelay + "',myRemarks:'" + m_Remarks + "'}",
+                        + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + SlaveTableName + "',myValidValues:'" + m_ValidValues + "',myTimeDelay:'" + m_TimeDelay + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
@@ -561,7 +591,7 @@ function SaveSlaveMachine() {
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/ModifySlaveMachineInfo",
                 data: "{myId:'" + m_SlaveMachineId + "',myOrganizationId:'" + m_OrganizationId + "',myKeyId:'" + m_KeyId + "',myVariableName:'" + m_VariableName
-                        + "',myVariableDescription:'" + m_VariableDescription + "',myValidValues:'" + m_ValidValues + "',myTimeDelay:'" + m_TimeDelay + "',myRemarks:'" + m_Remarks + "'}",
+                        + "',myVariableDescription:'" + m_VariableDescription + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + SlaveTableName + "',myValidValues:'" + m_ValidValues + "',myTimeDelay:'" + m_TimeDelay + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {

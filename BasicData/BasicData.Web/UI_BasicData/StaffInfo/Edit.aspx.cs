@@ -19,7 +19,7 @@ namespace BasicData.Web.UI_BasicData.StaffInfo
             {
 #if DEBUG
                 // 调试用,自定义的数据授权
-                List<string> m_DataValidIdItems = new List<string>() { "O0101", "O0102" };
+                List<string> m_DataValidIdItems = new List<string>() { "C41B1F47-A48A-495F-A890-0AABB2F3BFF7", "zc_nxjc_qtx_efc", "zc_nxjc_qtx_tys" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
 #endif
                 this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
