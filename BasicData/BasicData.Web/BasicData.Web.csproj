@@ -1575,7 +1575,9 @@
     <Content Include="lib\pllib\themes\jquery.jqplot.min.css" />
     <Content Include="test.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx" />
+    <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionPlan.js" />
+    <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionResult.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Detail.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
@@ -1588,7 +1590,9 @@
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
     <Content Include="UI_BasicData\StaffInfo\Edit.aspx" />
     <Content Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1605,6 +1609,12 @@
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx.designer.cs">
       <DependentUpon>EnergyConsumptionPlan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx.cs">
+      <DependentUpon>EnergyConsumptionResult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx.designer.cs">
+      <DependentUpon>EnergyConsumptionResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
