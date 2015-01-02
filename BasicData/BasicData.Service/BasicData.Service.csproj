@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\SqlServerDataAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="StatisticalReport.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\StatisticalReport.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
@@ -50,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicService\BasicDataHelper.cs" />
+    <Compile Include="BasicService\PredictHelper.cs" />
+    <Compile Include="EnergyConsumptionPredict\EnergyPredict.cs" />
+    <Compile Include="EnergyConsumptionPredict\Forecast.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionPlan.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionResult.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionResultHelper.cs" />

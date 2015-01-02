@@ -1574,8 +1574,10 @@
     <Content Include="lib\pllib\themes\jquery.jqplot.css" />
     <Content Include="lib\pllib\themes\jquery.jqplot.min.css" />
     <Content Include="test.aspx" />
+    <Content Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx" />
+    <Content Include="UI_BasicData\js\page\EnergyConsumptionPredict\EnergyPredit.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionPlan.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionResult.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
@@ -1602,6 +1604,12 @@
     </Compile>
     <Compile Include="test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx.cs">
+      <DependentUpon>EnergyPredit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx.designer.cs">
+      <DependentUpon>EnergyPredit.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx.cs">
       <DependentUpon>EnergyConsumptionPlan.aspx</DependentUpon>
