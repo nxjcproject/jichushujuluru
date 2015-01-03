@@ -227,12 +227,16 @@ namespace BasicData.Service.EnergyConsumptionPredict
             //DataRow[] drs = temp.Select("IdSort<>99");
             Result_Forecast_all.Clear();
             // Result_Forecast_all.Rows.Add(drs);
-            Result_Forecast_all = temp.Select("IdSort<>99").CopyToDataTable();
-            foreach (DataRow drow in Result_Forecast_all.Rows)
+            DataRow[] tempTows = temp.Select("IdSort<>99");
+            if (tempTows.Count() > 0)
             {
-                //替换OrganizationID，Name
-                drow["OrganizationID"] = v_OrganizationID;
-                drow["Name"] = "所有生产线";      //-- 生产机构名称
+                Result_Forecast_all = tempTows.CopyToDataTable();
+                foreach (DataRow drow in Result_Forecast_all.Rows)
+                {
+                    //替换OrganizationID，Name
+                    drow["OrganizationID"] = v_OrganizationID;
+                    drow["Name"] = "所有生产线";      //-- 生产机构名称
+                }
             }
             Result_Forecast_all.Merge(Result_Forecast_ProductionLine);
             _dt = Result_Forecast_all;

@@ -1607,6 +1607,7 @@
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx.cs">
       <DependentUpon>EnergyPredit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx.designer.cs">
       <DependentUpon>EnergyPredit.aspx</DependentUpon>

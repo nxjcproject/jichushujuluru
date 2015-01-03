@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',split:true" style="width:200px;padding:10px;">
+        <div data-options="region:'west',split:true" style="width:230px;">
             <uc1:OrganisationTree runat="server" ID="OrganisationTree_ProductionLine" />
         </div>
         <div id="toolbar_ReportTemplate" style="display: none;">
