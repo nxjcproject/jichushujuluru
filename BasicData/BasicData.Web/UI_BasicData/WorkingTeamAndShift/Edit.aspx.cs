@@ -22,6 +22,7 @@ namespace BasicData.Web.UI_BasicData.WorkingTeamAndShift
             //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
             this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "Edit.aspx";                                                       //向web用户控件传递当前调用的页面名称
+            this.OrganisationTree.LeveDepth = 5;
         }
 
         [WebMethod]

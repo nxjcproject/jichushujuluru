@@ -121,13 +121,13 @@
         <!-- 中央区域结束 -->
     </div>
     <script type="text/javascript">
-        
+
         function formatSexColumn(val, row) {
             return val == 'True' ? "男" : "女";
         }
 
         function formatOperateColumn(val, row) {
-            return '<a href="#" onclick="editStaffInfo(false, ' + row.StaffInfoID + ');">编辑</a>';
+            return '<a href="#" onclick="editStaffInfo(false, \'' + row.StaffInfoID + '\');">编辑</a>';
         }
 
         // 分厂ID变量
@@ -186,7 +186,7 @@
                 dataType: "json"
             });
         }
-        
+
         var isStaffInfoInsert = false;
         // 编辑员工信息
         function editStaffInfo(isInsert, staffInfoID) {
@@ -257,6 +257,7 @@
         }
 
     </script>
+
     <form id="form1" runat="server"></form>
 </body>
 </html>
