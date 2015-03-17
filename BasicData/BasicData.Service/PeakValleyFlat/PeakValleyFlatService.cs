@@ -20,8 +20,20 @@ namespace BasicData.Service.PeakValleyFlat
 
         public static DataTable GetPVFList(string organizationId, string startUsingDate)
         {
-            string queryStr = @"SELECT * FROM system_PVF WHERE OrganizationID=@organizationId AND StartUsing>=@startUsingDate";
-            SqlParameter[] parameters = { new SqlParameter("@organizationId", organizationId), new SqlParameter("@startUsingDate", startUsingDate) };
+            string queryStr;
+            SqlParameter[] parameters;
+            if (startUsingDate != "")
+            {
+                queryStr = @"SELECT * FROM system_PVF WHERE OrganizationID=@organizationId AND StartUsing>=@startUsingDate";
+                SqlParameter[] parametertemp = { new SqlParameter("@organizationId", organizationId), new SqlParameter("@startUsingDate", startUsingDate) };
+                parameters = parametertemp;
+            }
+            else
+            {
+                queryStr = @"SELECT * FROM system_PVF WHERE OrganizationID=@organizationId";
+                SqlParameter[] parametertemp = { new SqlParameter("@organizationId", organizationId) };
+                parameters = parametertemp;
+            }
             DataTable result = _dataFactory.Query(queryStr, parameters);
             return result;
         }

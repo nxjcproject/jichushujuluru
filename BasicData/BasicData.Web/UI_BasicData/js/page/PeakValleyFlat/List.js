@@ -12,7 +12,7 @@ var publicData = {
 }
 
 var pvfData = {
-    organizationId: '',
+    //organizationId: '',
     //tzStartDate: '',
     dataDetail: []
 }
@@ -317,6 +317,7 @@ function saveItem() {
         alert('请完成24小时的定义！');
     }
     else {
+        //pvfData.organizationId = publicData.organizationId;
         //pvfData.tzStartDate = new Date(); //$('#startUsing').datetimebox('getValue');
         for (var i = 0; i < items.length; i++) {
             pvfData.dataDetail.push(items[i]);
@@ -325,13 +326,14 @@ function saveItem() {
         $.ajax({
             type: "POST",
             url: "List.aspx/Save",
-            data: "{myJsonData:'" + JSON.stringify(pvfData) + "'}",
+            data: "{organizationId:'" + publicData.organizationId + "',myJsonData:'" + JSON.stringify(pvfData) + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
                 if (msg.d == "1") {
                     $('#addDialog').dialog('close');
                     alert("更新成功!");
+                    loadGridData('first');
                 } else {
                     $('#addDialog').dialog('close');
                     alert("更新失败!");

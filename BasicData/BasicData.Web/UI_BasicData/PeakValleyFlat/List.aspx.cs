@@ -54,9 +54,9 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
         }
 
         [WebMethod]
-        public static string Save(string myJsonData)
+        public static string Save(string organizationId, string myJsonData)
         {
-            string organizationId = myJsonData.JsonPick("organizationId");
+            string morganizationId = myJsonData.JsonPick("organizationId");
             //string startUsing = myJsonData.JsonPick("tzStartDate");
             string[] dataDetails = myJsonData.JsonPickArray("dataDetail");
 
