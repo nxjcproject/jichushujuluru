@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using EasyUIJsonParser;
 
 namespace BasicData.Web.UI_BasicData.PeakValleyFlat
 {
@@ -42,14 +43,37 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
         }
 
         [WebMethod]
-        public static string UpdatePVFList(string id, string endUsing, string flag)
+        public static string UpdatePVFList(string id, string startUsing, string endUsing, string flag)
         {
-            int result = PeakValleyFlatService.UpdatePVFData(id, endUsing, flag);
+            int result = PeakValleyFlatService.UpdatePVFData(id, startUsing, endUsing, flag);
 
             if (result == 1)
                 return "1";
             else
                 return "-1";
+        }
+
+        [WebMethod]
+        public static string Save(string myJsonData)
+        {
+            string organizationId = myJsonData.JsonPick("organizationId");
+            //string startUsing = myJsonData.JsonPick("tzStartDate");
+            string[] dataDetails = myJsonData.JsonPickArray("dataDetail");
+
+            int result = PeakValleyFlatService.SavePVFData(organizationId, dataDetails);
+
+            if (result == 1)
+                return "1";
+            else
+                return "-1";
+        }
+
+        [WebMethod]
+        public static string GetPVFDetail(string keyId)
+        {
+            DataTable dt = PeakValleyFlatService.GetPVFDetail(keyId);
+            string result = EasyUIJsonParser.DataGridJsonParser.DataTableToJson(dt);
+            return result;
         }
     }
 }

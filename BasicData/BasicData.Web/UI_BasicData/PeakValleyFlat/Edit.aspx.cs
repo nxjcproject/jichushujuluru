@@ -24,7 +24,7 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
             string startUsing = myJsonData.JsonPick("tzStartDate");
             string[] dataDetails = myJsonData.JsonPickArray("dataDetail");
 
-            int result = PeakValleyFlatService.SavePVFData(organizationId, startUsing, dataDetails);
+            int result = PeakValleyFlatService.SavePVFData(organizationId, dataDetails);
 
             if (result == 1)
                 return "1";

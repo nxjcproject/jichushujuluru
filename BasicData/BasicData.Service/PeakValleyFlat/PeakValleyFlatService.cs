@@ -33,7 +33,7 @@ namespace BasicData.Service.PeakValleyFlat
             return result;
         }
 
-        public static int SavePVFData(string organizationId, string startUsing, string[] dataDetails)
+        public static int SavePVFData(string organizationId, string[] dataDetails)
         {
             int result;
             Guid keyId = Guid.NewGuid();
@@ -41,7 +41,8 @@ namespace BasicData.Service.PeakValleyFlat
             DataTable pvfTable = _dataHelper.CreateTableStructure("system_PVF");
             DataRow newRow = pvfTable.NewRow();
             newRow["OrganizationID"] = organizationId;
-            newRow["StartUsing"] = startUsing;
+            //newRow["StartUsing"] = startUsing;
+            newRow["ID"] = keyId;
             newRow["KeyID"] = keyId;
             pvfTable.Rows.Add(newRow);
 
@@ -49,6 +50,8 @@ namespace BasicData.Service.PeakValleyFlat
             DataTable dt = EasyUIJsonParser.DataGridJsonParser.JsonToDataTable(dataDetails, detailTable);
             foreach (DataRow dr in dt.Rows)
             {
+                Guid detailID = Guid.NewGuid();
+                dr["ID"] = detailID;
                 dr["KeyID"] = keyId;
             }
 
@@ -94,13 +97,13 @@ namespace BasicData.Service.PeakValleyFlat
             return result;
         }
 
-        public static int UpdatePVFData(string id, string endUsing, string flag)
+        public static int UpdatePVFData(string id, string startUsing, string endUsing, string flag)
         {
             int result;
-            string update = @"UPDATE system_PVF SET EndUsing=@endUsing,Flag=@flag WHERE ID=@id";
+            string update = @"UPDATE system_PVF SET StartUsing=@startUsing,EndUsing=@endUsing,Flag=@flag WHERE ID=@id";
             try
             {
-                _dataFactory.ExecuteSQL(update, new SqlParameter("@id", id), new SqlParameter("@endUsing", endUsing), new SqlParameter("@flag", flag));
+                _dataFactory.ExecuteSQL(update, new SqlParameter("@id", id), new SqlParameter("@startUsing", startUsing), new SqlParameter("@endUsing", endUsing), new SqlParameter("@flag", flag));
                 result = 1;
             }
             catch
