@@ -19,8 +19,13 @@ function InitializePage() {
     loadWorkingTeamData();
 }
 
+//function onOrganisationTreeClick(node) {
+//    publicData.organizationId = node.OrganizationId;
+//    InitializePage();
+//}
 function onOrganisationTreeClick(node) {
     publicData.organizationId = node.OrganizationId;
+    $('#organizationName').textbox('setText', node.text);
     InitializePage();
 }
 

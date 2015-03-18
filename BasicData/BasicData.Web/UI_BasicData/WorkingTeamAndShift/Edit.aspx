@@ -22,12 +22,18 @@
     <title>班次班组定义</title>
 </head>
 <body>
-    <input type="checkbox" disabled="disabled" checked="checked" />
     <div class="easyui-layout" data-options="fit:true,border:false" style="padding: 5px;">
         <div data-options="region:'west',border:false,collapsible:false" style="width: 230px;">
             <uc1:OrganisationTree runat="server" ID="OrganisationTree" />
         </div>
         <div data-options="region:'center',border:false,collapsible:false" style="padding-left: 10px;">
+            <table>
+                <tr>
+                    <td>当前产线名称:</td>
+                    <td><input id="organizationName" class="easyui-textbox" style="width:100px"/></td>
+                    <%--<td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="loadGridData('first')">查询</a></td>--%>
+                </tr>
+            </table>
             <div style="height: 5px"></div>
             <table id="dg_shift" class="easyui-datagrid" title="班次时间设置" style="width: 100%; height: auto">
             </table>
