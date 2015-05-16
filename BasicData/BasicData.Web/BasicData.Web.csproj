@@ -1577,9 +1577,11 @@
     <Content Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx" />
+    <Content Include="UI_BasicData\EquipmentAccount\EquipmentAccountEdit.aspx" />
     <Content Include="UI_BasicData\js\page\EnergyConsumptionPredict\EnergyPredit.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionPlan.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionResult.js" />
+    <Content Include="UI_BasicData\js\page\EquipmentAccount\EquipmentAccountEdit.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Detail.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
@@ -1625,6 +1627,13 @@
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx.designer.cs">
       <DependentUpon>EnergyConsumptionResult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\EquipmentAccount\EquipmentAccountEdit.aspx.cs">
+      <DependentUpon>EquipmentAccountEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\EquipmentAccount\EquipmentAccountEdit.aspx.designer.cs">
+      <DependentUpon>EquipmentAccountEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
