@@ -18,8 +18,11 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
             if (!IsPostBack)
             {
                 ////////////////////调试用,自定义的数据授权
-                //List<string> m_DataValidIdItems = new List<string>() { "C41B1F47-A48A-495F-A890-0AABB2F3BFF7                            ", "43F1EA8C-FF77-4BC5-BACB-531DC56A2512                            " };
-                //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+#if DEBUG
+                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf" };
+                AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+#elif RELEASE
+#endif
                 this.TagsSelector_DcsTags.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
                 this.TagsSelector_DcsTags.PageName = "MasterSlaveMachinedescription.aspx";                                     //向web用户控件传递当前调用的页面名称
             }
@@ -37,11 +40,11 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
             return EasyUIJsonParser.DataGridJsonParser.DataTableToJson(m_MasterMachineInfo);
         }
         [WebMethod]
-        public static string AddMasterMachineInfo(string myOrganizationId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
+        public static string AddMasterMachineInfo(string myOrganizationId, string myVariableId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
             if (mUserId != "")
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddMasterMachineInfo(myOrganizationId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
+                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddMasterMachineInfo(myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
                 return ReturnValue.ToString();
             }
             else
@@ -50,11 +53,11 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
             }
         }
         [WebMethod]
-        public static string ModifyMasterMachineInfo(string myId, string myOrganizationId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
+        public static string ModifyMasterMachineInfo(string myId, string myOrganizationId, string myVariableId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
             if (mUserId != "")
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifyMasterMachineInfo(myId, myOrganizationId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
+                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifyMasterMachineInfo(myId, myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
                 return ReturnValue.ToString();
             }
             else
@@ -75,6 +78,13 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
             {
                 return "非法的用户操作!";
             }
+        }
+        [WebMethod]
+        public static string GetMasterMachineVariableId()
+        {
+            List<string> m_OrganizationIds = GetDataValidIdGroup("ProductionOrganization");
+            DataTable m_MainMachineInfo = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.GetMainMachineInfo(m_OrganizationIds);
+            return EasyUIJsonParser.TreeJsonParser.DataTableToJsonByLevelCodeWithIdColumn(m_MainMachineInfo, "LevelCode", "VariableId", "Name");
         }
         //////////////////////////////////////从机//////////////////////////////////////
 

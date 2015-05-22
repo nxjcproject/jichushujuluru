@@ -14,8 +14,8 @@ $(function () {
     LoadMasterMachineDialog();
     LoadSlaveMachineDialog();
     LoadSelectDcsTagsDialog();
+    LoadMasterMachineVariables();
 });
-
 function LoadMaterMachineData(myLoadType, myDcsId) {
     $.ajax({
         type: "POST",
@@ -47,42 +47,47 @@ function InitializeMaterMachineGrid(myData) {
         idField: 'Id',
         fit:true, 
         columns: [[{
-            width: 120,
+            width: 110,
             title: '设备组织机构',
             field: 'OrganizationId',
             hidden: true
         }, {
-            width: 120,
+            width: 110,
             title: 'DCS名称',
             field: 'OrganizationName'
         }, {
-            width: '120',
+            width: 110,
             title: '变量名',
             field: 'VariableName'
         }, {
-            width: 150,
+            width: 140,
             title: '变量描述',
             field: 'VariableDescription'
         }, {
-            width: '120',
+            width: 110,
             title: '数据库名',
             field: 'DataBaseName',
             hidden: true
         }, {
-            width: 120,
+            width: 110,
             title: '表名',
             field: 'TableName',
             hidden: true
         }, {
             width: 110,
-            title: '记录主机停机信息',
+            title: '主要设备',
+            field: 'VariableId',
+            hidden: true
+        }, {
+            width: 100,
+            title: '主机停机信息',
             field: 'Record'
         }, {
             width: 50,
             title: '有效值',
             field: 'ValidValues'
         }, {
-            width: 200,
+            width: 160,
             title: '备注',
             field: 'Remarks'
         }, {
@@ -243,8 +248,8 @@ function LoadMasterMachineDialog() {
     //loading 用户dialog
     $('#dlg_AddMasterMachine').dialog({
         title: '主机设备信息',
-        width: 650,
-        height: 360,
+        width: 690,
+        height: 340,
         closed: true,
         cache: false,
         modal: true,
@@ -257,7 +262,7 @@ function LoadSlaveMachineDialog() {
     $('#dlg_AddSlaveMachine').dialog({
         title: '从机设备信息',
         width: 650,
-        height: 360,
+        height: 340,
         closed: true,
         cache: false,
         modal: true,
@@ -354,6 +359,7 @@ function EditMasterMachineFun(myId) {
                 else {
                     $('#Radio_MasterValidValueOff').attr('checked', true);
                 }
+                $('#Commbox_VariableId').combotree("setValue", data[0].VariableId);
                 LoadSlaveMachineData('last', data[0].Id);                     //刷新从机列表
                 $('#Text_SelectMasterMachine').attr('value', data[0].VariableDescription);
             }
@@ -374,6 +380,8 @@ function SaveMasterMachine() {
     var m_ValidValues = $("input[name='SelectRadio_MasterValidValues']:checked").val();
     var m_Remarks = $('#TextBox_MasterRemark').val();
     var m_Record = $('#Checkbox_MasterRecord').attr('checked');
+    var m_VariableId = $('#Commbox_VariableId').combotree("getValue");
+   
     if (m_Record == 'checked') {
         m_Record = 1;
     }
@@ -396,7 +404,7 @@ function SaveMasterMachine() {
             $.ajax({
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/AddMasterMachineInfo",
-                data: "{myOrganizationId:'" + m_OrganizationId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
+                data: "{myOrganizationId:'" + m_OrganizationId + "',myVariableId:'" + m_VariableId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
                         + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + MasterTableName + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -423,7 +431,7 @@ function SaveMasterMachine() {
             $.ajax({
                 type: "POST",
                 url: "MasterSlaveMachinedescription.aspx/ModifyMasterMachineInfo",
-                data: "{myId:'" + m_MasterMachineId + "',myOrganizationId:'" + m_OrganizationId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
+                data: "{myId:'" + m_MasterMachineId + "',myOrganizationId:'" + m_OrganizationId + "',myVariableId:'" + m_VariableId + "',myVariableName:'" + m_VariableName + "',myVariableDescription:'" + m_VariableDescription
                         + "',myDataBaseName:'" + m_DataBaseName + "',myTableName:'" + MasterTableName + "',myRecord:'" + m_Record + "',myValidValues:'" + m_ValidValues + "',myRemarks:'" + m_Remarks + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -486,6 +494,39 @@ function DeleteMasterMachineFun(myId, myOrganizationId, myVariableDescription) {
         }
     });
 }
+//初始化主机设备标签列表
+function LoadMasterMachineVariables() {
+    $.ajax({
+        type: "POST",
+        url: "MasterSlaveMachinedescription.aspx/GetMasterMachineVariableId",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            var m_Data = jQuery.parseJSON(msg.d)
+            if (m_Data != null && m_Data != undefined) {
+                InitializingMasterMachineVariableCommbox(m_Data);
+            }
+        }
+    });
+    //$('#Commbox_VariableId');
+}
+function InitializingMasterMachineVariableCommbox(myData) {
+    $('#Commbox_VariableId').combotree({
+        data: myData,
+        dataType: "json",
+        valueField: 'id',
+        textField: 'text',
+        required: false,
+        panelHeight: 200,   //'auto',
+        editable: false,
+        onLoadSuccess: function () {
+            $("#Commbox_VariableId").combotree('tree').tree("collapseAll");
+        }
+    });
+    
+}
+
 
 //////////////////////////////////添加从机////////////////////////////////////////
 function AddSlaveMachineFun(myKeyId, myVariableDescription) {

@@ -68,13 +68,16 @@
     <Reference Include="WebStyleBaseForEnergy">
       <HintPath>..\..\Lib\WebStyleBaseForEnergy.dll</HintPath>
     </Reference>
-    <Reference Include="WebUserContorls.Web">
+    <Reference Include="WebUserContorls.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebUserContorls.Web.dll</HintPath>
     </Reference>
-    <Reference Include="WebUserControls.Infrastructure">
+    <Reference Include="WebUserControls.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebUserControls.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="WebUserControls.Service">
+    <Reference Include="WebUserControls.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebUserControls.Service.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -1688,6 +1691,7 @@
   <ItemGroup>
     <Content Include="lib\pllib\syntaxhighlighter\LGPL-LICENSE" />
     <Content Include="lib\pllib\syntaxhighlighter\MIT-LICENSE" />
+    <None Include="Properties\PublishProfiles\BasicData.pubxml" />
     <None Include="Properties\PublishProfiles\my.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
