@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>主要设备信息录入</title>
     <link rel="stylesheet" type="text/css" href="/lib/ealib/themes/gray/easyui.css" />
     <link rel="stylesheet" type="text/css" href="/lib/ealib/themes/icon.css" />
     <link rel="stylesheet" type="text/css" href="/lib/extlib/themes/syExtIcon.css" />
@@ -23,35 +23,32 @@
 
     <script type="text/javascript" src="../js/page/EquipmentAccount/EquipmentAccountEdit.js" charset="utf-8"></script>
     <style type="text/css">
-        td {
+       .easyui-dialog td {
             padding: 5px;
             text-align: right;
         }
     </style>
 </head>
 <body>
-    <div class="easyui-layout" data-options="fit:true,border:false">
-        <div data-options="region:'west',split:true" style="width: 230px;">
+    <div class="easyui-layout" data-options="fit:true,border:false" style="padding: 5px;">
+        <div data-options="region:'west',border:false,collapsible:false" style="width: 240px;">
             <uc1:OrganisationTree runat="server" ID="OrganisationTree_ProductionLine" />
         </div>
         <div data-options="region:'center',border:false">
-            <%--<div class="easyui-panel" title="设备信息" style="padding: 10px; background: #fafafa;" data-options="fit:true">--%>
-
-                <table id="equipmentAccount_Info" class="easyui-datagrid" data-options="fit:true,border:false,toolbar:equipmentAccount_ToolBar,onDblClickRow:EditEquipment,onRowContextMenu:onRowContextMenu"></table>
-            <%--</div>--%>
+            <table id="equipmentAccount_Info" class="easyui-datagrid" data-options="fit:true,border:false,toolbar:equipmentAccount_ToolBar,onDblClickRow:EditEquipment,onRowContextMenu:onRowContextMenu"></table>
         </div>
     </div>
 
     <div id="equipmentAccount_ToolBar">
-            <div style="padding: 10px" id="PanelToolBar">
-                    <span>机构名称：</span><input id="productLineName" class="easyui-textbox" style="width: 180px;" readonly="true" />
-                    <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true"
-                        onclick="QueryReportFun();">查询</a>
-                    <input id="organizationId" readonly="true" style="display: none;" />
-                </div>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="javascript:EditEquipment()">编辑</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="javascript:AddEquipment()">增加设备</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="javascript:RemoveEquipment()">删除设备</a>
+        <div style="padding: 10px" id="PanelToolBar">
+            <span>机构名称：</span><input id="productLineName" class="easyui-textbox" style="width: 180px;" readonly="true" />
+            <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true"
+                onclick="QueryReportFun();">查询</a>
+            <input id="organizationId" readonly="true" style="display: none;" />
+        </div>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="javascript:EditEquipment()">编辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="javascript:AddEquipment()">增加设备</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="javascript:RemoveEquipment()">删除设备</a>
     </div>
 
     <%--添加设备对话框开始--%>
@@ -112,7 +109,7 @@
     </div>
     <%--添加设备对话框结束--%>
     <div id="buttons_Add">
-        <table cellpadding="0" cellspacing="0" style="width: 100%">
+        <table style="width: 100%">
             <tr>
                 <td style="text-align: right">
                     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="javascript:SaveEquipment();">保存</a>
@@ -136,7 +133,7 @@
                 <td>组织机构ID:</td>
                 <td>
                     <select id="OrganizationID_edit" class="easyui-combobox" style="width: 150px" data-options="panelHeight:'auto',required:true"></select></td>
-                    
+
                 <td>设备名称:</td>
                 <td>
                     <input id="EquipmentName_edit" class="easyui-textbox" style="width: 120px;" data-options="required:true" /></td>
@@ -178,6 +175,7 @@
                 <td rowspan="2">备注：</td>
                 <td colspan="5" rowspan="2" style="text-align: left">
                     <textarea id="Remarks_edit" style="width: 500px"></textarea>
+                </td>
             </tr>
         </table>
         <%--</fieldset>--%>
