@@ -59,6 +59,7 @@
     <Compile Include="EnergyConsumption\EnergyConsumptionPlan.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionResult.cs" />
     <Compile Include="EnergyConsumption\EnergyConsumptionResultHelper.cs" />
+    <Compile Include="EnergyDataManualInput\EnergyDataManualInputService.cs" />
     <Compile Include="EquipmentAccount\EquipmentAccountService.cs" />
     <Compile Include="MachineHaltReasons\MachineHaltReasonsService.cs" />
     <Compile Include="MasterSlaveMachine\MasterSlaveMachinedescription.cs" />
