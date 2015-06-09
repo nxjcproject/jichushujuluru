@@ -125,21 +125,33 @@ namespace BasicData.Service.EnergyDataManualInput
         {
             int result = 0;
 
-            string insertSql = @"insert into system_EnergyDataManualInput (DataItemId,VariableId,OrganizationID,TimeStamp,DataValue,UpdateCycle,Version,Remark) 
+            string testSql = @"select * from system_EnergyDataManualInput where TimeStamp like @datetime";
+            string[] datetimearry = addData.JsonPick("timeStamp").Split('-');
+            SqlParameter[] testparameters = { new SqlParameter("@datetime", datetimearry[0] + "-" + datetimearry[1] + "%") };
+            DataTable testTable = _dataFactory.Query(testSql, testparameters);
+
+            if (testTable.Rows.Count > 0)
+            {
+                return result;
+            }
+            else
+            {
+                string insertSql = @"insert into system_EnergyDataManualInput (DataItemId,VariableId,OrganizationID,TimeStamp,DataValue,UpdateCycle,Version,Remark) 
                                 values (@dataItemId,@variableId,@organizationID,@timeStamp,@dataValue,@updateCycle,@version,@remark)";
-            IList<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@dataItemId", Guid.NewGuid()));
-            parameters.Add(new SqlParameter("@variableId", addData.JsonPick("variableId")));
-            parameters.Add(new SqlParameter("@organizationID", addData.JsonPick("organizationId")));
-            parameters.Add(new SqlParameter("@timeStamp", addData.JsonPick("timeStamp")));
-            parameters.Add(new SqlParameter("@dataValue", addData.JsonPick("dataValue")));
-            parameters.Add(new SqlParameter("@updateCycle", addData.JsonPick("updateCycle")));
-            parameters.Add(new SqlParameter("@version", 2));
-            parameters.Add(new SqlParameter("@remark", addData.JsonPick("remark")));
+                IList<SqlParameter> parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter("@dataItemId", Guid.NewGuid()));
+                parameters.Add(new SqlParameter("@variableId", addData.JsonPick("variableId")));
+                parameters.Add(new SqlParameter("@organizationID", addData.JsonPick("organizationId")));
+                parameters.Add(new SqlParameter("@timeStamp", addData.JsonPick("timeStamp")));
+                parameters.Add(new SqlParameter("@dataValue", addData.JsonPick("dataValue")));
+                parameters.Add(new SqlParameter("@updateCycle", addData.JsonPick("updateCycle")));
+                parameters.Add(new SqlParameter("@version", 2));
+                parameters.Add(new SqlParameter("@remark", addData.JsonPick("remark")));
 
-            result = _dataFactory.ExecuteSQL(insertSql, parameters.ToArray());
+                result = _dataFactory.ExecuteSQL(insertSql, parameters.ToArray());
 
-            return result;
+                return result;
+            }
         }
 
         public static int DeleteEnergyDataManualInput(string id)

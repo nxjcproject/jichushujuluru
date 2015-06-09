@@ -69,7 +69,7 @@
                 </td>
                 <td style="width:15%;">创建时间</td>
                 <td style="width:35%;">
-                    <input id="addCreateTime" class="easyui-datebox" required="required" />
+                    <input id="addCreateTime" class="easyui-datetimebox" required="required" />
                 </td>
             </tr>
             <tr>
@@ -107,7 +107,7 @@
                 </td>
                 <td style="width:15%;">创建时间</td>
                 <td style="width:35%;">
-                    <input id="editCreateTime" class="easyui-datebox" required="required" />
+                    <input id="editCreateTime" class="easyui-datetimebox" required="required" />
                 </td>
             </tr>
             <tr>

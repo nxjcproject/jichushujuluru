@@ -78,7 +78,12 @@ function InitializeGrid(myData) {
 }
 //添加按钮
 function addItem() {
-    $('#addDialog').dialog('open');
+    if ($('#organizationName').textbox('getText') == '') {
+        alert("请选择分厂！");
+    }
+    else {
+        $('#addDialog').dialog('open');
+    }
 }
 //添加对话框保存按钮
 function saveAddDialog() {
@@ -100,9 +105,10 @@ function saveAddDialog() {
             success: function (msg) {
                 if (msg.d == '1') {
                     alert("添加成功！");
+                    loadGridData();
                 }
                 else {
-                    alert("添加失败！");
+                    alert("本月已经提交或添加失败！");
                 }
             }
         });

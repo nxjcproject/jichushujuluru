@@ -75,7 +75,7 @@ function saveAddDialog() {
     //addData.type = $('#addType').combobox('getValue');
     addData.enabled = $("input[name='radiobutton']:checked").val();
     addData.creator = $('#addCreator').textbox('getText');
-    addData.createTime = $('#addCreateTime').datebox('getValue');
+    addData.createTime = $('#addCreateTime').datetimebox('getValue');
     addData.remark = $('#addRemark').textbox('getText');
 
     if (addData.variableName != '' && addData.creator != '' && addData.createTime != '') {
@@ -154,9 +154,9 @@ function editItem() {
         publicData.variableId = row['VariableId'];
         $("#editVariableName").textbox("setText", row['VariableName']);
         $("#editCreator").textbox("setText", row['Creator']);
-        $("#editCreateTime").datebox("setValue", row['CreateTime']);
+        $("#editCreateTime").datetimebox('setValue', row['CreateTime']);
         $("#editRemark").textbox("setText", row['Remark']);
-        if (row['Enabled'] == 'true') {
+        if (row['Enabled'] == 'True') {
             $("#editradioTrue").attr("checked", "checked");
         }
         else {
@@ -171,7 +171,7 @@ function saveEditDialog() {
     editData.variableName = $('#editVariableName').textbox('getText');
     editData.enabled = $("input[name='editradiobutton']:checked").val();
     editData.creator = $('#editCreator').textbox('getText');
-    editData.createTime = $('#editCreateTime').datebox('getValue');
+    editData.createTime = $('#editCreateTime').datetimebox('getValue');
     editData.remark = $('#editRemark').textbox('getText');
 
     if (editData.variableName != '' && editData.creator != '' && editData.createTime != '') {
