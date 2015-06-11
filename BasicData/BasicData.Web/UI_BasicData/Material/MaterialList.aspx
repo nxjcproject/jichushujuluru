@@ -142,7 +142,7 @@
 	    	<tr>
 	    		<td>系数：</td>
 	    		<td>
-                    <input class="easyui-textbox" id="coefficient" name="coefficient" style="width:160px" />
+                    <input class="easyui-numberbox" data-options="min:0,max:99,precision:4" id="coefficient" name="coefficient" style="width:160px" />
 	    		</td>
 	    	</tr>
 	    	<tr>
