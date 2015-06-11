@@ -93,7 +93,7 @@
     <div id="addDialog-buttons">
         <%--<a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveEditDialog()">保存</a>--%>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveItem()">保存</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#editDialog').dialog('close')">取消</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#addDialog').dialog('close')">取消</a>
     </div>
 
     <div id="edit" class="easyui-dialog" title="添加峰谷平时间段" data-options="iconCls:'icon-save',closed:true,buttons:'#edit-buttons'" style="width:400px;height:200px;padding:10px">
