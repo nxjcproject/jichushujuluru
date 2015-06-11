@@ -414,41 +414,34 @@ namespace BasicData.Service.Material
 
             string connectionString = ConnectionStringFactory.NXJCConnectionString;
 
-            SqlConnection connection = new SqlConnection(connectionString);
-            SqlCommand command = connection.CreateCommand();
+            using (TransactionScope tsCope = new TransactionScope())
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
 
-            command.CommandText = @"UPDATE [dbo].[material_MaterialDetail]
+                    command.CommandText = @"UPDATE [dbo].[material_MaterialDetail]
                                        SET [Coefficient] = @coefficient
                                      WHERE [MaterialId] = @materialId";
 
-            SqlTransaction transaction = connection.BeginTransaction();
+                    connection.Open();
 
-            try
-            {
-                connection.Open();
+                    foreach (string detail in detailJsons)
+                    {
+                        string materialId = detail.JsonPick("MaterialId");
+                        string coefficient = detail.JsonPick("Coefficient");
 
-                foreach (string detail in detailJsons)
-                {
-                    string materialId = detail.JsonPick("MaterialId");
-                    string coefficient = detail.JsonPick("Coefficient");
-
-                    command.Parameters.Clear();
-                    command.Parameters.Add(new SqlParameter("materialId", materialId));
-                    command.Parameters.Add(new SqlParameter("coefficient", coefficient));
-                    command.ExecuteNonQuery();
+                        command.Parameters.Clear();
+                        command.Parameters.Add(new SqlParameter("materialId", materialId));
+                        if (string.IsNullOrWhiteSpace(coefficient))
+                            command.Parameters.Add(new SqlParameter("coefficient", DBNull.Value));
+                        else
+                            command.Parameters.Add(new SqlParameter("coefficient", decimal.Parse(coefficient)));
+                        command.ExecuteNonQuery();
+                    }
                 }
 
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-            }
-            finally
-            {
-                connection.Close();
-                transaction.Dispose();
-                connection.Dispose();
+                tsCope.Complete();
             }
         }
     }
