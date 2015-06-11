@@ -107,8 +107,11 @@ function saveAddDialog() {
                     alert("添加成功！");
                     loadGridData();
                 }
+                else if (msg.d == '-2') {
+                    alert("本月已经提交,添加失败！");
+                }
                 else {
-                    alert("本月已经提交或添加失败！");
+                    alert("添加失败！");
                 }
             }
         });

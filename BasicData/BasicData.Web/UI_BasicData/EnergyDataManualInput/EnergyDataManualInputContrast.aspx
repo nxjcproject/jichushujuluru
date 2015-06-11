@@ -50,6 +50,10 @@
     <div id="addDialog" class="easyui-dialog" title="添加录入信息" data-options="iconCls:'icon-save',closed:true,buttons:'#addDialog-buttons'" style="width:500px;height:200px;padding:10px">
         <table>
             <tr>
+                <td style="width:15%;">变量ID</td>
+                <td style="width:35%;">
+                    <input id="addVariableId" class="easyui-textbox" required="required" />
+                </td>
                 <td style="width:15%;">变量名称</td>
                 <td style="width:35%;">
                     <input id="addVariableName" class="easyui-textbox" required="required" />
