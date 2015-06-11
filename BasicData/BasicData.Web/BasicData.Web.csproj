@@ -1590,12 +1590,15 @@
     <Content Include="UI_BasicData\js\page\EnergyDataManualInput\EnergyDataManualInputContrast.js" />
     <Content Include="UI_BasicData\js\page\EquipmentAccount\EquipmentAccountEdit.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
+    <Content Include="UI_BasicData\js\page\Material\MaterialList.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Detail.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\List.js" />
     <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
     <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
     <Content Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx" />
+    <Content Include="UI_BasicData\Material\CoefficientUpdater.aspx" />
+    <Content Include="UI_BasicData\Material\MaterialList.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Detail.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Edit.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
@@ -1669,6 +1672,20 @@
     </Compile>
     <Compile Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx.designer.cs">
       <DependentUpon>MasterSlaveMachinedescription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\Material\CoefficientUpdater.aspx.cs">
+      <DependentUpon>CoefficientUpdater.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\Material\CoefficientUpdater.aspx.designer.cs">
+      <DependentUpon>CoefficientUpdater.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\Material\MaterialList.aspx.cs">
+      <DependentUpon>MaterialList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\Material\MaterialList.aspx.designer.cs">
+      <DependentUpon>MaterialList.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\PeakValleyFlat\Detail.aspx.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
