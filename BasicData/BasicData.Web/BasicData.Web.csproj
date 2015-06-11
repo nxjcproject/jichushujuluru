@@ -1729,6 +1729,7 @@
     <Content Include="lib\pllib\syntaxhighlighter\MIT-LICENSE" />
     <None Include="Properties\PublishProfiles\BasicData.pubxml" />
     <None Include="Properties\PublishProfiles\my.pubxml" />
+    <None Include="Properties\PublishProfiles\NXJC.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

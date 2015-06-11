@@ -34,6 +34,8 @@ namespace BasicData.Web.UI_BasicData.EnergyDataManualInput
 
             if (result == 1)
                 return "1";
+            else if (result == -2)
+                return "-2";
             else
                 return "-1";
         }

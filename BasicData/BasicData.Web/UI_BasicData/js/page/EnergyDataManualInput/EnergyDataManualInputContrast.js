@@ -71,6 +71,7 @@ function addItem() {
 //添加对话框保存按钮
 function saveAddDialog() {
     var addData = {};
+    addData.variableId = $('#addVariableId').textbox('getText');
     addData.variableName = $('#addVariableName').textbox('getText');
     //addData.type = $('#addType').combobox('getValue');
     addData.enabled = $("input[name='radiobutton']:checked").val();
@@ -78,7 +79,7 @@ function saveAddDialog() {
     addData.createTime = $('#addCreateTime').datetimebox('getValue');
     addData.remark = $('#addRemark').textbox('getText');
 
-    if (addData.variableName != '' && addData.creator != '' && addData.createTime != '') {
+    if (addData.variableId != '' && addData.variableName != '' && addData.creator != '' && addData.createTime != '') {
         $.ajax({
             type: "POST",
             url: "EnergyDataManualInputContrast.aspx/AddEnergyDataManualInputContrastData",
@@ -88,6 +89,9 @@ function saveAddDialog() {
             success: function (msg) {
                 if (msg.d == '1') {
                     alert("添加成功！");
+                }
+                else if (msg.d == '-2') {
+                    alert("ID值重复，添加失败！");
                 }
                 else {
                     alert("添加失败！");
@@ -114,7 +118,7 @@ function deleteItem() {
         $.messager.confirm('提示', '确定要删除选中行？', function (r) {
             if (r) {
                 $('#dg').datagrid('deleteRow', index);
-                deleteData(row["VarialeId"]);
+                deleteData(row['VariableId']);
             }
         });
     }
