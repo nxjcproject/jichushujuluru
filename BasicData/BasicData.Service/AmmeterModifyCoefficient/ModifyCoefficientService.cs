@@ -49,7 +49,7 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             }
             string myFieldSql = @"select A.LevelCode,B.OrganizationID, B.AmmeterNumber, B.AmmeterName, B.ElectricRoom, B.CommunicationProtocol, B.AmmeterAddress, 
                                     B.CommPort, B.CT,B.PT, B.PowerFieldNameSave, B.Status
-                                    from {0}.dbo.AmmeterLevel A,{0}.dbo.AmmeterContrast B
+                                    from {0}.dbo.AmmeterModifyCoefficientReference A,{0}.dbo.AmmeterContrast B
                                     where A.OrganizationID=B.OrganizationID
                                     and A.AmmeterNumber=B.AmmeterNumber";
             DataTable fieldTable = dataFactory.Query(string.Format(myFieldSql, meterDatabase));
