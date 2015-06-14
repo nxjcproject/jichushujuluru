@@ -41,25 +41,36 @@ namespace BasicData.Service.EnergyDataManualInput
         {
             int result = 0;
 
-            string insertSql = @"insert into system_EnergyDataManualInputContrast (VariableId,VariableName,Type,Enabled,Creator,CreateTime,Remark) 
-                                values (@variableId,@variableName,@type,@enabled,@creator,@createTime,@remark)";
-            IList<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@variableId", Guid.NewGuid()));
-            parameters.Add(new SqlParameter("@variableName", addData.JsonPick("variableName")));
-            parameters.Add(new SqlParameter("@type", addData.JsonPick("type")));
-            parameters.Add(new SqlParameter("@enabled", addData.JsonPick("enabled")));
-            parameters.Add(new SqlParameter("@creator", addData.JsonPick("creator")));
-            parameters.Add(new SqlParameter("@createTime", addData.JsonPick("createTime")));
-            parameters.Add(new SqlParameter("@remark", addData.JsonPick("remark")));
+            string testSql = @"select * from system_EnergyDataManualInputContrast where VariableId=@variableId";
+            SqlParameter[] testParameters = { new SqlParameter("@variableId", addData.JsonPick("variableId")) };
+            DataTable testTable = _dataFactory.Query(testSql, testParameters);
 
-            result = _dataFactory.ExecuteSQL(insertSql, parameters.ToArray());
+            if (testTable.Rows.Count == 0)
+            {
+                string insertSql = @"insert into system_EnergyDataManualInputContrast (VariableId,VariableName,Type,Enabled,Creator,CreateTime,Remark) 
+                                values (@variableId,@variableName,@type,@enabled,@creator,@createTime,@remark)";
+                IList<SqlParameter> parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter("@variableId", addData.JsonPick("variableId")));
+                parameters.Add(new SqlParameter("@variableName", addData.JsonPick("variableName")));
+                parameters.Add(new SqlParameter("@type", addData.JsonPick("type")));
+                parameters.Add(new SqlParameter("@enabled", addData.JsonPick("enabled")));
+                parameters.Add(new SqlParameter("@creator", addData.JsonPick("creator")));
+                parameters.Add(new SqlParameter("@createTime", addData.JsonPick("createTime")));
+                parameters.Add(new SqlParameter("@remark", addData.JsonPick("remark")));
+
+                result = _dataFactory.ExecuteSQL(insertSql, parameters.ToArray());
+            }
+            else
+            {
+                result = -2; //ID重复
+            }
 
             return result;
         }
 
         public static int DeleteEnergyDataManualInputContrast(string variableId)
         {
-            string deleteSql = @"delete from system_EnergyDataManualInputContrast where VarialeId=@variableId";
+            string deleteSql = @"delete from system_EnergyDataManualInputContrast where VariableId=@variableId";
             SqlParameter[] parameters = {new SqlParameter("@variableId",variableId)};
 
             int result = _dataFactory.ExecuteSQL(deleteSql, parameters);
@@ -132,7 +143,7 @@ namespace BasicData.Service.EnergyDataManualInput
 
             if (testTable.Rows.Count > 0)
             {
-                return result;
+                return -2;
             }
             else
             {
