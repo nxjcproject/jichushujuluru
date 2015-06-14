@@ -1577,12 +1577,16 @@
     <Content Include="lib\pllib\themes\jquery.jqplot.css" />
     <Content Include="lib\pllib\themes\jquery.jqplot.min.css" />
     <Content Include="test.aspx" />
+    <Content Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterLevelMaintenance.aspx" />
+    <Content Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterReferenceCoefficient.aspx" />
     <Content Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionPlan.aspx" />
     <Content Include="UI_BasicData\EnergyConsumption\EnergyConsumptionResult.aspx" />
     <Content Include="UI_BasicData\EnergyDataManualInput\EnergyDataManualInput.aspx" />
     <Content Include="UI_BasicData\EnergyDataManualInput\EnergyDataManualInputContrast.aspx" />
     <Content Include="UI_BasicData\EquipmentAccount\EquipmentAccountEdit.aspx" />
+    <Content Include="UI_BasicData\js\page\AmmeterModifyCoefficient\AmmeterLevelMaintenance.js" />
+    <Content Include="UI_BasicData\js\page\AmmeterModifyCoefficient\AmmeterReferenceCoefficient.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumptionPredict\EnergyPredit.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionPlan.js" />
     <Content Include="UI_BasicData\js\page\EnergyConsumption\EnergyConsumptionResult.js" />
@@ -1613,6 +1617,20 @@
     </Compile>
     <Compile Include="test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterLevelMaintenance.aspx.cs">
+      <DependentUpon>AmmeterLevelMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterLevelMaintenance.aspx.designer.cs">
+      <DependentUpon>AmmeterLevelMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterReferenceCoefficient.aspx.cs">
+      <DependentUpon>AmmeterReferenceCoefficient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\AmmeterModifyCoefficient\AmmeterReferenceCoefficient.aspx.designer.cs">
+      <DependentUpon>AmmeterReferenceCoefficient.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\EnergyConsumptionPredict\EnergyPredit.aspx.cs">
       <DependentUpon>EnergyPredit.aspx</DependentUpon>

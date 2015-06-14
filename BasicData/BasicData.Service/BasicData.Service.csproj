@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmmeterModifyCoefficient\ModifyCoefficientService.cs" />
     <Compile Include="BasicService\BasicDataHelper.cs" />
     <Compile Include="BasicService\PredictHelper.cs" />
     <Compile Include="EnergyConsumptionPredict\EnergyPredict.cs" />
@@ -75,6 +76,7 @@
       <Name>BasicData.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

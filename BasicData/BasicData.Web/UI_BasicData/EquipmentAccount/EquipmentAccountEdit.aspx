@@ -23,7 +23,7 @@
 
     <script type="text/javascript" src="../js/page/EquipmentAccount/EquipmentAccountEdit.js" charset="utf-8"></script>
     <style type="text/css">
-       .easyui-dialog td {
+        .easyui-dialog td {
             padding: 5px;
             text-align: right;
         }
@@ -104,6 +104,7 @@
                 <td rowspan="2">备注：</td>
                 <td colspan="5" rowspan="2" style="text-align: left">
                     <textarea id="Remarks" style="width: 500px"></textarea>
+                </td>
             </tr>
         </table>
     </div>

@@ -1,4 +1,5 @@
-﻿using BasicData.Service.PeakValleyFlat;
+﻿using BasicData.Service.AmmeterModifyCoefficient;
+using BasicData.Service.PeakValleyFlat;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +14,11 @@ namespace BasicData.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            PeakValleyFlatService service = new PeakValleyFlatService();
+            //PeakValleyFlatService service = new PeakValleyFlatService();
             //DataTable dt = service.GetPVFList("123", "2014-10-08");
             //this.GridView1.DataSource = dt;
             //this.GridView1.DataBind();
+            ModifyCoefficientService.ReferenceCoefficientCalculate("zc_nxjc_byc_byf", "2015-01-01", "2015-05-30");
         }
     }
 }
