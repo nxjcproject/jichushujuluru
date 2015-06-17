@@ -54,7 +54,7 @@
                 </td>
                 <td style="width:15%;">更新周期</td>
                 <td style="width:35%;">
-                    <select id="addUpdateCycle" class="easyui-combobox" data-option="readonly:true">
+                    <select id="addUpdateCycle" class="easyui-combobox" data-options="panelHeight:'auto'">
                         <option value="day">天</option>
                         <option value="month">月</option>
                     </select>
