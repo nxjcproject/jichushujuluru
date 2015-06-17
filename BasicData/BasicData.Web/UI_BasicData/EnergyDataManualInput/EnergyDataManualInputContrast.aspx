@@ -86,7 +86,7 @@
             <tr>
                 <td>备注</td>
                 <td colspan="3">
-                    <input id="addRemark" class="easyui-textbox" data-option="multiline:true" style="width:300px;" />
+                    <input id="addRemark" class="easyui-textbox" data-options="multiline:true" style="width:300px;" />
                 </td>
             </tr>
         </table>
@@ -124,7 +124,7 @@
             <tr>
                 <td>备注</td>
                 <td colspan="3">
-                    <input id="editRemark" class="easyui-textbox" data-option="multiline:true" style="width:300px;" />
+                    <input id="editRemark" class="easyui-textbox" data-options="multiline:true" style="width:300px;" />
                 </td>
             </tr>
         </table>

@@ -73,7 +73,7 @@
             <tr>
                 <td>备注</td>
                 <td colspan="3">
-                    <input id="addRemark" class="easyui-textbox" data-option="multiline:true" style="width:300px;" />
+                    <input id="addRemark" class="easyui-textbox" data-options="multiline:true" style="width:300px;" />
                 </td>
             </tr>
         </table>
@@ -88,11 +88,11 @@
             <tr>
                 <td style="width:15%;">变量名称</td>
                 <td style="width:35%;">
-                    <input id="editVariableName" class="easyui-textbox" data-option="readonly:true" style="width:150px;"/>
+                    <input id="editVariableName" class="easyui-textbox" data-options="readonly:true" style="width:150px;"/>
                 </td>
                 <td style="width:15%;">更新周期</td>
                 <td style="width:35%;">
-                    <input id="editUpdateCycle" class="easyui-textbox" data-option="readonly:true"/>
+                    <input id="editUpdateCycle" class="easyui-textbox" data-options="readonly:true"/>
                 </td>
             </tr>
             <tr>
@@ -108,7 +108,7 @@
             <tr>
                 <td>备注</td>
                 <td colspan="3">
-                    <input id="editRemark" class="easyui-textbox" data-option="multiline:true" style="width:300px;" />
+                    <input id="editRemark" class="easyui-textbox" data-options="multiline:true" style="width:300px;" />
                 </td>
             </tr>
         </table>
