@@ -46,7 +46,7 @@ function query() {
     var sendData="{organizationId:'"+organizationId+"',startTime:'"+startDate+"',endTime:'"+endDate+"'}";
     $.ajax({
         type: "POST",
-        url: "AmmeterReferenceCoefficient.aspx/GetData",
+        url: "AmmeterLevelMaintenance.aspx/GetData",
         data: sendData,
         contentType: "application/json; charset=utf-8",
         dataType: "json",

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmmeterModifyCoefficient\AmmeterLevelMaintenanceService.cs" />
     <Compile Include="AmmeterModifyCoefficient\ModifyCoefficientService.cs" />
     <Compile Include="BasicService\BasicDataHelper.cs" />
     <Compile Include="BasicService\PredictHelper.cs" />
