@@ -1593,6 +1593,7 @@
     <Content Include="UI_BasicData\js\page\EnergyDataManualInput\EnergyDataManualInput.js" />
     <Content Include="UI_BasicData\js\page\EnergyDataManualInput\EnergyDataManualInputContrast.js" />
     <Content Include="UI_BasicData\js\page\EquipmentAccount\EquipmentAccountEdit.js" />
+    <Content Include="UI_BasicData\js\page\KpiDefinition\KpiList.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
     <Content Include="UI_BasicData\js\page\Material\MaterialList.js" />
     <Content Include="UI_BasicData\js\page\Material\CoefficientUpdater.js" />
@@ -1600,6 +1601,7 @@
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\List.js" />
     <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
+    <Content Include="UI_BasicData\KpiDefinition\KpiList.aspx" />
     <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
     <Content Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx" />
     <Content Include="UI_BasicData\Material\CoefficientUpdater.aspx" />
@@ -1677,6 +1679,13 @@
     </Compile>
     <Compile Include="UI_BasicData\EquipmentAccount\EquipmentAccountEdit.aspx.designer.cs">
       <DependentUpon>EquipmentAccountEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KpiList.aspx.cs">
+      <DependentUpon>KpiList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KpiList.aspx.designer.cs">
+      <DependentUpon>KpiList.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>

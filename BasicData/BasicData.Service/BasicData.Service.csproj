@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmmeterModifyCoefficient\AmmeterLevelMaintenanceService.cs" />
     <Compile Include="AmmeterModifyCoefficient\ModifyCoefficientService.cs" />
     <Compile Include="BasicService\BasicDataHelper.cs" />
     <Compile Include="BasicService\PredictHelper.cs" />
@@ -63,6 +62,7 @@
     <Compile Include="EnergyConsumption\EnergyConsumptionResultHelper.cs" />
     <Compile Include="EnergyDataManualInput\EnergyDataManualInputService.cs" />
     <Compile Include="EquipmentAccount\EquipmentAccountService.cs" />
+    <Compile Include="KpiDefinition\KpiService.cs" />
     <Compile Include="MachineHaltReasons\MachineHaltReasonsService.cs" />
     <Compile Include="MasterSlaveMachine\MasterSlaveMachinedescription.cs" />
     <Compile Include="MasterSlaveMachine\OrganizationInstrumentation.cs" />

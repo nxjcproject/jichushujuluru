@@ -62,7 +62,7 @@ function MaterialListSave() {
 }
 
 // 删除物料列表
-function DeleteMaterialList(keyId) {
+function DeleteMaterialList() {
     var row = $('#dgMaterial').datagrid('getSelected');
     if (row == undefined || row == null) {
         $.messager.alert('提示', '请选择需要删除的行。', 'info');
