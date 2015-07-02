@@ -26,7 +26,7 @@ namespace BasicData.Service.Material
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT *
-                                          FROM [NXJC].[dbo].[tz_Material]
+                                          FROM [tz_Material]
                                          WHERE [OrganizationID] LIKE @organizationId + '%' AND
 	                                           [Enable] = 1";
 
@@ -148,7 +148,7 @@ namespace BasicData.Service.Material
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT *
-                                          FROM [NXJC].[dbo].[material_MaterialDetail]
+                                          FROM [material_MaterialDetail]
                                          WHERE [KeyID] = @keyId";
 
                 command.Parameters.Add(new SqlParameter("keyId", keyId));

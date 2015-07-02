@@ -65,10 +65,10 @@ namespace BasicData.Web.UI_BasicData.EquipmentAccount
         /// <returns></returns>
         [WebMethod]
         public static string SaveEquipmentInfo(string VariableId, string OrganizationID, string EquipmentName, int MonitorType,string PowerSupply, string VoltageGrade, 
-            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit,string PowerSupplyPosition, string Remarks)
+            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit,string Current,string PowerSupplyPosition, string Remarks)
         {
             string message= EquipmentAccountService.SaveEquipment(VariableId, OrganizationID, EquipmentName, MonitorType, PowerSupply, VoltageGrade,RatedCT, AmmeterCode, ActualCT, 
-                Power, Unit, PowerSupplyPosition, Remarks);
+                Power, Unit,Current, PowerSupplyPosition, Remarks);
             return message;
         }
         /// <summary>
@@ -90,10 +90,10 @@ namespace BasicData.Web.UI_BasicData.EquipmentAccount
         /// <returns></returns>
         [WebMethod]
         public static string EditEquipmentInfo(string variableId_old, string organizationId_old, string VariableId, string OrganizationID, string EquipmentName, int MonitorType, string PowerSupply, string VoltageGrade,
-            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit, string PowerSupplyPosition, string Remarks)
+            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit, string Current,string PowerSupplyPosition, string Remarks)
         {
             return EquipmentAccountService.UpdateEquipment(variableId_old, organizationId_old, VariableId, OrganizationID, EquipmentName, MonitorType, PowerSupply,
-                VoltageGrade, RatedCT, AmmeterCode, ActualCT, Power, Unit, PowerSupplyPosition, Remarks);
+                VoltageGrade, RatedCT, AmmeterCode, ActualCT, Power, Unit, Current,PowerSupplyPosition, Remarks);
         }
     }
 }

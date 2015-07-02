@@ -52,7 +52,7 @@
     </div>
 
     <%--添加设备对话框开始--%>
-    <div id="AddDialog" class="easyui-dialog" title="添加设备" style="width: 770px; height: 330px; background-color: rgb(248, 246, 246)"
+    <div id="AddDialog" class="easyui-dialog" title="添加设备" style="width: 770px; height: 340px; background-color: rgb(248, 246, 246)"
         data-options="iconCls:'icon-save',resizable:false,modal:true,closed: true,buttons:buttons_Add">
         <table cellpadding="0" cellspacing="0" style="padding: 10px;">
             <tr>
@@ -101,6 +101,11 @@
                     <input id="PowerSupplyPosition" class="easyui-textbox" style="width: 120px;" data-option="required:true" /></td>
             </tr>
             <tr>
+                <td>额定电流:</td>
+                <td>
+                    <input id="Current" class="easyui-textbox" style="width: 120px;" data-option="required:true" /></td>
+            </tr>
+            <tr>
                 <td rowspan="2">备注：</td>
                 <td colspan="5" rowspan="2" style="text-align: left">
                     <textarea id="Remarks" style="width: 500px"></textarea>
@@ -125,7 +130,7 @@
         data-options="iconCls:'icon-edit',resizable:false,modal:true,closed: true,buttons:buttons_Edit">
         <%--<fieldset>--%>
         <%--<legend>主机设备</legend>--%>
-        <table cellpadding="0" cellspacing="0" style="padding: 10px;">
+        <table style="padding: 10px;">
             <tr>
                 <td>变量ID:</td>
                 <td>
@@ -171,6 +176,11 @@
                 <td>电源安装位置:</td>
                 <td>
                     <input id="PowerSupplyPosition_edit" class="easyui-textbox" style="width: 120px;" data-option="required:true" /></td>
+            </tr>
+            <tr>
+                <td>额定电流:</td>
+                <td>
+                    <input id="Current_edit" class="easyui-textbox" style="width: 120px;" data-option="required:true" /></td>
             </tr>
             <tr>
                 <td rowspan="2">备注：</td>

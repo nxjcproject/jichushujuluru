@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BasicData.Service.AmmeterModifyCoefficient
 {
@@ -47,11 +48,11 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             {
                 meterDatabase = t_table.Rows[0]["MeterDatabase"].ToString().Trim();
             }
-            string myFieldSql = @"select A.LevelCode,B.OrganizationID, B.AmmeterNumber, B.AmmeterName, B.ElectricRoom, B.CommunicationProtocol, B.AmmeterAddress, 
+            string myFieldSql = @"select A.LevelCode,A.OrganizationID, A.AmmeterNumber, B.AmmeterName, B.ElectricRoom, B.CommunicationProtocol, B.AmmeterAddress, 
                                     B.CommPort, B.CT,B.PT, B.PowerFieldNameSave, B.Status
-                                    from {0}.dbo.AmmeterModifyCoefficientReference A,{0}.dbo.AmmeterContrast B
-                                    where A.OrganizationID=B.OrganizationID
-                                    and A.AmmeterNumber=B.AmmeterNumber";
+                                    from {0}.dbo.AmmeterModifyCoefficientReference A left join {0}.dbo.AmmeterContrast B
+                                    on ( A.OrganizationID=B.OrganizationID
+                                    and A.AmmeterNumber=B.AmmeterNumber)";
             DataTable fieldTable = dataFactory.Query(string.Format(myFieldSql, meterDatabase));
             DataColumn column = new DataColumn("Value", typeof(decimal));
             column.DefaultValue = 0;
@@ -62,11 +63,22 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             StringBuilder fieldBuilder = new StringBuilder();
             foreach (DataRow dr in fieldTable.Rows)
             {
+                string t_formula = dr["AmmeterNumber"].ToString().Trim();
+                string resultFormula = t_formula;
+                IEnumerable<string> variableList = Regex.Split(t_formula, @"[+\-*/()]+")
+                                                .Except((IEnumerable<string>)new string[] { "" })
+                                                .Select(p => p = Regex.Replace(p, @"^([0-9]+)([\.]([0-9]+))?$", ""))
+                                                .Except((IEnumerable<string>)new string[] { "" });
+                foreach (string item in variableList)
+                {
+                    resultFormula = resultFormula.Replace(item, item.Trim() + "Energy");
+
+                }
                 fieldBuilder.Append("SUM(");
+                fieldBuilder.Append(resultFormula);
+                fieldBuilder.Append(") as '");
                 fieldBuilder.Append(dr["AmmeterNumber"].ToString().Trim());
-                fieldBuilder.Append("Energy) as ");
-                fieldBuilder.Append(dr["AmmeterNumber"].ToString().Trim());
-                fieldBuilder.Append(",");
+                fieldBuilder.Append("',");
             }
             fieldBuilder.Remove(fieldBuilder.Length - 1, 1);
             string myValueSql = @"select {0}

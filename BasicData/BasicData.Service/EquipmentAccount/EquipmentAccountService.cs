@@ -59,7 +59,7 @@ namespace BasicData.Service.EquipmentAccount
         /// <param name="Remarks"></param>
         /// <returns></returns>
         public static string SaveEquipment(string VariableId, string OrganizationID, string EquipmentName, int MonitorType,string PowerSupply, string VoltageGrade, 
-            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit,string PowerSupplyPosition, string Remarks)
+            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit,string Current,string PowerSupplyPosition, string Remarks)
         {
             string connectionString = ConnectionStringFactory.NXJCConnectionString;
             ISqlServerDataFactory dataFactory = new SqlServerDataFactory(connectionString);
@@ -73,9 +73,9 @@ namespace BasicData.Service.EquipmentAccount
             }
             string mySql = @"INSERT INTO system_EquipmentAccount 
                                    (EquipmentItemId, VariableId, OrganizationID, EquipmentName, MonitorType, PowerSupply, VoltageGrade, 
-                                   RatedCT, AmmeterCode, ActualCT, [Power], Unit, PowerSupplyPosition, Remarks)
+                                   RatedCT, AmmeterCode, ActualCT, [Power], Unit, [Current],PowerSupplyPosition, Remarks)
                             values(@EquipmentItemId, @VariableId, @OrganizationID, @EquipmentName, @MonitorType, @PowerSupply, @VoltageGrade, 
-                                   @RatedCT, @AmmeterCode, @ActualCT, @Power, @Unit, @PowerSupplyPosition, @Remarks)";
+                                   @RatedCT, @AmmeterCode, @ActualCT, @Power, @Unit,@Current,@PowerSupplyPosition, @Remarks)";
             Guid EquipmentItemId = Guid.NewGuid();
             SqlParameter[] m_Parameters = {new SqlParameter("@EquipmentItemId", EquipmentItemId),
                                               new SqlParameter("@VariableId", VariableId),
@@ -89,6 +89,7 @@ namespace BasicData.Service.EquipmentAccount
                                           new SqlParameter("@ActualCT", ActualCT),
                                           new SqlParameter("@Power", Power),
                                           new SqlParameter("@Unit", Unit),
+                                          new SqlParameter("@Current", Unit),
                                           new SqlParameter("@PowerSupplyPosition", PowerSupplyPosition),
                                           new SqlParameter("@Remarks", Remarks)};
             int num=dataFactory.ExecuteSQL(mySql, m_Parameters);
@@ -132,7 +133,7 @@ namespace BasicData.Service.EquipmentAccount
         /// <param name="organizationId"></param>
         /// <returns></returns>
         public static string UpdateEquipment(string variableId_old, string organizationId_old, string VariableId, string OrganizationID, string EquipmentName, int MonitorType, string PowerSupply, string VoltageGrade,
-            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit, string PowerSupplyPosition, string Remarks)
+            string RatedCT, string AmmeterCode, string ActualCT, int Power, string Unit,string Current, string PowerSupplyPosition, string Remarks)
         {
             string connectionString = ConnectionStringFactory.NXJCConnectionString;
             ISqlServerDataFactory dataFactory = new SqlServerDataFactory(connectionString);
@@ -140,7 +141,7 @@ namespace BasicData.Service.EquipmentAccount
                                     SET 
                                     VariableId=@VariableId, OrganizationID=@OrganizationID,EquipmentName=@EquipmentName,MonitorType=@MonitorType,
                                     PowerSupply=@PowerSupply,VoltageGrade=@VoltageGrade,RatedCT=@RatedCT,AmmeterCode=@AmmeterCode,ActualCT=@ActualCT,
-                                    [Power]=@Power,Unit=@Unit,PowerSupplyPosition=@PowerSupplyPosition,Remarks=@Remarks
+                                    [Power]=@Power,Unit=@Unit,[Current]=@Current,PowerSupplyPosition=@PowerSupplyPosition,Remarks=@Remarks
                                     WHERE
                                     VariableId=@VariableId_old AND OrganizationID=@OrganizationID_old";
             SqlParameter[] m_Parameters = {new SqlParameter("@VariableId_old", variableId_old),
@@ -156,6 +157,7 @@ namespace BasicData.Service.EquipmentAccount
                                           new SqlParameter("@ActualCT", ActualCT),
                                           new SqlParameter("@Power", Power),
                                           new SqlParameter("@Unit", Unit),
+                                          new SqlParameter("@Current", Current),
                                           new SqlParameter("@PowerSupplyPosition", PowerSupplyPosition),
                                           new SqlParameter("@Remarks", Remarks)};
             int n = dataFactory.ExecuteSQL(updateSql, m_Parameters);

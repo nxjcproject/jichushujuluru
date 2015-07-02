@@ -26,7 +26,7 @@ namespace BasicData.Service.KpiDefinition
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT [A].*, [U].[USER_NAME] AS [UserName]
-                                          FROM [NXJC].[dbo].[analyse_KPI_Standard] AS [A] LEFT JOIN
+                                          FROM [analyse_KPI_Standard] AS [A] LEFT JOIN
                                                [IndustryEnergy_SH].[dbo].[users] AS [U] ON [A].[Creator] = [U].[USER_ID]
                                          WHERE [A].[StatisticalMethod] = @statisticalMethod AND
                                                [A].[Enabled] = 1
@@ -162,8 +162,8 @@ namespace BasicData.Service.KpiDefinition
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT [D].*, [O].[Name] AS [OrganizationName], [U].[USER_NAME] AS [UserName]
-                                          FROM [NXJC].[dbo].[analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
-                                               [NXJC].[dbo].[system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
+                                          FROM [analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
+                                               [system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
                                                [IndustryEnergy_SH].[dbo].[users] AS [U] ON [D].[Creator] = [U].[USER_ID]
                                          WHERE [D].[KeyId] = @keyId AND
                                                [D].[Enabled] = 1
@@ -194,8 +194,8 @@ namespace BasicData.Service.KpiDefinition
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT [D].*, [O].[Name] AS [OrganizationName], [U].[USER_NAME] AS [UserName]
-                                          FROM [NXJC].[dbo].[analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
-                                               [NXJC].[dbo].[system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
+                                          FROM [analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
+                                               [system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
                                                [IndustryEnergy_SH].[dbo].[users] AS [U] ON [D].[Creator] = [U].[USER_ID]
                                          WHERE [D].[KeyId] = @keyId AND
                                                [D].[Enabled] = 1 AND
@@ -227,8 +227,8 @@ namespace BasicData.Service.KpiDefinition
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = @"SELECT [D].*, [O].[Name] AS [OrganizationName], [U].[USER_NAME] AS [UserName]
-                                          FROM [NXJC].[dbo].[analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
-                                               [NXJC].[dbo].[system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
+                                          FROM [analyse_KPI_Standard_Detail] AS [D] LEFT JOIN
+                                               [system_Organization] AS [O] ON [D].[OrganizationID] = [O].[OrganizationID] LEFT JOIN
                                                [IndustryEnergy_SH].[dbo].[users] AS [U] ON [D].[Creator] = [U].[USER_ID]
                                          WHERE [D].[KeyId] = @keyId AND
                                                [D].[Enabled] = 1 AND

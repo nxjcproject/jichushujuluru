@@ -47,14 +47,16 @@ function InitializeGrid(myData) {
             { field: 'VariableId', title: '变量ID', width: 250 },            
             //{ field: 'OrganizationID', title: '组织机构ID', width: 200 },
             { field: 'Name', title: '产线名称', width: 70 },
+            { field: 'OrganizationID', title: '组织机构ID', width: 70, hidden: true },
             { field: 'MonitorType', title: '监控点类别', width: 80 },
             { field: 'PowerSupply', title: '设备工序电源取自位置', width: 130 },
             { field: 'VoltageGrade', title: '电压等级', width: 60 },
             { field: 'RatedCT', title: '互感器变比', width: 70 },
             { field: 'AmmeterCode', title: '电表编号', width: 100 },
             { field: 'ActualCT', title: '实际变比', width: 60 },
-            { field: 'Power', title: '设备功率', width: 60 },
+            { field: 'Power', title: '设备功率', width: 60 },            
             { field: 'Unit', title: '单位', width: 40 },
+            { field: 'Current', title: '额定电流', width: 60 },
             { field: 'PowerSupplyPosition', title: '计量供电电源安装位置', width: 100 },
             { field: 'Remarks', title: '备注', width: 100 }
         ]],
@@ -105,6 +107,7 @@ function AddEquipment() {
     m_ActualCT = $('#ActualCT_edit').textbox('setValue', '');
     m_Power = $('#Power_edit').textbox('setValue', '');
     m_Unit = $('#Unit_edit').textbox('setValue', '');
+    m_Current = $('#Current_edit').textbox('setValue', '');
     m_PowerSupplyPosition = $('#PowerSupplyPosition_edit').textbox('setValue', '');
     m_Remarks = $('#Remarks_edit').val('');
 
@@ -140,6 +143,7 @@ function SaveEquipment() {
     m_ActualCT = $('#ActualCT').textbox('getValue');
     m_Power = $('#Power').textbox('getValue');
     m_Unit = $('#Unit').textbox('getValue');
+    m_Current = $('#Current').textbox('getValue');
     m_PowerSupplyPosition = $('#PowerSupplyPosition').textbox('getValue');
     m_Remarks = $('#Remarks').val();
     //要传入的参数
@@ -158,7 +162,7 @@ function SaveEquipment() {
 
     var m_Datas = "{VariableId:'" + m_VariableId + "',OrganizationID:'" + m_OrganizationID + "',EquipmentName:'" + m_EquipmentName + "',MonitorType:'" + m_MonitorType +
         "',PowerSupply:'" + m_PowerSupply + "',VoltageGrade:'" + m_VoltageGrade + "',RatedCT:'" + m_RatedCT + "',AmmeterCode:'" + m_AmmeterCode + "',ActualCT:'" +
-        m_ActualCT + "',Power:'" + m_Power + "',Unit:'" + m_Unit + "',PowerSupplyPosition:'" + m_PowerSupplyPosition + "',Remarks:'" + m_Remarks+"'}";
+        m_ActualCT + "',Power:'" + m_Power + "',Unit:'" + m_Unit + "',Current:'" + m_Current + "',PowerSupplyPosition:'" + m_PowerSupplyPosition + "',Remarks:'" + m_Remarks + "'}";
     $.ajax({
         type: "POST",
         url: "EquipmentAccountEdit.aspx/SaveEquipmentInfo",
@@ -203,6 +207,7 @@ function EditEquipment() {
         $.messager.alert("提示", "请先选择一行数据");
     var VariableId_old = selectedRow.VariableId;
     var OrganizationName_old = selectedRow.Name;
+    var OrganizationId_old = selectedRow.OrganizationID;
     var EquipmentName_old = selectedRow.EquipmentName;
     var MonitorType_old = selectedRow.MonitorType;
     var PowerSupply_old = selectedRow.PowerSupply;
@@ -212,6 +217,7 @@ function EditEquipment() {
     var ActualCT_old = selectedRow.ActualCT;
     var Power_old = selectedRow.Power;
     var Unit_old = selectedRow.Unit;
+    var Current_old = selectedRow.Current;
     var PowerSupplyPosition_old = selectedRow.PowerSupplyPosition;
     var Remarks_old = selectedRow.Remarks;
     //打开修改对话框
@@ -228,6 +234,7 @@ function EditEquipment() {
     m_ActualCT = $('#ActualCT_edit').textbox('setValue', ActualCT_old);
     m_Power = $('#Power_edit').textbox('setValue', Power_old);
     m_Unit = $('#Unit_edit').textbox('setValue', Unit_old);
+    m_Current = $('#Current_edit').textbox('setValue', Current_old);
     m_PowerSupplyPosition = $('#PowerSupplyPosition_edit').textbox('setValue', PowerSupplyPosition_old);
     m_Remarks = $('#Remarks_edit').val(Remarks_old);
 
@@ -247,6 +254,7 @@ function EditEquipment() {
                 textField: 'Name',
             });
             $('#OrganizationID_edit').combobox('setText', OrganizationName_old);
+            $('#OrganizationID_edit').combobox('setValue', OrganizationId_old);
         },
     });
     
@@ -270,6 +278,7 @@ function SaveEditEquipment() {
     m_ActualCT = $('#ActualCT_edit').textbox('getValue');
     m_Power = $('#Power_edit').textbox('getValue');
     m_Unit = $('#Unit_edit').textbox('getValue');
+    m_Current = $('#Current_edit').textbox('getValue');
     m_PowerSupplyPosition = $('#PowerSupplyPosition_edit').textbox('getValue');
     m_Remarks = $('#Remarks_edit').val();
 
@@ -290,7 +299,7 @@ function SaveEditEquipment() {
 
     var m_Datas = "{variableId_old:'" + VariableId_old + "',organizationId_old:'" + OrganizationID_old + "',VariableId:'" + m_VariableId + "',OrganizationID:'" + m_OrganizationID + "',EquipmentName:'" + m_EquipmentName + "',MonitorType:'" + m_MonitorType +
         "',PowerSupply:'" + m_PowerSupply + "',VoltageGrade:'" + m_VoltageGrade + "',RatedCT:'" + m_RatedCT + "',AmmeterCode:'" + m_AmmeterCode + "',ActualCT:'" +
-        m_ActualCT + "',Power:'" + m_Power + "',Unit:'" + m_Unit + "',PowerSupplyPosition:'" + m_PowerSupplyPosition + "',Remarks:'" + m_Remarks + "'}";
+        m_ActualCT + "',Power:'" + m_Power + "',Unit:'" + m_Unit + "',Current:'" + m_Current + "',PowerSupplyPosition:'" + m_PowerSupplyPosition + "',Remarks:'" + m_Remarks + "'}";
     $.ajax({
         type: "POST",
         url: "EquipmentAccountEdit.aspx/EditEquipmentInfo",
