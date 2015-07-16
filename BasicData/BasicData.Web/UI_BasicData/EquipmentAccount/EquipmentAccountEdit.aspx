@@ -54,7 +54,7 @@
     <%--添加设备对话框开始--%>
     <div id="AddDialog" class="easyui-dialog" title="添加设备" style="width: 770px; height: 340px; background-color: rgb(248, 246, 246)"
         data-options="iconCls:'icon-save',resizable:false,modal:true,closed: true,buttons:buttons_Add">
-        <table cellpadding="0" cellspacing="0" style="padding: 10px;">
+        <table style="padding: 10px;">
             <tr>
                 <td>变量ID:</td>
                 <td>

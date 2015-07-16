@@ -1600,6 +1600,7 @@
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Detail.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\List.js" />
+    <Content Include="UI_BasicData\js\page\ShiftArrangement\ShiftArrangementEdit.js" />
     <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
     <Content Include="UI_BasicData\KpiDefinition\KpiList.aspx" />
     <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
@@ -1609,6 +1610,7 @@
     <Content Include="UI_BasicData\PeakValleyFlat\Detail.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Edit.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
+    <Content Include="UI_BasicData\ShiftArrangement\ShiftArrangementEdit.aspx" />
     <Content Include="UI_BasicData\StaffInfo\Edit.aspx" />
     <Content Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx" />
     <Content Include="Web.config">
@@ -1735,6 +1737,13 @@
     </Compile>
     <Compile Include="UI_BasicData\PeakValleyFlat\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\ShiftArrangement\ShiftArrangementEdit.aspx.cs">
+      <DependentUpon>ShiftArrangementEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\ShiftArrangement\ShiftArrangementEdit.aspx.designer.cs">
+      <DependentUpon>ShiftArrangementEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\StaffInfo\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
