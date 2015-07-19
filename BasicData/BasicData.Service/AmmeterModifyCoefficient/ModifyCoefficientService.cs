@@ -57,6 +57,15 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             DataColumn column = new DataColumn("Value", typeof(decimal));
             column.DefaultValue = 0;
             fieldTable.Columns.Add(column);
+            //子节点电量和
+            DataColumn columnChildrenValue = new DataColumn("ChildrenValue", typeof(decimal));
+            columnChildrenValue.DefaultValue = 0;
+            fieldTable.Columns.Add(columnChildrenValue);
+            //差值
+            DataColumn columnDValue = new DataColumn("DValue", typeof(decimal));
+            columnDValue.DefaultValue = 0;
+            fieldTable.Columns.Add(columnDValue);
+            //系数
             DataColumn columnRatio = new DataColumn("Ratio",typeof(decimal));
             columnRatio.DefaultValue = 1;
             fieldTable.Columns.Add(columnRatio);
@@ -104,6 +113,8 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             DataRow[] rows = source.Select("LevelCode like '"+levelCode+"%' and "+ "len(LevelCode)="+(parentlength+2));
             if (rows.Count() == 0)
             {
+                currentRow["ChildrenValue"]=currentRow["Value"];
+                currentRow["DValue"] = 0;
                 return;
             }
             else
@@ -120,8 +131,10 @@ namespace BasicData.Service.AmmeterModifyCoefficient
                 //设置子节点比例系数
                 foreach (DataRow dr in rows)
                 {
-                    dr["Ratio"] = (currentRow["Value"] is DBNull?0: Convert.ToDecimal(dr["Value"]))==0?1:(parentValue - childValue) / (currentRow["Value"] is DBNull?0: Convert.ToDecimal(dr["Value"]));
+                    dr["Ratio"] = childValue == 0 ? 1 : (parentValue - childValue) / childValue+1;
                 }
+                currentRow["ChildrenValue"] = childValue;
+                currentRow["DValue"] = parentValue - childValue;
             }
         }
     }

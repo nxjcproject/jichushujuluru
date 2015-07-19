@@ -28,6 +28,8 @@ function loadDataGrid(data, type) {
                 { field: 'PT', title: '电压变比', width: 70 },
                 { field: 'CT', title: '电流变比', width: 70 },
                 { field: 'Value', title: '电量', width: 100 },
+                { field: 'ChildrenValue', title: '子节点电量', width: 100 },
+                { field: 'DValue', title: '差值', width: 100 },
                 { field: 'Ratio', title: '参考修正系数', width: 100 }
             ]],
             idField: 'id',
