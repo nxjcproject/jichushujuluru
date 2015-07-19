@@ -20,7 +20,7 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             {
                 ////////////////////调试用,自定义的数据授权
                 #if DEBUG
-                List<string> m_DataValidIdItems = new List<string>() { "C41B1F47-A48A-495F-A890-0AABB2F3BFF7                            ", "43F1EA8C-FF77-4BC5-BACB-531DC56A2512                            " };
+                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
                 #elif RELEASE
                 #endif
@@ -34,19 +34,19 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
         {
             string[] m_ColumnText = new string[] { "指标项ID", "指标项目名称", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月", "年度合计", "备注" };
             int[] m_ColumnWidth = new int[] { 180, 180, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 100, 180 };
-            string[] m_FormatString = new string[] { "", "", "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}", 
-                "\"type\":\"numberbox\", \"options\":{\"precision\":\"1\"}",
+            string[] m_FormatString = new string[] { "", "", "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+                "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}",
                 "\"type\":\"textbox\", \"options\":{\"validType\":\"length[0,200]\", \"invalidMessage\":\"不能超过200个字符!\"}" };
 
             DataTable m_EnergyConsumptionInfo = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetEnergyConsumptionInfo(myProductionLineType, myOrganizationId, myPlanYear);
@@ -100,6 +100,8 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
 
             for (int i = 0; i < m_DataGridData.Rows.Count; i++)
             {
+                string m_QuotasItemID = Guid.NewGuid().ToString();
+                m_DataGridData.Rows[i]["QuotasItemID"] = m_QuotasItemID;
                 m_DataGridData.Rows[i]["KeyID"] = m_KeyId;
                 m_DataGridData.Rows[i]["DisplayIndex"] = (i + 1).ToString();
                 m_DataGridData.Rows[i]["ProductionLineType"] = myProductionLineType;
