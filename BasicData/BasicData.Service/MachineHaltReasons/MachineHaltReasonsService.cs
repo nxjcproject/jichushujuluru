@@ -36,8 +36,20 @@ namespace BasicData.Service.MachineHaltReasons
             ISqlServerDataFactory factory = new SqlServerDataFactory(connectionString);
             Delete delete = new Delete("system_MachineHaltReason");
             factory.Remove(delete);
+            Query query = new Query("system_MachineHaltReason");
+            DataTable m_ReasonTable = factory.Query(query);
+            if (query != null)
+            {
+                foreach (DataColumn Column in m_ReasonTable.Columns)
+                {
+                    int m_ColumnIndex = Column.Ordinal;
+                    data.Columns[Column.ColumnName].SetOrdinal(m_ColumnIndex); 
+                }
+            }
 
             factory.Save("system_MachineHaltReason", data);
+
+  
 
         }
     }

@@ -15,6 +15,7 @@
     <script type="text/javascript" src="/js/common/jquery.utility.js"></script>
 	<script type="text/javascript" src="/lib/ealib/jquery.easyui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="/lib/ealib/easyui-lang-zh_CN.js" charset="utf-8"></script>
+    <!--[if lt IE 8 ]><script type="text/javascript" src="/js/common/json2.min.js"></script><![endif]-->
 </head>
 <body>
     <div id="wrapper" class="easyui-panel" style="width:98%;height:auto;padding:2px;">
@@ -37,9 +38,11 @@
 			    ">
 		    <thead>
 			    <tr>
+                    <th data-options="field:'ReasonItemID',width:100">错误标识</th>         <%--, hidden:true--%>
                     <th data-options="field:'MachineHaltReasonID',width:50">错误码</th>
 				    <th data-options="field:'ReasonText',width:100,editor:'text'">停机原因</th>
                     <th data-options="field:'Remarks',width:100,editor:'text'">备注</th>
+                    <th data-options="field:'Enabled',width:80,editor:'text'">是否可用</th>
 			    </tr>
 		    </thead>
 	    </table>
@@ -75,32 +78,63 @@
 
         // 添加根节点
         function appendRoot() {
-            var levelCode = getAppendRootLevelCode();
-            $('#tgMachineHaltReasonsEditor').treegrid('append', {
-                data: [{
-                    MachineHaltReasonID: levelCode,
-                    ReasonText: '新增错误原因'
-                }]
-            })
+            GetReasonRow("RootNode");
         }
-
+ 
         //添加子节点
         function append() {
-            var node = $('#tgMachineHaltReasonsEditor').treegrid('getSelected');
-            if (node.MachineHaltReasonID.length == 7) {
-                $.messager.alert('错误', '最多只能有三级停机原因！');
-                return;
-            }
-            var levelCode = getAppendLevelCode(node.MachineHaltReasonID);
-            $('#tgMachineHaltReasonsEditor').treegrid('append', {
-                parent: node.MachineHaltReasonID,
-                data: [{
-                    MachineHaltReasonID: levelCode,
-                    ReasonText: '新增错误原因'
-                }]
-            })
+            GetReasonRow("ChildNode");
         }
-
+        //创建设备故障原因ID
+        function GetReasonRow(Flag) {
+            var queryUrl = 'Edit.aspx/GetReasonItemID';
+            $.ajax({
+                type: "POST",
+                url: queryUrl,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var m_Msg = msg.d;
+                    if (m_Msg != null && m_Msg != undefined && m_Msg != "") {
+                        if (Flag == "RootNode") {           //添加根节点
+                            var levelCode = getAppendRootLevelCode();
+                            $('#tgMachineHaltReasonsEditor').treegrid('append', {
+                                data: [{
+                                    ReasonItemID: m_Msg,
+                                    MachineHaltReasonID: levelCode,
+                                    ReasonText: '新增错误原因',
+                                    Enabled: 'True'
+                                }]
+                            })
+                        }
+                        else if (Flag == "ChildNode")
+                        {
+                            var node = $('#tgMachineHaltReasonsEditor').treegrid('getSelected');
+                            if (node.MachineHaltReasonID.length == 7) {
+                                $.messager.alert('错误', '最多只能有三级停机原因！');
+                                return;
+                            }
+                            var levelCode = getAppendLevelCode(node.MachineHaltReasonID);
+                            $('#tgMachineHaltReasonsEditor').treegrid('append', {
+                                parent: node.MachineHaltReasonID,
+                                data: [{
+                                    ReasonItemID: m_Msg,
+                                    MachineHaltReasonID: levelCode,
+                                    ReasonText: '新增错误原因',
+                                    Enabled: 'True'
+                                }]
+                            })
+                        }
+                    }
+                    else {
+                        $.messager.alert('错误', '无法创建新设备故障原因！');
+                    }
+                },
+                error: function () {
+                    $.messager.alert('错误', '无法创建新设备故障原因！');
+                }
+            });
+        }
         // 删除节点
         function removeIt() {
             var node = $('#tgMachineHaltReasonsEditor').treegrid('getSelected');
@@ -262,10 +296,11 @@
 
         // 保存停机原因
         function saveMachineHaltReasons() {
-            queryUrl = 'Edit.aspx/SaveMachineHaltReasons';
-            dataToSend = '{"json":\'' + JSON.stringify($('#tgMachineHaltReasonsEditor').treegrid('getData')) + '\'}';
-
-            var dataToSend = '{organizationId: "' + organizationId + '"}';
+            var queryUrl = 'Edit.aspx/SaveMachineHaltReasons';
+            save();
+            var dataToSend = '{"json":\'' + JSON.stringify($('#tgMachineHaltReasonsEditor').treegrid('getData')) + '\'}';
+            //var m_OrganizationId = "";
+            //var dataToSend = '{organizationId: "' + m_OrganizationId + '"}';
 
             $.ajax({
                 type: "POST",
