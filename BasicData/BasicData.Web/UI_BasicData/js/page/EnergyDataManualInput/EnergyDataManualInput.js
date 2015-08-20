@@ -1,6 +1,6 @@
 ﻿$(function () {
-    loadVaribleNameData();
-    loadGridData();
+    loadDataGrid("first");
+    initPageAuthority();
 });
 
 var publicData = {
@@ -8,7 +8,32 @@ var publicData = {
     editIndex: "",
     editRow: {}
 }
-
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "EnergyDataManualInput.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            if (authArray[1] == '0') {
+                $("#add").linkbutton('disable');
+            }
+            //修改
+            if (authArray[2] == '0') {
+                $("#edit").linkbutton('disable');
+            }
+            //删除
+            if (authArray[3] == '0') {
+                $("#delete").linkbutton('disable');
+            }
+        }
+    });
+}
 function onOrganisationTreeClick(node) {
     publicData.organizationId = node.OrganizationId;
     $('#organizationName').textbox('setText', node.text);
@@ -20,6 +45,7 @@ function loadVaribleNameData() {
         data: "",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        async:false,//同步执行
         success: function (msg) {
             var comboboxValue = jQuery.parseJSON(msg.d);
             $('#addVariableName').combobox({
@@ -31,7 +57,7 @@ function loadVaribleNameData() {
     });
 }
 
-function loadGridData() {
+function query() {
     var dataToServer = {
         organizationId: publicData.organizationId
     };
@@ -43,38 +69,45 @@ function loadGridData() {
         dataType: "json",
         success: function (msg) {
             m_MsgData = jQuery.parseJSON(msg.d);
-            InitializeGrid(m_MsgData);
+            loadDataGrid("last",m_MsgData);
         }
     });
 }
-function InitializeGrid(myData) {
-    $('#dg').datagrid({
-        data: myData,
-        iconCls: 'icon-edit', singleSelect: true, rownumbers: true, striped: true, toolbar: '#tb',
-        columns: [[
-            {
-                field: 'VariableName', title: '变量名称', width: '17%', align: 'center'
-            },
-            {
-                field: 'Name', title: '组织机构名称', width: '12%', align: 'center'
-            },
-            {
-                field: 'TimeStamp', title: '更新日期', width: '10%', align: 'center'
-            },
-            {
-                field: 'DataValue', title: '录入值', width: '16%', align: 'center'
-            },
-            {
-                field: 'UpdateCycle', title: '更新周期', width: '16%', align: 'center'
-            },
-            {
-                field: 'Version', title: '版本', width: '8%', align: 'center'
-            },
-            {
-                field: 'Remark', title: '备注', width: '20%', align: 'center'
-            }
-        ]]
-    });
+function loadDataGrid(type, myData) {
+    if (type == "first") {
+        $('#dg').datagrid({
+            //data: myData,
+            iconCls: 'icon-edit', singleSelect: true, rownumbers: true, striped: true,// toolbar: '#tb',
+            fit: true,
+            toolbar: "#toolBar",
+            columns: [[
+                {
+                    field: 'VariableName', title: '变量名称', width: '17%', align: 'center'
+                },
+                {
+                    field: 'Name', title: '组织机构名称', width: '12%', align: 'center'
+                },
+                {
+                    field: 'TimeStamp', title: '更新日期', width: '10%', align: 'center'
+                },
+                {
+                    field: 'DataValue', title: '录入值', width: '16%', align: 'center'
+                },
+                {
+                    field: 'UpdateCycle', title: '更新周期', width: '16%', align: 'center'
+                },
+                {
+                    field: 'Version', title: '版本', width: '8%', align: 'center'
+                },
+                {
+                    field: 'Remark', title: '备注', width: '20%', align: 'center'
+                }
+            ]]
+        });
+    }
+    else {
+        $('#dg').datagrid("loadData", myData);
+    }
 }
 //添加按钮
 function addItem() {
@@ -82,6 +115,7 @@ function addItem() {
         alert("请选择分厂！");
     }
     else {
+        loadVaribleNameData();
         $('#addDialog').dialog('open');
     }
 }
@@ -105,19 +139,21 @@ function saveAddDialog() {
             success: function (msg) {
                 if (msg.d == '1') {
                     alert("添加成功！");
-                    loadGridData();
+                    query();
                 }
                 else if (msg.d == '-2') {
-                    alert("本月已经提交,添加失败！");
+                    alert("该数据已经提交,添加失败！");
                 }
-                else {
+                else if (msg.d == "noright") {
+                    alert("用户没有添加权限！");
+                } else {
                     alert("添加失败！");
                 }
             }
         });
 
         $('#addDialog').dialog('close');
-        loadGridData();
+        query();
     }
     else {
         alert('请输入必填项！');
@@ -151,6 +187,9 @@ function deleteData(id) {
         success: function (msg) {
             if (msg.d == '1') {
                 alert("删除成功！");
+            }
+            else if(msg.d == 'noright'){
+                alert("用户没有删除权限！");
             }
             else {
                 alert("删除失败！");
@@ -199,6 +238,12 @@ function saveEditDialog() {
                 if (msg.d == '1') {
                     alert("修改成功！");
                 }
+                else if (msg.d == '-2') {
+                    alert("该数据已经提交,修改失败！");
+                }
+                else if (msg.d == 'noright') {
+                    alert("用户没有编辑权限！");
+                }
                 else {
                     alert("修改失败！");
                 }
@@ -206,7 +251,7 @@ function saveEditDialog() {
         });
 
         $('#editDialog').dialog('close');
-        loadGridData();
+        query();
     }
     else {
         alert('请输入必填项！');
