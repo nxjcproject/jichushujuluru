@@ -72,7 +72,7 @@
             <tr>
                 <td>当前：<input id="currentMaterialName" class="easyui-textbox" data-options="editable:false" style="width: 150px;" /><input id="currentMaterialKeyId" readonly="true" style="display: none;" /></td>
                 <td><div class="datagrid-btn-separator"></div></td>
-                <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="SaveMaterialDetail()" data-options="iconCls:'icon-save',plain:true">保存</a></td>
+                <td><a id="save" href="javascript:void(0)" class="easyui-linkbutton" onclick="SaveMaterialDetail()" data-options="iconCls:'icon-save',plain:true">保存</a></td>
             </tr>
         </table>      
     </div>
