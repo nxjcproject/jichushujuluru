@@ -21,11 +21,21 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
 #if DEBUG
                 List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+                mPageOpPermission = "0000";
 #elif RELEASE
 #endif
                 this.TagsSelector_DcsTags.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
                 this.TagsSelector_DcsTags.PageName = "MasterSlaveMachinedescription.aspx";                                     //向web用户控件传递当前调用的页面名称
             }
+        }
+        /// <summary>
+        /// 增删改查权限控制
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public static char[] AuthorityControl()
+        {
+            return mPageOpPermission.ToArray();
         }
         [WebMethod]
         public static string GetMasterMachineInfo(string myDcsId)
@@ -42,41 +52,62 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
         [WebMethod]
         public static string AddMasterMachineInfo(string myOrganizationId, string myVariableId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[1] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddMasterMachineInfo(myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddMasterMachineInfo(myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有添加权限！";
             }
         }
         [WebMethod]
         public static string ModifyMasterMachineInfo(string myId, string myOrganizationId, string myVariableId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myRecord, string myValidValues, string myRemarks)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[2] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifyMasterMachineInfo(myId, myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifyMasterMachineInfo(myId, myOrganizationId, myVariableId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myRecord, myValidValues, myRemarks);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有修改权限！";
             }
         }
         [WebMethod]
         public static string DeleteMasterMachineInfo(string myId)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[3] == '1')
             {
-                BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteAllSlaveMachineInfoByKeyId(myId); //删除所有从机
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteMasterMachineInfo(myId);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteAllSlaveMachineInfoByKeyId(myId); //删除所有从机
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteMasterMachineInfo(myId);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有删除权限！";
             }
         }
         [WebMethod]
@@ -110,54 +141,82 @@ namespace BasicData.Web.UI_BasicData.MasterSlaveMachine
         [WebMethod]
         public static string AddSlaveMachineInfo(string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myValidValues, string myTimeDelay, string myRemarks)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[1] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddSlaveMachineInfo(myOrganizationId, myKeyId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myValidValues, myTimeDelay, myRemarks);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.AddSlaveMachineInfo(myOrganizationId, myKeyId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myValidValues, myTimeDelay, myRemarks);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有添加权限！";
             }
         }
         [WebMethod]
         public static string ModifySlaveMachineInfo(string myId, string myOrganizationId, string myKeyId, string myVariableName, string myVariableDescription, string myDataBaseName, string myTableName, string myValidValues, string myTimeDelay, string myRemarks)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[2] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifySlaveMachineInfo(myId, myOrganizationId, myKeyId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myValidValues, myTimeDelay, myRemarks);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.ModifySlaveMachineInfo(myId, myOrganizationId, myKeyId, myVariableName, myVariableDescription, myDataBaseName, myTableName, myValidValues, myTimeDelay, myRemarks);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有修改权限！";
             }
         }
         [WebMethod]
         public static string DeleteSlaveMachineInfo(string myId)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[3] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteSlaveMachineInfo(myId);
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteSlaveMachineInfo(myId);
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有删除权限！";
             }
         }
         [WebMethod]
         public static string DeleteAllSlaveMachineInfoByKeyId(string myKeyId)
         {
-            if (mUserId != "")
+            if (mPageOpPermission.ToArray()[3] == '1')
             {
-                int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteAllSlaveMachineInfoByKeyId(myKeyId);
-                ReturnValue = ReturnValue > 1 ? 1 : ReturnValue;
-                return ReturnValue.ToString();
+                if (mUserId != "")
+                {
+                    int ReturnValue = BasicData.Service.MasterSlaveMachine.MasterSlaveMachinedescription.DeleteAllSlaveMachineInfoByKeyId(myKeyId);
+                    ReturnValue = ReturnValue > 1 ? 1 : ReturnValue;
+                    return ReturnValue.ToString();
+                }
+                else
+                {
+                    return "非法的用户操作!";
+                }
             }
             else
             {
-                return "非法的用户操作!";
+                return "该用户没有删除权限！";
             }
         }
         /// <summary>

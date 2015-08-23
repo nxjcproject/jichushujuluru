@@ -2,8 +2,34 @@
 var editIndex = undefined;
 $(function () {
     initDatagrid();
+    //initPageAuthority();
 });
-
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "ShiftArrangementEdit.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            //if (authArray[1] == '0') {
+            //    $("#add").linkbutton('disable');
+            //}
+            //修改
+            if (authArray[2] == '0') {
+                $("#id_save").linkbutton('disable');
+            }
+            //删除
+            //if (authArray[3] == '0') {
+            //    $("#delete").linkbutton('disable');
+            //}
+        }
+    });
+}
 function initDatagrid() {
     $('#dg').datagrid({
         //data: myData,
@@ -95,6 +121,9 @@ function saveShiftArrangement() {
             }
             if (m_meg == "success") {
                 alert("数据更新成功");
+            }
+            if (m_meg == "noright") {
+                alert("用户没有修改权限！");
             }
         },
         error: saveError

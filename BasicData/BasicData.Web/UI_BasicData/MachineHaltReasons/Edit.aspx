@@ -20,7 +20,7 @@
 <body>
     <div id="wrapper" class="easyui-panel" style="width:98%;height:auto;padding:2px;">
 	    <div class="easyui-panel" style="width:100%;padding:5px;margin-bottom:5px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton c4 easyui-tooltip tooltip-f" data-options="plain:true,iconCls:'icon-ok'" title="保存。" onclick="saveMachineHaltReasons()">保存</a>
+            <a id="save" href="javascript:void(0)" class="easyui-linkbutton c4 easyui-tooltip tooltip-f" data-options="plain:true,iconCls:'icon-ok'" title="保存。" onclick="saveMachineHaltReasons()">保存</a>
 	    </div>
 
 	    <table id="tgMachineHaltReasonsEditor" class="easyui-treegrid" title="停机原因维护" style="width:100%;height:450px;"
@@ -47,15 +47,15 @@
 		    </thead>
 	    </table>
 	    <div class="easyui-panel" style="width:100%;padding:5px;margin-top:5px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'" onclick="appendRoot()">添加一级停机原因</a>
+            <a id="addOneReason" href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'" onclick="appendRoot()">添加一级停机原因</a>
 	    </div>
 
          <!-- 右键菜单开始 -->
 	    <div id="mm" class="easyui-menu" style="width:120px;">
-		    <div onclick="append()" data-options="iconCls:'icon-add'">添加</div>
-		    <div onclick="removeIt()" data-options="iconCls:'icon-remove'">删除</div>
+		    <div id="add" onclick="append()" data-options="iconCls:'icon-add'">添加</div>
+		    <div id="remove" onclick="removeIt()" data-options="iconCls:'icon-remove'">删除</div>
 		    <div class="menu-sep"></div>
-            <div onclick="appendRoot()" data-options="iconCls:'icon-add'">添加一级停机原因</div>
+            <div id="addReason" onclick="appendRoot()" data-options="iconCls:'icon-add'">添加一级停机原因</div>
             <div class="menu-sep"></div>
 		    <div onclick="collapse()">收起</div>
 		    <div onclick="expand()">展开</div>
@@ -65,7 +65,37 @@
 
     <script type="text/javascript">
         //////////////////////////////////////////////////////////////////////
-
+        //初始化页面的增删改查权限
+        function initPageAuthority() {
+            $.ajax({
+                type: "POST",
+                url: "Edit.aspx/AuthorityControl",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//同步执行
+                success: function (msg) {
+                    var authArray = msg.d;
+                    //增加
+                    if (authArray[1] == '0') {
+                        var itemEl = $('#add')[0];
+                        $("#mm").menu('disableItem', itemEl);
+                        itemEl = $('#addReason')[0];
+                        $("#mm").menu('disableItem', itemEl);
+                        $("#addOneReason").linkbutton('disable');
+                    }
+                    //修改
+                    if (authArray[2] == '0') {                     
+                        $("#save").linkbutton('disable');
+                    }
+                    //删除
+                    if (authArray[3] == '0') {
+                        var itemEl = $('#remove')[0];
+                        $("#mm").menu('disableItem', itemEl);
+                    }
+                }
+            });
+        }
         // 右键菜单
         function onContextMenu(e, row) {
             e.preventDefault();
@@ -317,6 +347,7 @@
 
         $(document).ready(function () {
             loadMachineHaltReasons();
+            initPageAuthority();
         });
 
     </script>

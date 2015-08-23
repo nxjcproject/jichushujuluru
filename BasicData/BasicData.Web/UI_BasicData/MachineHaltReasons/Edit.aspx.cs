@@ -11,11 +11,23 @@ using System.Web.UI.WebControls;
 
 namespace BasicData.Web.UI_BasicData.MachineHaltReasons
 {
-    public partial class Edit : System.Web.UI.Page
+    public partial class Edit : WebStyleBaseForEnergy.webStyleBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+#if DEBUG
+               mPageOpPermission="0000";
+#endif
+        }
 
+        /// <summary>
+        /// 页面操作权限
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public static char[] AuthorityControl()
+        {
+            return mPageOpPermission.ToArray();
         }
 
         [WebMethod]

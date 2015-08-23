@@ -56,7 +56,7 @@
                                 <tr>
                                     <td><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="loadStaffInfo();">刷新</a></td>
                                     <td><div class="datagrid-btn-separator"></div></td>
-                                    <td><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="editStaffInfo(true,'');">添加新职工</a></td>
+                                    <td><a id="id_add" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="editStaffInfo(true,'');">添加新职工</a></td>
                                 </tr>
                             </table>
                         </td>
@@ -121,6 +121,9 @@
         <!-- 中央区域结束 -->
     </div>
     <script type="text/javascript">
+        $(function () {
+           initPageAuthority();
+        })
 
         function formatSexColumn(val, row) {
             return val == 'True' ? "男" : "女";
@@ -132,7 +135,33 @@
 
         // 分厂ID变量
         var organizationId = '';
-
+        var authArray;
+        //初始化页面的增删改查权限
+        function initPageAuthority() {
+            $.ajax({
+                type: "POST",
+                url: "Edit.aspx/AuthorityControl",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,//同步执行
+                success: function (msg) {
+                     authArray = msg.d;
+                    //增加
+                    if (authArray[1] == '0') {
+                        $("#id_add").linkbutton('disable');
+                    }
+                    //修改
+                    //if (authArray[2] == '0') {
+                    //    $("#edit").linkbutton('disable');
+                    //}
+                    ////删除
+                    //if (authArray[3] == '0') {
+                    //    $("#delete").linkbutton('disable');
+                    //}
+                }
+            });
+        }
         // 目录树选择事件
         function onOrganisationTreeClick(node) {
             // 仅分厂级目录有效
@@ -190,6 +219,10 @@
         var isStaffInfoInsert = false;
         // 编辑员工信息
         function editStaffInfo(isInsert, staffInfoID) {
+            if (authArray[2] == '0') {
+                $.messager.alert("提示","该用户没有编辑权限！");
+                return;
+            }
             if (isInsert) {
                 isStaffInfoInsert = true;
                 $('#id').textbox('readonly', false);

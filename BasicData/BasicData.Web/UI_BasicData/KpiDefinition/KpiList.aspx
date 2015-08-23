@@ -46,8 +46,8 @@
                         </td>
                         <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="QueryList()" data-options="iconCls:'icon-search',plain:true">查询</a></td>
                         <td><div class="datagrid-btn-separator"></div></td>
-                        <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="CreateKpiList()" data-options="iconCls:'icon-add',plain:true">添加</a></td>
-                        <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="DeleteList()" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
+                        <td><a id="add_list" href="javascript:void(0)" class="easyui-linkbutton" onclick="CreateKpiList()" data-options="iconCls:'icon-add',plain:true">添加</a></td>
+                        <td><a id="delete_list" href="javascript:void(0)" class="easyui-linkbutton" onclick="DeleteList()" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
                     </tr>
                 </table>      
             </div>
@@ -74,8 +74,8 @@
                                 </td>
                                 <!--<td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="QueryDetail()" data-options="iconCls:'icon-search',plain:true">查询</a></td>-->
                                 <td><div class="datagrid-btn-separator"></div></td>
-                                <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="AddKpiDetail()" data-options="iconCls:'icon-add',plain:true">添加</a></td>
-                                <td><a href="javascript:void(0)" class="easyui-linkbutton" onclick="DeleteDetail()" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
+                                <td><a id="add_detail" href="javascript:void(0)" class="easyui-linkbutton" onclick="AddKpiDetail()" data-options="iconCls:'icon-add',plain:true">添加</a></td>
+                                <td><a id="delete_detail" href="javascript:void(0)" class="easyui-linkbutton" onclick="DeleteDetail()" data-options="iconCls:'icon-remove',plain:true">删除</a></td>
                             </tr>
                         </table>
                     </div>
@@ -127,7 +127,7 @@
 	    </table>
     </div>
 	<div id="bbKpiListEditor">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="KpiListSave()">保存</a>
+	    <a id="save_list" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="KpiListSave()">保存</a>
 	    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#dlgKpiListEditor').dialog('close');">取消</a>
 	</div>
     <!-- KPI指标体系添加窗口结束 -->
@@ -184,7 +184,7 @@
 	    </table>
     </div>
 	<div id="bbKpiDetailEditor">
-	    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="KpiDetailSave()">保存</a>
+	    <a id="save_detail" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="KpiDetailSave()">保存</a>
 	    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#dlgKpiDetailEditor').dialog('close');">取消</a>
 	</div>
     <!-- KPI详细添加窗口结束 -->

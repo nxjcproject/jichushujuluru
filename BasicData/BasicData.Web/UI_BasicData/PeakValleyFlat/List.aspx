@@ -44,9 +44,9 @@
     </div>
 
     <div id="tb" style="padding: 5px; height: auto">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItem()">添加</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteItem()">删除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editItem()">编辑</a>
+        <a href="javascript:void(0)" id="add" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItem()">添加</a>
+        <a href="javascript:void(0)" id="delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteItem()">删除</a>
+        <a href="javascript:void(0)" id="editBtn" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editItem()">编辑</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="loadGridData('first')">刷新</a>
     </div>
 
@@ -83,9 +83,9 @@
 	    </table>
 
         <div id="addtb" style="padding:5px;height:auto">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItemPeak()">添加</a>
-	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteTimeItem()">删除</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearAllItems()">清空</a>
+            <a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addItemPeak()">添加</a>
+	        <a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteTimeItem()">删除</a>
+            <a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true" onclick="clearAllItems()">清空</a>
             <%--<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true" onclick="javascript:window.history.go(-1);">返回</a>--%>
 	        <%--<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="$('#save').dialog('open')">保存</a>--%>
         </div>

@@ -60,7 +60,7 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="SaveEnergyConsumptionPlanFun();">保存</a>
+                                <td><a href="#" id="id_save" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="SaveEnergyConsumptionPlanFun();">保存</a>
                                 </td>
                                 <td>
                                     <div class="datagrid-btn-separator"></div>

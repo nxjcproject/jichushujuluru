@@ -4,6 +4,7 @@
     //var workingteamData = [{ "Name": "A组" }, { "Name": "B组" }, { "Name": "C组" }, { "Name": "D组" }];
     //workingteamInitializeGrid(workingteamData);
     InitializePage();
+    initPageAuthority();
 });
 
 var publicData = {
@@ -12,7 +13,37 @@ var publicData = {
     editRow: {},
     comboboxValue:[]
 };
-
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "Edit.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            //if (authArray[1] == '0') {
+            //    $("#add").linkbutton('disable');
+            //}
+            //修改
+            if (authArray[2] == '0') {
+                $("#id_shiftEdit").linkbutton('disable');
+                $("#id_shiftSave").linkbutton('disable');
+                $("#id_shiftReset").linkbutton('disable');
+                $("#id_workingTeamEdit").linkbutton('disable');
+                $("#id_workingTeamSave").linkbutton('disable');
+                $("#id_workingTeamReset").linkbutton('disable');
+            }
+            ////删除
+            //if (authArray[3] == '0') {
+            //    $("#delete").linkbutton('disable');
+            //}
+        }
+    });
+}
 function InitializePage() {
     loadChargeManData();
     loadShiftsData();
@@ -197,7 +228,12 @@ function shiftSave() {
             if (msg.d == "1") {
                 $('#save').dialog('close');
                 alert("更新成功!");
-            } else {
+            }
+            else if(msg.d=="noright"){
+                $('#save').dialog('close');
+                alert("用户没有修改权限!");
+            }
+            else {
                 $('#save').dialog('close');
                 alert("更新失败!");
             }
@@ -318,7 +354,12 @@ function workingteamSave() {
             if (msg.d == "1") {
                 $('#save').dialog('close');
                 alert("更新成功!");
-            } else {
+            }
+            else if (msg.d == "noright") {
+                $('#save').dialog('close');
+                alert("用户没有修改权限!");
+            }
+            else {
                 $('#save').dialog('close');
                 alert("更新失败!");
             }

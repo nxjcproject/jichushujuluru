@@ -22,13 +22,22 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                 #if DEBUG
                 List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+                mPageOpPermission = "0000";
                 #elif RELEASE
                 #endif
                 this.OrganisationTree_ProductionLine.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
                 this.OrganisationTree_ProductionLine.PageName = "EnergyConsumptionPlan.aspx";                                     //向web用户控件传递当前调用的页面名称
             }
         }
-
+        /// <summary>
+        /// 增删改查权限控制
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public static char[] AuthorityControl()
+        {
+            return mPageOpPermission.ToArray();
+        }
         [WebMethod]
         public static string GetEnergyConsumptionInfo(string myProductionLineType, string myOrganizationId, string myPlanYear)
         {
@@ -81,35 +90,42 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
         [WebMethod]
         public static string SetEnergyConsumptionInfo(string myOrganizationId, string myPlanYear, string myProductionLineType, string myDataGridData)
         {
-            DataTable m_DataGridDataStruct = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.CreateTableStructure("plan_EnergyConsumptionYearlyPlan");
-            //m_DataGridDataStruct.Columns.Remove("QuotasItemID");       //去掉ID列，此列的数据由数据库自动生成
-            string[] m_DataGridDataGroup = EasyUIJsonParser.Utility.JsonPickArray(myDataGridData,"rows");
-            DataTable m_DataGridData = EasyUIJsonParser.DataGridJsonParser.JsonToDataTable(m_DataGridDataGroup, m_DataGridDataStruct);
-            ///////////////tz表里查找是否已经存在////////////////
-            string m_KeyId = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myProductionLineType);
-            if (m_KeyId != "")               //表示计划已经存在
+            if (mPageOpPermission.ToArray()[2] == '1')
             {
-                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
+                DataTable m_DataGridDataStruct = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.CreateTableStructure("plan_EnergyConsumptionYearlyPlan");
+                //m_DataGridDataStruct.Columns.Remove("QuotasItemID");       //去掉ID列，此列的数据由数据库自动生成
+                string[] m_DataGridDataGroup = EasyUIJsonParser.Utility.JsonPickArray(myDataGridData, "rows");
+                DataTable m_DataGridData = EasyUIJsonParser.DataGridJsonParser.JsonToDataTable(m_DataGridDataGroup, m_DataGridDataStruct);
+                ///////////////tz表里查找是否已经存在////////////////
+                string m_KeyId = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myProductionLineType);
+                if (m_KeyId != "")               //表示计划已经存在
+                {
+                    BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
+                }
+                else
+                {
+                    m_KeyId = Guid.NewGuid().ToString();
+                    //添加TZ引领
+                    BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.InsertTzPlan(m_KeyId, myOrganizationId, myProductionLineType, myPlanYear, mUserId);
+                }
+
+                for (int i = 0; i < m_DataGridData.Rows.Count; i++)
+                {
+                    string m_QuotasItemID = Guid.NewGuid().ToString();
+                    m_DataGridData.Rows[i]["QuotasItemID"] = m_QuotasItemID;
+                    m_DataGridData.Rows[i]["KeyID"] = m_KeyId;
+                    m_DataGridData.Rows[i]["DisplayIndex"] = (i + 1).ToString();
+                    m_DataGridData.Rows[i]["ProductionLineType"] = myProductionLineType;
+                }
+                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.DeleteEnergyConsumptionInfo(m_KeyId);
+                int ReturnValue = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.SaveEnergyConsumptionInfo("plan_EnergyConsumptionYearlyPlan", m_DataGridData);
+                ReturnValue = ReturnValue > 0 ? 1 : ReturnValue;
+                return ReturnValue.ToString();
             }
             else
             {
-                m_KeyId = Guid.NewGuid().ToString();
-                //添加TZ引领
-                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.InsertTzPlan(m_KeyId, myOrganizationId, myProductionLineType, myPlanYear, mUserId);
+                return "noright";
             }
-
-            for (int i = 0; i < m_DataGridData.Rows.Count; i++)
-            {
-                string m_QuotasItemID = Guid.NewGuid().ToString();
-                m_DataGridData.Rows[i]["QuotasItemID"] = m_QuotasItemID;
-                m_DataGridData.Rows[i]["KeyID"] = m_KeyId;
-                m_DataGridData.Rows[i]["DisplayIndex"] = (i + 1).ToString();
-                m_DataGridData.Rows[i]["ProductionLineType"] = myProductionLineType;
-            }
-            BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.DeleteEnergyConsumptionInfo(m_KeyId);
-            int ReturnValue = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.SaveEnergyConsumptionInfo("plan_EnergyConsumptionYearlyPlan", m_DataGridData);
-            ReturnValue = ReturnValue > 0 ? 1 : ReturnValue;
-            return ReturnValue.ToString();
         }
     }
 }

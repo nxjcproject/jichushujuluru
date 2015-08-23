@@ -1,6 +1,7 @@
 ﻿$(function () {
     //InitializePage();
     loadGridData();
+    initPageAuthority();
 });
 
 var publicData = {
@@ -9,6 +10,32 @@ var publicData = {
     editRow: {}
 }
 
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "EnergyDataManualInputContrast.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            if (authArray[1] == '0') {
+                $("#add").linkbutton('disable');
+            }
+            //修改
+            if (authArray[2] == '0') {
+                $("#edit").linkbutton('disable');
+            }
+            //删除
+            if (authArray[3] == '0') {
+                $("#delete").linkbutton('disable');
+            }
+        }
+    });
+}
 function onOrganisationTreeClick(node) {
     publicData.organizationId = node.OrganizationId;
     $('#organizationName').textbox('setText', node.text);
@@ -93,6 +120,9 @@ function saveAddDialog() {
                 else if (msg.d == '-2') {
                     alert("ID值重复，添加失败！");
                 }
+                else if (msg.d == "noright") {
+                    alert("用户没有添加权限！");
+                }
                 else {
                     alert("添加失败！");
                 }
@@ -135,6 +165,8 @@ function deleteData(id) {
         success: function (msg) {
             if (msg.d == '1') {
                 alert("删除成功！");
+            } else if (msg.d == "noright") {
+                alert("用户没有删除权限！");
             }
             else {
                 alert("删除失败！");
@@ -188,6 +220,9 @@ function saveEditDialog() {
             success: function (msg) {
                 if (msg.d == '1') {
                     alert("修改成功！");
+                }
+                else if (msg.d == "noright") {
+                    alert("用户没有修改权限！");
                 }
                 else {
                     alert("修改失败！");

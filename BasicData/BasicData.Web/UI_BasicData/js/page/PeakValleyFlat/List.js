@@ -3,8 +3,35 @@
     //publicData.organizationId = $.getUrlParam('organizationId');
 
     loadGridData('first');
+    initPageAuthority();
 });
 
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "List.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            if (authArray[1] == '0') {
+                $("#add").linkbutton('disable');
+            }
+            //修改
+            if (authArray[2] == '0') {
+                $("#editBtn").linkbutton('disable');
+            }
+            //删除
+            if (authArray[3] == '0') {
+                $("#delete").linkbutton('disable');
+            }
+        }
+    });
+}
 var publicData = {
     organizationId: "",
     editIndex: "",
@@ -205,6 +232,8 @@ function editData(id, startUsing, endUsing, flag) {
         success: function (msg) {
             if (msg.d == '1') {
                 alert("修改成功！");
+            } else if (msg.d =="noright" ) {
+                alert("用户没有修改权限！");
             }
             else {
                 alert("修改失败！");
@@ -240,6 +269,9 @@ function deleteData(keyId) {
         success: function (msg) {
             if (msg.d == '1') {
                 alert("删除成功！");
+            }
+            else if(msg.d=='noright'){
+                alert("用户没有删除权限！");
             }
             else {
                 alert("删除失败！");
@@ -334,7 +366,10 @@ function saveItem() {
                     $('#addDialog').dialog('close');
                     alert("更新成功!");
                     loadGridData('first');
-                } else {
+                } else if (msg.d == "noright") {
+                    alert("用户没有更新权限！");
+                }
+                else {
                     $('#addDialog').dialog('close');
                     alert("更新失败!");
                 }

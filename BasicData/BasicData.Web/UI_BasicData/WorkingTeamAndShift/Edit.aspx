@@ -43,9 +43,9 @@
         </div>
 
         <div id="tb_shift" style="padding: 5px; height: auto">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="shiftEditItem()">编辑</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="shiftReload()">重置</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="shiftSave()">保存</a>
+            <a id="id_shiftEdit" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="shiftEditItem()">编辑</a>
+            <a id="id_shiftReset" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="shiftReload()">重置</a>
+            <a id="id_shiftSave" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="shiftSave()">保存</a>
         </div>
 
         <div id="shiftEditDialog" class="easyui-dialog" title="编辑" data-options="iconCls:'icon-save',closed:true,buttons:'#shiftEditDialog-buttons'" style="width: 400px; height: 220px; padding: 10px">
@@ -88,9 +88,9 @@
         </div>
 
         <div id="tb_workingteam" style="padding: 5px; height: auto">
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="shifteditItem()">编辑</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="workingteamReload()">重置</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="workingteamSave()">保存</a>
+            <a id="id_workingTeamEdit" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="shifteditItem()">编辑</a>
+            <a id="id_workingTeamReset" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload',plain:true" onclick="workingteamReload()">重置</a>
+            <a id="id_workingTeamSave" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="workingteamSave()">保存</a>
         </div>
 
         <div id="workingteamEditDialog" class="easyui-dialog" title="编辑" data-options="iconCls:'icon-save',closed:true,buttons:'#workingteamEditDialog-buttons'" style="width: 400px; height: 200px; padding: 10px">
@@ -123,7 +123,7 @@
         </div>
 
         <div id="workingteamEditDialog-buttons">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="workingteamSaveEditDialog()">保存</a>
+            <a  href="javascript:void(0)" class="easyui-linkbutton" onclick="workingteamSaveEditDialog()">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#workingteamEditDialog').dialog('close')">取消</a>
         </div>
     </div>

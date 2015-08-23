@@ -14,8 +14,41 @@ var m_Remarks = '';
 
 
 $(function () {
-    InitializeGrid();   
+    InitializeGrid();
+    initPageAuthority();
 });
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "EquipmentAccountEdit.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            if (authArray[1] == '0') {
+                $("#add").linkbutton('disable');
+                
+            }
+            //修改
+            if (authArray[2] == '0') {
+                $("#edit").linkbutton('disable'); 
+                $("#saveEditDlg").linkbutton('disable');
+                var itemEl = $('#mm_edit')[0];
+                $("#RightMenu").menu('disableItem', itemEl);
+            }
+            //删除
+            if (authArray[3] == '0') {
+                $("#delete").linkbutton('disable');
+                var itemEl = $('#mm_delete')[0];
+                $("#RightMenu").menu('disableItem', itemEl);
+            }
+        }
+    });
+}
 
 function loadGridData(myLoadType) {
     var m_OrganizationId = $("#organizationId").val();

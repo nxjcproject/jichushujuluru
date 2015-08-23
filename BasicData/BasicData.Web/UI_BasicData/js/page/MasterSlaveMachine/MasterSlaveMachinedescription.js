@@ -7,6 +7,7 @@ var SlaveOrganizationId;               //从机组织机构代码,用于接收We
 var SlaveDataBaseName;                 //从机变量数据库名称
 var SlaveTableName = "ContrastTable";                    //从机变量表名
 var CurrentMachineEditFoucs            //当前编辑的是主机还是从机1表示主机，2表示从机
+var PageOpPermission;//页面操作权限控制
 $(function () {
     LoadDcsOrganizationData('first');
     InitializeMaterMachineGrid({ "rows": [], "total": 0 });
@@ -15,7 +16,35 @@ $(function () {
     LoadSlaveMachineDialog();
     LoadSelectDcsTagsDialog();
     LoadMasterMachineVariables();
+    initPageAuthority();
 });
+
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "MasterSlaveMachinedescription.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            PageOpPermission = msg.d;
+            //增加
+            if (PageOpPermission[1] == '0') {
+                $("#id_add").linkbutton('disable');
+            }
+            //修改
+            //if (authArray[2] == '0') {
+            //    $("#edit").linkbutton('disable');
+            //}
+            //删除
+            if (PageOpPermission[3] == '0') {
+                $("#id_deleteAll").linkbutton('disable');
+            }
+        }
+    });
+}
 function LoadMaterMachineData(myLoadType, myDcsId) {
     $.ajax({
         type: "POST",
@@ -332,6 +361,10 @@ function AddMasterMachineFun() {
     $('#dlg_AddMasterMachine').dialog('open');
 }
 function EditMasterMachineFun(myId) {
+    if (PageOpPermission[2] == "0") {
+        $.messager.alert("提示", "该用户没有编辑权限！");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "MasterSlaveMachinedescription.aspx/GetMasterMachineInfobyId",
@@ -459,6 +492,10 @@ function SaveMasterMachine() {
 
 ////////////////////////////////删除主机///////////////////////////////
 function DeleteMasterMachineFun(myId, myOrganizationId, myVariableDescription) {
+    if (PageOpPermission[3] == "0") {
+        $.messager.alert("提示", "该用户没有删除权限！");
+        return;
+    }
     $('#HiddenField_MasterMachineId').attr('value', myId);
     LoadSlaveMachineData('last', myId);                     //刷新从机列表
     $('#Text_SelectMasterMachine').attr('value', myVariableDescription);
@@ -530,6 +567,10 @@ function InitializingMasterMachineVariableCommbox(myData) {
 
 //////////////////////////////////添加从机////////////////////////////////////////
 function AddSlaveMachineFun(myKeyId, myVariableDescription) {
+    if (PageOpPermission[1] == "0") {
+        $.messager.alert("提示", "该用户没有增加权限！");
+        return;
+    }
     $('#HiddenField_MasterMachineId').attr('value', myKeyId);
     $('#HiddenField_SlaveMachineId').attr('value', "");
     $('#TextBox_SlaveVariableName').textbox('setText', '');
@@ -547,6 +588,10 @@ function AddSlaveMachineFun(myKeyId, myVariableDescription) {
     $('#dlg_AddSlaveMachine').dialog('open');
 }
 function EditSlaveMachineFun(myId) {
+    if (PageOpPermission[2] == "0") {
+        $.messager.alert("提示", "该用户没有编辑权限！");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "MasterSlaveMachinedescription.aspx/GetSlaveMachineInfobyId",
@@ -659,6 +704,10 @@ function SaveSlaveMachine() {
 
 ////////////////////////////////删除从机///////////////////////////////
 function DeleteSlaveMachineFun(myId, myOrganizationId) {
+    if (PageOpPermission[3] == "0") {
+        $.messager.alert("提示", "该用户没有删除权限！");
+        return;
+    }
     parent.$.messager.confirm('询问', '您确定要删除该从机?', function (r) {
         if (r) {
             $.ajax({

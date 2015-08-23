@@ -9,8 +9,34 @@ $(document).ready(function () {
     //$('#TextBox_OrganizationId').textbox('hide');
     SetYearValue();
     LoadEnergyConsumptionData('first');
+    initPageAuthority();
 });
-
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "EnergyConsumptionPlan.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            //if (authArray[1] == '0') {
+            //    $("#add").linkbutton('disable');
+            //}
+            //修改
+            if (authArray[2] == '0') {
+                $("#id_save").linkbutton('disable');
+            }
+            //删除
+            //if (authArray[3] == '0') {
+            //    $("#delete").linkbutton('disable');
+            //}
+        }
+    });
+}
 function onOrganisationTreeClick(myNode) {
     //alert(myNode.text);
     $('#TextBox_OrganizationId').attr('value', myNode.OrganizationId);  //textbox('setText', myNode.OrganizationId);
@@ -83,6 +109,9 @@ function SaveEnergyConsumptionPlanFun() {
                 }
                 else if (m_Msg == '-1') {
                     alert('数据库错误!');
+                }
+                else if (m_Msg == 'noright') {
+                    alert("该用户没有修改保存权限！");
                 }
                 else {
                     alert(m_Msg);

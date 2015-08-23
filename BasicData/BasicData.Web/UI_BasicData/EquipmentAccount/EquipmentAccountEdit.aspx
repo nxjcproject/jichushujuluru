@@ -46,9 +46,9 @@
                 onclick="QueryReportFun();">查询</a>
             <input id="organizationId" readonly="true" style="display: none;" />
         </div>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="javascript:EditEquipment()">编辑</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="javascript:AddEquipment()">增加设备</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="javascript:RemoveEquipment()">删除设备</a>
+        <a href="#" class="easyui-linkbutton" id="edit" data-options="iconCls:'icon-edit',plain:true" onclick="javascript:EditEquipment()">编辑</a>
+        <a href="#" class="easyui-linkbutton" id="add" data-options="iconCls:'icon-add',plain:true" onclick="javascript:AddEquipment()">增加设备</a>
+        <a href="#" class="easyui-linkbutton" id="delete" data-options="iconCls:'icon-remove',plain:true" onclick="javascript:RemoveEquipment()">删除设备</a>
     </div>
 
     <%--添加设备对话框开始--%>
@@ -196,7 +196,7 @@
         <table cellpadding="0" cellspacing="0" style="width: 100%">
             <tr>
                 <td style="text-align: right">
-                    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="javascript:SaveEditEquipment();">保存修改</a>
+                    <a href="#" id="saveEditDlg" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="javascript:SaveEditEquipment();">保存修改</a>
                     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#EditDialog').dialog('close');">取消</a>
                 </td>
             </tr>
@@ -204,9 +204,9 @@
     </div>
     <!-- 右键菜单开始 -->
     <div id="RightMenu" class="easyui-menu" style="width: 120px;">
-        <div onclick="EditEquipment()" data-options="iconCls:'icon-edit'">编辑</div>
+        <div id="mm_edit" onclick="EditEquipment()" data-options="iconCls:'icon-edit'">编辑</div>
         <div class="menu-sep"></div>
-        <div onclick="RemoveEquipment()" data-options="iconCls:'icon-remove'">删除</div>
+        <div id="mm_delete" onclick="RemoveEquipment()" data-options="iconCls:'icon-remove'">删除</div>
     </div>
     <!-- 右键菜单结束 -->
 </body>

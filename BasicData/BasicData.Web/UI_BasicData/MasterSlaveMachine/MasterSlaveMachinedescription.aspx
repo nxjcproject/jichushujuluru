@@ -42,7 +42,7 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="AddMasterMachineFun();">添加</a>
+                                <td><a id="id_add" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="AddMasterMachineFun();">添加</a>
                                 </td>
                                 <td>
                                     <div class="datagrid-btn-separator"></div>
@@ -80,7 +80,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
+                                            <td><a id="id_deleteAll" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
                                                 onclick="RemoveAllSlaveMachineFun();">全部删除</a>
                                             </td>
                                         </tr>

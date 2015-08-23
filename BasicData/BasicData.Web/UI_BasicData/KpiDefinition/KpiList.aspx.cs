@@ -18,11 +18,20 @@ namespace BasicData.Web.UI_BasicData.KPIDefinition
             // 调试用,自定义的数据授权
             List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_qtx_efc", "zc_nxjc_byc" };
             AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+            mPageOpPermission = "0000";
 #endif
             this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "MaterialList.aspx";
         }
-
+        /// <summary>
+        /// 增删改查权限控制
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public static char[] AuthorityControl()
+        {
+            return mPageOpPermission.ToArray();
+        }
         [WebMethod]
         public static string GetKpiList(string statisticalMethod)
         {
@@ -64,13 +73,19 @@ namespace BasicData.Web.UI_BasicData.KPIDefinition
 #if DEBUG
             WebStyleBaseForEnergy.webStyleBase.mUserId = "1";
 #endif
-            KpiService.CreateKpiList(standardId, statisticalMethod, displayIndex, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            if (mPageOpPermission.ToArray()[1] == '1')
+            {
+                KpiService.CreateKpiList(standardId, statisticalMethod, displayIndex, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            }
         }
 
         [WebMethod]
         public static void DeleteKpiList(string keyId)
         {
-            KpiService.DeleteKpiList(keyId);
+            if (mPageOpPermission.ToArray()[3] == '1')
+            {
+                KpiService.DeleteKpiList(keyId);
+            }
         }
 
         /// <summary>
@@ -91,7 +106,10 @@ namespace BasicData.Web.UI_BasicData.KPIDefinition
 #if DEBUG
             WebStyleBaseForEnergy.webStyleBase.mUserId = "1";
 #endif
-            KpiService.CreateKpiDetail(keyId, name, organizationId, levelType, variableId, valueType, unit, standardValue, standardLevel, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            if (mPageOpPermission.ToArray()[1] == '1')
+            {
+                KpiService.CreateKpiDetail(keyId, name, organizationId, levelType, variableId, valueType, unit, standardValue, standardLevel, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            }
         }
 
         /// <summary>
@@ -110,13 +128,19 @@ namespace BasicData.Web.UI_BasicData.KPIDefinition
         [WebMethod]
         public static void UpdateKpiDetail(string standardItemId, string name, string organizationId, string levelType, string variableId, string valueType, string unit, decimal standardValue, int standardLevel)
         {
-            KpiService.UpdateKpiDetail(standardItemId, name, organizationId, levelType, variableId, valueType, unit, standardValue, standardLevel, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            if (mPageOpPermission.ToArray()[2] == '1')
+            {
+                KpiService.UpdateKpiDetail(standardItemId, name, organizationId, levelType, variableId, valueType, unit, standardValue, standardLevel, WebStyleBaseForEnergy.webStyleBase.mUserId);
+            }
         }
 
         [WebMethod]
         public static void DeleteKpiDetail(string standardItemId)
         {
-            KpiService.DeleteKpiDetail(standardItemId);
+            if (mPageOpPermission.ToArray()[3] == '1')
+            {
+                KpiService.DeleteKpiDetail(standardItemId);
+            }
         }
     }
 }

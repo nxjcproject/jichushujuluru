@@ -19,13 +19,22 @@ namespace BasicData.Web.UI_BasicData.ShiftArrangement
 #if DEBUG
             List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf" };
             AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
+            mPageOpPermission = "0000";
 #elif RELEASE
 #endif
             this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "ShiftArrangementEdit.aspx";                                                       //向web用户控件传递当前调用的页面名称
             this.OrganisationTree.LeveDepth = 5;
         }
-
+        /// <summary>
+        /// 增删改查权限控制
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public static char[] AuthorityControl()
+        {
+            return mPageOpPermission.ToArray();
+        }
         [WebMethod]
         public static string GetData(string organizationId)
         {
@@ -37,14 +46,21 @@ namespace BasicData.Web.UI_BasicData.ShiftArrangement
         [WebMethod]
         public static string SaveData(string json)
         {
-            int count=ShiftArrangementService.SaveShiftArrange(json);
-            if (count == -1)
+            if (mPageOpPermission.ToArray()[2] == '1')
             {
-                return "failure";
+                int count = ShiftArrangementService.SaveShiftArrange(json);
+                if (count == -1)
+                {
+                    return "failure";
+                }
+                else
+                {
+                    return "success";
+                }
             }
             else
             {
-                return "success";
+                return "noright";
             }
         }
     }

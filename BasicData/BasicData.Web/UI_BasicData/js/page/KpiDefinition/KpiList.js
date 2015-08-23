@@ -3,8 +3,36 @@
 $(document).ready(function () {
     var data = $('#organisationTree').tree('getData');
     $('#organisationTree').tree('getData');
+    initPageAuthority();
 });
-
+//初始化页面的增删改查权限
+function initPageAuthority() {
+    $.ajax({
+        type: "POST",
+        url: "KpiList.aspx/AuthorityControl",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,//同步执行
+        success: function (msg) {
+            var authArray = msg.d;
+            //增加
+            if (authArray[1] == '0') {
+                $("#add_list").linkbutton('disable');
+                $("#add_detail").linkbutton('disable');
+            }
+            //修改
+            //if (authArray[2] == '0') {
+            //    $("#edit").linkbutton('disable');
+            //}
+            //删除
+            if (authArray[3] == '0') {
+                $("#delete_list").linkbutton('disable');
+                $("#delete_detail").linkbutton('disable');
+            }
+        }
+    });
+}
 // KPI引领双击事件
 function OnKpiListDblClicked(index, row) {
     $("#txtCurrentKpi").textbox('setValue', row.StandardName);
