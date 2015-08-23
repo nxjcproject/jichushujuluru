@@ -15,6 +15,7 @@ namespace BasicData.Web.UI_BasicData.StaffInfo
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.InitComponts();
             if (!IsPostBack)
             {
 #if DEBUG

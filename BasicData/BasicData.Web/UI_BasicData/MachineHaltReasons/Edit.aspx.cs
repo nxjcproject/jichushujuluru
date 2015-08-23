@@ -15,6 +15,7 @@ namespace BasicData.Web.UI_BasicData.MachineHaltReasons
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.InitComponts();
 #if DEBUG
                mPageOpPermission="0000";
 #endif

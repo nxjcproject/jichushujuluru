@@ -14,6 +14,7 @@ namespace BasicData.Web.UI_BasicData.KPIDefinition
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.InitComponts();
 #if DEBUG
             // 调试用,自定义的数据授权
             List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_qtx_efc", "zc_nxjc_byc" };
