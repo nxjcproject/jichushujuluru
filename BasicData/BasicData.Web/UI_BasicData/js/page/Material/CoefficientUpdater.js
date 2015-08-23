@@ -1,10 +1,28 @@
-﻿function Query() {
+﻿$(function () {
+    GetPageOpPermission();
+});
+function Query() {
     var organizationId = $('#organizationId').val();
 
     // 获取物料记录
     GetMaterialList(organizationId);
 }
-
+function GetPageOpPermission() {
+    $.ajax({
+        type: "POST",
+        url: 'CoefficientUpdater.aspx/AuthorityControl',
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            var authArray = msg.d;            
+            //修改
+            if (authArray[2] == '0') {
+                $("#save").linkbutton('disable');
+            }
+        }
+    });
+}
 // 获取物料列表
 function GetMaterialList(organizationId) {
     var queryUrl = 'MaterialList.aspx/GetMaterialList';

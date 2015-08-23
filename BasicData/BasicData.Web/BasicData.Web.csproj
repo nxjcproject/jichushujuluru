@@ -50,6 +50,7 @@
       <HintPath>..\..\Lib\mDbDataAdaper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -1763,6 +1764,7 @@
   <ItemGroup>
     <Content Include="lib\pllib\syntaxhighlighter\LGPL-LICENSE" />
     <Content Include="lib\pllib\syntaxhighlighter\MIT-LICENSE" />
+    <Fakes Include="Fakes\SqlServerDataAdapter.fakes" />
     <None Include="Properties\PublishProfiles\BasicData.pubxml" />
     <None Include="Properties\PublishProfiles\my.pubxml" />
     <None Include="Properties\PublishProfiles\NXJC.pubxml" />
