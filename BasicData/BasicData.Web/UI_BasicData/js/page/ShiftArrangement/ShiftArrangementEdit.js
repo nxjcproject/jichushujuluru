@@ -2,7 +2,7 @@
 var editIndex = undefined;
 $(function () {
     initDatagrid();
-    //initPageAuthority();
+    initPageAuthority();
 });
 //初始化页面的增删改查权限
 function initPageAuthority() {
