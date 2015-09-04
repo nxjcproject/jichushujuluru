@@ -31,7 +31,7 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             {
                 throw new Exception("无该组织机构对应的电表数据库");
             }
-            string mySql = @"select A.OrganizationID,A.LevelCode,A.AmmeterNumber,rtrim(ltrim(B.AmmeterName)) as AmmeterName,rtrim(ltrim(B.ElectricRoom)) as ElectricRoom
+            string mySql = @"select A.OrganizationID,A.LevelCode,A.AmmeterNumber,A.Remarks,rtrim(ltrim(B.AmmeterName)) as AmmeterName,rtrim(ltrim(B.ElectricRoom)) as ElectricRoom
                                 from [{0}].[dbo].[AmmeterModifyCoefficientReference] A 
                                 left join [{0}].[dbo].[AmmeterContrast] B
                                 on A.OrganizationID=B.OrganizationID

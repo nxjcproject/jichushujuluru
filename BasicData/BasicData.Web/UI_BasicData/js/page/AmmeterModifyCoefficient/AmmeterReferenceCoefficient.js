@@ -23,7 +23,8 @@ function loadDataGrid(data, type) {
             columns: [[
                 { field: 'AmmeterNumber', title: '电表编号', width: 130 },
                 { field: 'ElectricRoom', title: '电气室', width: 120 },
-                { field: 'AmmeterName', title: '电表名称', width: 120 },
+                { field: 'AmmeterName', title: '电表名称', width: 120 },//
+                { field: 'Remarks', title: '备注', width: 120 },
                 { field: 'AmmeterAddress', title: '表地址', width: 70 },
                 { field: 'PT', title: '电压变比', width: 70 },
                 { field: 'CT', title: '电流变比', width: 70 },

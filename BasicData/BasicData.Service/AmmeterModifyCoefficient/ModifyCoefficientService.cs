@@ -48,7 +48,7 @@ namespace BasicData.Service.AmmeterModifyCoefficient
             {
                 meterDatabase = t_table.Rows[0]["MeterDatabase"].ToString().Trim();
             }
-            string myFieldSql = @"select A.LevelCode,A.OrganizationID, A.AmmeterNumber, B.AmmeterName, B.ElectricRoom, B.CommunicationProtocol, B.AmmeterAddress, 
+            string myFieldSql = @"select A.LevelCode,A.OrganizationID, A.AmmeterNumber,A.Remarks,B.AmmeterName, B.ElectricRoom, B.CommunicationProtocol, B.AmmeterAddress, 
                                     B.CommPort, B.CT,B.PT, B.PowerFieldNameSave, B.Status
                                     from {0}.dbo.AmmeterModifyCoefficientReference A left join {0}.dbo.AmmeterContrast B
                                     on ( A.OrganizationID=B.OrganizationID
