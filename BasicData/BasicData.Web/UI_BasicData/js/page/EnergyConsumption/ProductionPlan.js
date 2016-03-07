@@ -1,7 +1,6 @@
 ﻿var editIndex = undefined;
 var PlanYearCurrentDataGrid;                //当前datagrid显示的计划年
 var OrganizationIdCurrentDataGrid;            //当前datagrid显示的组织机构
-var ProductionLineTypeCurrentDataGrid;        //当前datagrid显示的产线类型
 var PlanType;                                 //计划类型
 $(document).ready(function () {
     //LoadProductionType('first');
@@ -10,14 +9,15 @@ $(document).ready(function () {
     //$('#TextBox_OrganizationId').textbox('hide');
     PlanType = $('#HiddenField_PlanType').val();
     SetYearValue();
-    LoadEnergyConsumptionData('first');
+
+    LoadProductionPlanData('first');
     initPageAuthority();
 });
 //初始化页面的增删改查权限
 function initPageAuthority() {
     $.ajax({
         type: "POST",
-        url: "EnergyConsumptionPlan.aspx/AuthorityControl",
+        url: "ProductionPlan.aspx/AuthorityControl",
         data: "",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -43,43 +43,42 @@ function onOrganisationTreeClick(myNode) {
     //alert(myNode.text);
     $('#TextBox_OrganizationId').attr('value', myNode.OrganizationId);  //textbox('setText', myNode.OrganizationId);
     $('#TextBox_OrganizationText').textbox('setText', myNode.text);
-    $('#TextBox_OrganizationType').textbox('setText', myNode.OrganizationType);
+    //$('#TextBox_OrganizationType').textbox('setText', myNode.OrganizationType);
 }
 function SetYearValue() {
     var m_PlanYear = new Date().getFullYear();
     $('#numberspinner_PlanYear').numberspinner('setValue', m_PlanYear);
 }
-function QueryEnergyConsumptionPlanInfoFun() {
+function QueryProductionPlanInfoFun() {
     endEditing();           //关闭正在编辑
 
     var m_OrganizationId = $('#TextBox_OrganizationId').val();
     var m_PlanYear = $('#numberspinner_PlanYear').numberspinner('getValue');
-    var m_OrganizationType = $('#TextBox_OrganizationType').textbox('getText');
+    //var m_ProductionPlanType = $('#drpDisplayType').combobox('select');
     PlanYearCurrentDataGrid = m_PlanYear;
     OrganizationIdCurrentDataGrid = m_OrganizationId;
-    ProductionLineTypeCurrentDataGrid = m_OrganizationType;
-    if (m_OrganizationType != "" && m_OrganizationId != "") {
-        LoadEnergyConsumptionData('last');
+    if (m_OrganizationId != "") {
+        LoadProductionPlanData('last');
     }
     else {
         alert("请选择正确的产线!");
     }
 }
-function LoadEnergyConsumptionData(myLoadType) {
+function LoadProductionPlanData(myLoadType) {
     var m_OrganizationId = $('#TextBox_OrganizationId').val();
     var m_PlanYear = $('#numberspinner_PlanYear').numberspinner('getValue');
-    var m_OrganizationType = $('#TextBox_OrganizationType').textbox('getText');
-    var m_GridCommonName = "EnergyConsumptionPlanInfo";
+    var m_ProductionPlanType = $('#drpDisplayType').combobox('getValue');
+    var m_GridCommonName = "ProductionPlanInfo";
     $.ajax({
         type: "POST",
-        url: "EnergyConsumptionPlan.aspx/GetEnergyConsumptionInfo",
-        data: "{myProductionLineType:'" + m_OrganizationType + "',myOrganizationId:'" + m_OrganizationId + "',myPlanYear:'" + m_PlanYear + "',myPlanType:'" + PlanType + "'}",
+        url: "ProductionPlan.aspx/GetProductionPlanInfo",
+        data: "{myProductionPlanType:'" + m_ProductionPlanType + "',myOrganizationId:'" + m_OrganizationId + "',myPlanYear:'" + m_PlanYear + "',myPlanType:'" + PlanType + "'}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             var m_MsgData = jQuery.parseJSON(msg.d);
             if (myLoadType == 'first') {
-                InitializeEnergyConsumptionGrid(m_GridCommonName, m_MsgData);
+                InitializeProductionPlanGrid(m_GridCommonName, m_MsgData);
             }
             else if (myLoadType == 'last') {
                 $('#grid_' + m_GridCommonName).datagrid('loadData', m_MsgData);
@@ -87,18 +86,19 @@ function LoadEnergyConsumptionData(myLoadType) {
         }
     });
 }
-function RefreshEnergyConsumptionPlanFun() {
-    QueryEnergyConsumptionPlanInfoFun();
+function RefreshProductionPlanFun() {
+    QueryProductionPlanInfoFun();
 }
-function SaveEnergyConsumptionPlanFun() {
+function SaveProductionPlanFun() {
     endEditing();           //关闭正在编辑
-    var m_DataGridData = $('#grid_EnergyConsumptionPlanInfo').datagrid('getData');
+    var m_DataGridData = $('#grid_ProductionPlanInfo').datagrid('getData');
+    var m_ProductionPlanType = $('#drpDisplayType').combobox('getValue');
     if (m_DataGridData['rows'].length > 0) {
         var m_DataGridDataJson = '{"rows":' + JSON.stringify(m_DataGridData['rows']) + '}';
         $.ajax({
             type: "POST",
-            url: "EnergyConsumptionPlan.aspx/SetEnergyConsumptionInfo",
-            data: "{myOrganizationId:'" + OrganizationIdCurrentDataGrid + "',myPlanYear:'" + PlanYearCurrentDataGrid + "',myProductionLineType:'" + ProductionLineTypeCurrentDataGrid + "',myPlanType:'" + PlanType + "',myDataGridData:'" + m_DataGridDataJson + "',myPlanType:'" + PlanType + "'}",
+            url: "ProductionPlan.aspx/SetProductionPlanInfo",
+            data: "{myOrganizationId:'" + OrganizationIdCurrentDataGrid + "',myPlanYear:'" + PlanYearCurrentDataGrid + "',myPlanType:'" + PlanType + "',myProductionPlanType:'" + m_ProductionPlanType + "',myDataGridData:'" + m_DataGridDataJson + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
@@ -126,9 +126,9 @@ function SaveEnergyConsumptionPlanFun() {
     }
 }
 //////////////////////////////////初始化基础数据//////////////////////////////////////////
-function InitializeEnergyConsumptionGrid(myGridId, myData) {
+function InitializeProductionPlanGrid(myGridId, myData) {
 
-    var m_IdColumn = myData['columns'].splice(0, 1);
+    var m_IdColumn = myData['columns'].splice(0, 2);
     $('#grid_' + myGridId).datagrid({
         title: '',
         data: myData,
@@ -150,10 +150,10 @@ function InitializeEnergyConsumptionGrid(myGridId, myData) {
 }
 function endEditing() {
     if (editIndex == undefined) { return true }
-    if ($('#grid_EnergyConsumptionPlanInfo').datagrid('validateRow', editIndex)) {
-        $('#grid_EnergyConsumptionPlanInfo').datagrid('endEdit', editIndex);
+    if ($('#grid_ProductionPlanInfo').datagrid('validateRow', editIndex)) {
+        $('#grid_ProductionPlanInfo').datagrid('endEdit', editIndex);
 
-        //MathSumColumnsValue('grid_EnergyConsumptionPlanInfo', editIndex);             //计算合计列
+        //MathSumColumnsValue('grid_ProductionPlanInfo', editIndex);             //计算合计列
         editIndex = undefined;
         return true;
     } else {
@@ -163,14 +163,14 @@ function endEditing() {
 
 function onClickCell(index, field) {
     if (endEditing()) {
-        //var m_Rows = $('#grid_EnergyConsumptionPlanInfo').datagrid("getRows")
+        //var m_Rows = $('#grid_ProductionPlanInfo').datagrid("getRows")
         //var m_Formula = m_Rows[index]["StatisticalFormula"];         //屏蔽根据行的内容进行计算的行，这些行自动改变值
         //if (m_Formula.indexOf("{Line|") == -1) {
-            $('#grid_EnergyConsumptionPlanInfo').datagrid('selectRow', index)
-                            .datagrid('editCell', { index: index, field: field });
-            editIndex = index;
-//
-       //     SelectedTagValue = GetTagValue('grid_EnergyConsumptionPlanInfo', index);
+        $('#grid_ProductionPlanInfo').datagrid('selectRow', index)
+                        .datagrid('editCell', { index: index, field: field });
+        editIndex = index;
+        //
+        //     SelectedTagValue = GetTagValue('grid_ProductionPlanInfo', index);
         //}
     }
 }
@@ -184,7 +184,7 @@ function MathSumColumnsValue(myDataGridId, editIndex) {
         var m_Value = Number(m_Rows[editIndex][m_Field]);
         if (m_Value != "" && m_Value != null && m_Value != undefined && m_Value != NaN) {
             m_SumValue = m_SumValue + m_Value;
-        }        
+        }
     }
     m_Rows[editIndex]["Totals"] = m_SumValue.toString();
     $('#' + myDataGridId).datagrid("refreshRow", editIndex);

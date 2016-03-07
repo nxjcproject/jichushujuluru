@@ -10,14 +10,14 @@ using BasicData.Infrastructure.Configuration;
 using BasicData.Service.BasicService;
 using SqlServerDataAdapter;
 
+
 namespace BasicData.Service.EnergyConsumption
 {
-    public class EnergyConsumptionPlan
+    public class ProductionPlan
     {
         private static readonly string _connStr = ConnectionStringFactory.NXJCConnectionString;
         private static readonly ISqlServerDataFactory _dataFactory = new SqlServerDataFactory(_connStr);
         private static readonly BasicDataHelper _dataHelper = new BasicDataHelper(_connStr);
-
         /// <summary>
         /// 根据产线Id，产线类型和年份获得年计划
         /// </summary>
@@ -25,40 +25,47 @@ namespace BasicData.Service.EnergyConsumption
         /// <param name="myOrganizationId">产线ID</param>
         /// <param name="myPlanYear">年计划的年份</param>
         /// <returns></returns>
-        public static DataTable GetEnergyConsumptionInfo(string myProductionLineType, string myOrganizationId, string myPlanYear, string myPlanType)
+        public static DataTable GetProductionPlanInfo(string myProductionPlanType, string myOrganizationId, string myPlanYear, string myPlanType)
         {
-            string m_Sql = @"Select
-                    A.QuotasID as QuotasID,  
-                    A.QuotasName as QuotasName,
-                    B.January as January,
-                    B.February as February,
-                    B.March as March,
-                    B.April as April,
-                    B.May as May,
-                    B.June as June,
-                    B.July as July,
-                    B.August as August,
-                    B.September as September,
-                    B.October as October,
-                    B.November as November,
-                    B.December as December,
-                    B.Totals as Totals,
-                    B.Remarks as Remarks
-                    from plan_EnergyConsumptionPlan_Template A 
-                    left join 
-					    (select C.*
-							   from plan_EnergyConsumptionYearlyPlan C, tz_Plan D
-							   where C.KeyID = D.KeyID
-							   and D.OrganizationID=@OrganizationID
-							   and D.Date=@Date
-							   and D.ProductionLineType = @ProductionLineType
-                               and D.PlanType = @PlanType) B on A.QuotasID = B.QuotasID
-                    where A.ProductionLineType = @ProductionLineType
-                    and (A.OrganizationID is null or A.OrganizationID = @OrganizationID)
-					order by A.DisplayIndex";
+            string m_Sql = @"Select M.QuotasID, 
+                M.EquipmentId, 
+	            M.QuotasName,
+	            N.January as January,
+	            N.February as February,
+	            N.March as March,
+	            N.April as April,
+	            N.May as May,
+	            N.June as June,
+	            N.July as July,
+	            N.August as August,
+	            N.September as September,
+	            N.October as October,
+	            N.November as November,
+	            N.December as December,
+	            N.Totals as Totals,
+	            N.Remarks as Remarks
+	            from (Select
+                            A.QuotasID as QuotasID,
+                            B.EquipmentId as EquipmentId,  
+                            B.EquipmentName + A.QuotasName as QuotasName,
+				            A.DisplayIndex as TemplateIndex,
+				            B.DisplayIndex as EquipmentIndex   
+                            from plan_ProductionPlan_Template A,
+                            equipment_EquipmentDetail B            
+                            where A.Type = @Type
+                            and (A.OrganizationID is null or A.OrganizationID = @OrganizationID)
+                            and B.OrganizationID = @OrganizationID
+                            and A.EquipmentCommonId = B.EquipmentCommonId) M
+	            left join (select C.*
+				            from plan_ProductionYearlyPlan C, tz_Plan D
+				            where C.KeyID = D.KeyID
+				            and D.OrganizationID=@OrganizationID
+				            and D.Date=@Date
+                            and D.PlanType = @PlanType) N on M.EquipmentId = N.EquipmentId and M.QuotasID = N.QuotasID
+	            order by M.EquipmentIndex, M.TemplateIndex";
             try
             {
-                SqlParameter[] m_Parameters = { new SqlParameter("@ProductionLineType", myProductionLineType), 
+                SqlParameter[] m_Parameters = { new SqlParameter("@Type", myProductionPlanType), 
                                                   new SqlParameter("@OrganizationID", myOrganizationId), 
                                                   new SqlParameter("@PlanType", myPlanType), 
                                                   new SqlParameter("@Date", myPlanYear) };
@@ -87,7 +94,7 @@ namespace BasicData.Service.EnergyConsumption
         /// <param name="myDataTableName">数据表的名称</param>
         /// <param name="myDataTable">数据表内容</param>
         /// <returns></returns>
-        public static int SaveEnergyConsumptionInfo(string myDataTableName, DataTable myDataTable)
+        public static int SaveProductionPlanInfo(string myDataTableName, DataTable myDataTable)
         {
             return _dataFactory.Save(myDataTableName, myDataTable);
         }
@@ -96,10 +103,10 @@ namespace BasicData.Service.EnergyConsumption
         /// </summary>
         /// <param name="myKeyId">KeyId</param>
         /// <returns>是否删除成功</returns>
-        public static int DeleteEnergyConsumptionInfo(string myKeyId)
+        public static int DeleteProductionPlanInfo(string myKeyId, string myProductionPlanType)
         {
-            string m_Sql = @"DELETE FROM plan_EnergyConsumptionYearlyPlan where KeyId=@KeyId";
-            SqlParameter[] m_Parameters = { new SqlParameter("@KeyId", myKeyId) };
+            string m_Sql = @"DELETE FROM plan_ProductionYearlyPlan where KeyId=@KeyId and QuotasID in (Select A.QuotasID as QuotasID from plan_ProductionPlan_Template A where Type = @Type)";
+            SqlParameter[] m_Parameters = { new SqlParameter("@KeyId", myKeyId), new SqlParameter("@Type", myProductionPlanType) };
             try
             {
                 return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
@@ -116,10 +123,10 @@ namespace BasicData.Service.EnergyConsumption
         /// <param name="myOrganizationId">组织机构id</param>
         /// <param name="myProductionLineType">生产线类型</param>
         /// <returns>KeyId</returns>
-        public static string GetKeyIdFromTz(string myPlanYear, string myOrganizationId, string myProductionLineType, string myPlanType)
+        public static string GetKeyIdFromTz(string myPlanYear, string myOrganizationId, string myPlanType)
         {
-            string m_Sql = @"Select A.KeyID as KeyId FROM tz_Plan A where A.OrganizationID=@OrganizationID and A.Date=@Date and A.ProductionLineType=@ProductionLineType and A.PlanType = @PlanType";
-            SqlParameter[] m_Parameters = { new SqlParameter("@OrganizationID", myOrganizationId), new SqlParameter("@Date", myPlanYear), new SqlParameter("@ProductionLineType", myProductionLineType), new SqlParameter("@PlanType", myPlanType)};
+            string m_Sql = @"Select A.KeyID as KeyId FROM tz_Plan A where A.OrganizationID=@OrganizationID and A.Date=@Date and A.PlanType=@PlanType";
+            SqlParameter[] m_Parameters = { new SqlParameter("@OrganizationID", myOrganizationId), new SqlParameter("@Date", myPlanYear), new SqlParameter("@PlanType", myPlanType) };
             try
             {
                 DataTable m_DataTable = _dataFactory.Query(m_Sql, m_Parameters);
@@ -144,16 +151,15 @@ namespace BasicData.Service.EnergyConsumption
                 return "";
             }
         }
-        public static int InsertTzPlan(string myKeyId, string myOrganizationId, string myProductionLineType, string myPlanYear, string myModifierId, string myPlanType)
+        public static int InsertTzPlan(string myKeyId, string myOrganizationId, string myPlanYear, string myModifierId, string myPlanType)
         {
             string m_Sql = @" Insert into tz_Plan 
-                ( KeyID, OrganizationID, Date, ProductionLineType, PlanType, TableName, CreationDate, Version, ModifierID, Statue, Remarks) 
+                ( KeyID, OrganizationID, Date, PlanType, TableName, CreationDate, Version, ModifierID, Statue, Remarks) 
                 values
-                (@KeyID, @OrganizationID, @Date, @ProductionLineType, @PlanType, @TableName, @CreationDate, @Version, @ModifierID, @Statue, @Remarks)";
+                (@KeyID, @OrganizationID, @Date, @PlanType, @TableName, @CreationDate, @Version, @ModifierID, @Statue, @Remarks)";
             SqlParameter[] m_Parameters = { new SqlParameter("@KeyID", myKeyId),
                                           new SqlParameter("@OrganizationID", myOrganizationId),
                                           new SqlParameter("@Date", myPlanYear),
-                                          new SqlParameter("@ProductionLineType", myProductionLineType),
                                           new SqlParameter("@PlanType", myPlanType),
                                           new SqlParameter("@TableName", "plan_EnergyConsumptionYearlyPlan"),
                                           new SqlParameter("@CreationDate", DateTime.Now),

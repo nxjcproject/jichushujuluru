@@ -9,9 +9,10 @@ using System.Data;
 using System.Web.Services;
 using WebStyleBaseForEnergy;
 
+
 namespace BasicData.Web.UI_BasicData.EnergyConsumption
 {
-    public partial class EnergyConsumptionPlan : WebStyleBaseForEnergy.webStyleBase
+    public partial class ProductionPlan : WebStyleBaseForEnergy.webStyleBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,16 +20,16 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             if (!IsPostBack)
             {
                 ////////////////////调试用,自定义的数据授权
-                #if DEBUG
+#if DEBUG
                 List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_ychc" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
                 mPageOpPermission = "1111";
-                #elif RELEASE
-                #endif
+#elif RELEASE
+#endif
                 this.OrganisationTree_ProductionLine.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
-                this.OrganisationTree_ProductionLine.PageName = "EnergyConsumptionPlan.aspx";                                     //向web用户控件传递当前调用的页面名称
-                HiddenField_PlanType.Value = "Energy";    //HttpContext.Current.Request.QueryString["id"];
-                //this.OrganisationTree_ProductionLine.LeveDepth = 7;
+                this.OrganisationTree_ProductionLine.PageName = "ProductionPlan.aspx";                                     //向web用户控件传递当前调用的页面名称
+                HiddenField_PlanType.Value = "Production";    //HttpContext.Current.Request.QueryString["id"];
+                this.OrganisationTree_ProductionLine.LeveDepth = 5;
             }
         }
         /// <summary>
@@ -41,11 +42,11 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             return mPageOpPermission.ToArray();
         }
         [WebMethod]
-        public static string GetEnergyConsumptionInfo(string myProductionLineType, string myOrganizationId, string myPlanYear, string myPlanType)
+        public static string GetProductionPlanInfo(string myProductionPlanType, string myOrganizationId, string myPlanYear, string myPlanType)
         {
-            string[] m_ColumnText = new string[] { "指标项ID", "指标项目名称", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月", "年度合计", "备注" };
-            int[] m_ColumnWidth = new int[] { 180, 180, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 100, 180 };
-            string[] m_FormatString = new string[] { "", "", "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
+            string[] m_ColumnText = new string[] { "指标项ID", "主要设备ID", "指标项目名称", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月", "年度合计", "备注" };
+            int[] m_ColumnWidth = new int[] { 180, 180, 180, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 100, 180 };
+            string[] m_FormatString = new string[] { "", "", "", "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
                 "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
                 "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
                 "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}", 
@@ -60,27 +61,28 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                 "\"type\":\"numberbox\", \"options\":{\"precision\":\"2\"}",
                 "\"type\":\"textbox\", \"options\":{\"validType\":\"length[0,200]\", \"invalidMessage\":\"不能超过200个字符!\"}" };
 
-            DataTable m_EnergyConsumptionInfo = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetEnergyConsumptionInfo(myProductionLineType, myOrganizationId, myPlanYear, myPlanType);
-            string m_Rows = EasyUIJsonParser.DataGridJsonParser.GetDataRowJson(m_EnergyConsumptionInfo);
+            DataTable m_ProductionPlanInfo = BasicData.Service.EnergyConsumption.ProductionPlan.GetProductionPlanInfo(myProductionPlanType, myOrganizationId, myPlanYear, myPlanType);
+
+            string m_Rows = EasyUIJsonParser.DataGridJsonParser.GetDataRowJson(m_ProductionPlanInfo);
             StringBuilder m_Columns = new StringBuilder();
             if (m_Rows == "")
             {
                 m_Rows = "\"rows\":[],\"total\":0";
             }
             m_Columns.Append("\"columns\":[");
-            for (int i = 0; i < m_EnergyConsumptionInfo.Columns.Count; i++)
+            for (int i = 0; i < m_ProductionPlanInfo.Columns.Count; i++)
             {
                 m_Columns.Append("{");
                 m_Columns.Append("\"width\":\"" + m_ColumnWidth[i] + "\"");
                 m_Columns.Append(", \"title\":\"" + m_ColumnText[i] + "\"");
-                m_Columns.Append(", \"field\":\"" + m_EnergyConsumptionInfo.Columns[i].ColumnName.ToString() + "\"");
+                m_Columns.Append(", \"field\":\"" + m_ProductionPlanInfo.Columns[i].ColumnName.ToString() + "\"");
                 if (m_FormatString[i] != "")
                 {
                     m_Columns.Append(", \"editor\":{" + m_FormatString[i] + "}");
                 }
 
                 m_Columns.Append("}");
-                if (i < m_EnergyConsumptionInfo.Columns.Count - 1)
+                if (i < m_ProductionPlanInfo.Columns.Count - 1)
                 {
                     m_Columns.Append(",");
                 }
@@ -90,25 +92,39 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             return "{" + m_Rows + "," + m_Columns + "}";
         }
         [WebMethod]
-        public static string SetEnergyConsumptionInfo(string myOrganizationId, string myPlanYear, string myProductionLineType, string myPlanType, string myDataGridData)
+        public static string SetProductionPlanInfo(string myOrganizationId, string myPlanYear, string myPlanType, string myProductionPlanType, string myDataGridData)
         {
             if (mPageOpPermission.ToArray()[2] == '1')
             {
-                DataTable m_DataGridDataStruct = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.CreateTableStructure("plan_EnergyConsumptionYearlyPlan");
+                DataTable m_DataGridDataStruct = BasicData.Service.EnergyConsumption.ProductionPlan.CreateTableStructure("plan_ProductionYearlyPlan");
                 //m_DataGridDataStruct.Columns.Remove("QuotasItemID");       //去掉ID列，此列的数据由数据库自动生成
                 string[] m_DataGridDataGroup = EasyUIJsonParser.Utility.JsonPickArray(myDataGridData, "rows");
                 DataTable m_DataGridData = EasyUIJsonParser.DataGridJsonParser.JsonToDataTable(m_DataGridDataGroup, m_DataGridDataStruct);
+                if (m_DataGridData != null)
+                {
+                    for (int i = 0; i < m_DataGridData.Rows.Count; i++)
+                    {
+                        m_DataGridData.Rows[i]["Totals"] = 0;
+                        for (int j = 0; j < 12; j++)
+                        {
+                            if (m_DataGridData.Rows[i][j + 6] != DBNull.Value)
+                            {
+                                m_DataGridData.Rows[i]["Totals"] = (decimal)m_DataGridData.Rows[i]["Totals"] + (decimal)m_DataGridData.Rows[i][j + 6];
+                            }
+                        }
+                    }
+                }
                 ///////////////tz表里查找是否已经存在////////////////
-                string m_KeyId = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myProductionLineType, myPlanType);
+                string m_KeyId = BasicData.Service.EnergyConsumption.ProductionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myPlanType);
                 if (m_KeyId != "")               //表示计划已经存在
                 {
-                    BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
+                    BasicData.Service.EnergyConsumption.ProductionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
                 }
                 else
                 {
                     m_KeyId = Guid.NewGuid().ToString();
                     //添加TZ引领
-                    BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.InsertTzPlan(m_KeyId, myOrganizationId, myProductionLineType, myPlanYear, mUserId, myPlanType);
+                    BasicData.Service.EnergyConsumption.ProductionPlan.InsertTzPlan(m_KeyId, myOrganizationId, myPlanYear, mUserId, myPlanType);
                 }
 
                 for (int i = 0; i < m_DataGridData.Rows.Count; i++)
@@ -117,10 +133,9 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                     m_DataGridData.Rows[i]["QuotasItemID"] = m_QuotasItemID;
                     m_DataGridData.Rows[i]["KeyID"] = m_KeyId;
                     m_DataGridData.Rows[i]["DisplayIndex"] = (i + 1).ToString();
-                    m_DataGridData.Rows[i]["ProductionLineType"] = myProductionLineType;
                 }
-                BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.DeleteEnergyConsumptionInfo(m_KeyId);
-                int ReturnValue = BasicData.Service.EnergyConsumption.EnergyConsumptionPlan.SaveEnergyConsumptionInfo("plan_EnergyConsumptionYearlyPlan", m_DataGridData);
+                BasicData.Service.EnergyConsumption.ProductionPlan.DeleteProductionPlanInfo(m_KeyId, myProductionPlanType);
+                int ReturnValue = BasicData.Service.EnergyConsumption.ProductionPlan.SaveProductionPlanInfo("plan_ProductionYearlyPlan", m_DataGridData);
                 ReturnValue = ReturnValue > 0 ? 1 : ReturnValue;
                 return ReturnValue.ToString();
             }

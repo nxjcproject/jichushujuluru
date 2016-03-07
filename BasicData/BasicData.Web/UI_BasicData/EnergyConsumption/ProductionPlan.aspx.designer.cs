@@ -10,7 +10,16 @@
 namespace BasicData.Web.UI_BasicData.EnergyConsumption {
     
     
-    public partial class EnergyConsumptionPlan {
+    public partial class ProductionPlan {
+        
+        /// <summary>
+        /// Head1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
         /// OrganisationTree_ProductionLine 控件。
@@ -22,13 +31,13 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption {
         protected global::WebUserContorls.Web.UI_WebUserControls.OrganizationSelector.OrganisationTree OrganisationTree_ProductionLine;
         
         /// <summary>
-        /// form_EnergyConsumptionPlan 控件。
+        /// form_ProductionPlan 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form_EnergyConsumptionPlan;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form_ProductionPlan;
         
         /// <summary>
         /// HiddenField_PlanType 控件。
