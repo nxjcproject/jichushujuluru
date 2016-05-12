@@ -17,7 +17,7 @@ namespace BasicData.Web.UI_BasicData.MachineHaltReasons
         {
             base.InitComponts();
 #if DEBUG
-               mPageOpPermission="0000";
+               mPageOpPermission="1111";
 #endif
         }
 
@@ -44,7 +44,7 @@ namespace BasicData.Web.UI_BasicData.MachineHaltReasons
                 if (levelcode.Length > 3)
                     row["ParentID"] = levelcode.Substring(0, levelcode.Length - 2);
             }
-            return TreeGridJsonParser.DataTableToJson(dt, "MachineHaltReasonID", "ParentID", "ReasonItemID", "ReasonText", "Remarks", "Enabled");
+            return TreeGridJsonParser.DataTableToJson(dt, "MachineHaltReasonID", "ParentID", "ReasonItemID", "ReasonText", "ReasonStatisticsTypeId","Remarks", "Enabled");
         }
 
         [WebMethod]
@@ -59,6 +59,12 @@ namespace BasicData.Web.UI_BasicData.MachineHaltReasons
         {
             string m_ReasonItemId = System.Guid.NewGuid().ToString();
             return m_ReasonItemId;
+        }
+        [WebMethod]
+        public static string GetReasonStatisticsTypeData()
+        {
+            string m_ReasonStatisticsTypeValue = MachineHaltReasonsService.GetReasonStatisticsTypeInfo();
+            return m_ReasonStatisticsTypeValue;
         }
     }
 }

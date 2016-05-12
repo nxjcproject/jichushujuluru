@@ -74,6 +74,7 @@ namespace BasicData.Service.EnergyConsumption
             }
             catch (Exception e)
             {
+                var m_e = e;
                 return null;
             }
         }
@@ -154,9 +155,8 @@ namespace BasicData.Service.EnergyConsumption
         public static int InsertTzPlan(string myKeyId, string myOrganizationId, string myPlanYear, string myModifierId, string myPlanType)
         {
             string m_Sql = @" Insert into tz_Plan 
-                ( KeyID, OrganizationID, Date, PlanType, TableName, CreationDate, Version, ModifierID, Statue, Remarks) 
-                values
-                (@KeyID, @OrganizationID, @Date, @PlanType, @TableName, @CreationDate, @Version, @ModifierID, @Statue, @Remarks)";
+                ( KeyID, OrganizationID, Date, ProductionLineType, PlanType, TableName, CreationDate, Version, ModifierID, Statue, Remarks) 
+                select @KeyID, @OrganizationID, @Date, Type, @PlanType, @TableName, @CreationDate, @Version, @ModifierID, @Statue, @Remarks from system_Organization where OrganizationID = @OrganizationID";
             SqlParameter[] m_Parameters = { new SqlParameter("@KeyID", myKeyId),
                                           new SqlParameter("@OrganizationID", myOrganizationId),
                                           new SqlParameter("@Date", myPlanYear),

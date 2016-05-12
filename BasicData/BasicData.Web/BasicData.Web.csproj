@@ -51,6 +51,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="RunIndicators, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\组件\RunIndicators\RunIndicators\bin\Debug\RunIndicators.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -66,7 +70,8 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WebStyleBaseForEnergy">
+    <Reference Include="WebStyleBaseForEnergy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebStyleBaseForEnergy.dll</HintPath>
     </Reference>
     <Reference Include="WebUserContorls.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -1599,6 +1604,9 @@
     <Content Include="UI_BasicData\js\page\EnergyDataManualInput\EnergyDataManualInputContrast.js" />
     <Content Include="UI_BasicData\js\page\EquipmentAccount\EquipmentAccountEdit.js" />
     <Content Include="UI_BasicData\js\page\KpiDefinition\KpiList.js" />
+    <Content Include="UI_BasicData\js\page\KpiDefinition\KPIndexEnergy.js" />
+    <Content Include="UI_BasicData\js\page\KpiDefinition\KPIndexProduction.js" />
+    <Content Include="UI_BasicData\js\page\MachineHaltReasons\Edit.js" />
     <Content Include="UI_BasicData\js\page\MasterSlaveMachine\MasterSlaveMachinedescription.js" />
     <Content Include="UI_BasicData\js\page\Material\MaterialList.js" />
     <Content Include="UI_BasicData\js\page\Material\CoefficientUpdater.js" />
@@ -1608,6 +1616,8 @@
     <Content Include="UI_BasicData\js\page\ShiftArrangement\ShiftArrangementEdit.js" />
     <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
     <Content Include="UI_BasicData\KpiDefinition\KpiList.aspx" />
+    <Content Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx" />
+    <Content Include="UI_BasicData\KpiDefinition\KPIndexProduction.aspx" />
     <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
     <Content Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx" />
     <Content Include="UI_BasicData\Material\CoefficientUpdater.aspx" />
@@ -1708,6 +1718,20 @@
     <Compile Include="UI_BasicData\KpiDefinition\KpiList.aspx.designer.cs">
       <DependentUpon>KpiList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx.cs">
+      <DependentUpon>KPIndexEnergy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx.designer.cs">
+      <DependentUpon>KPIndexEnergy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KPIndexProduction.aspx.cs">
+      <DependentUpon>KPIndexProduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI_BasicData\KpiDefinition\KPIndexProduction.aspx.designer.cs">
+      <DependentUpon>KPIndexProduction.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1805,6 +1829,10 @@
     <Folder Include="UI_BasicData\js\common\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicData.Infrastructure\BasicData.Infrastructure.csproj">
+      <Project>{c27ee8fa-613a-4d6f-8db5-182c0c5793cf}</Project>
+      <Name>BasicData.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BasicData.Service\BasicData.Service.csproj">
       <Project>{c934ef88-3ad9-4437-a5ed-629a77871968}</Project>
       <Name>BasicData.Service</Name>

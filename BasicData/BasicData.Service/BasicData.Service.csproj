@@ -35,7 +35,8 @@
       <HintPath>..\..\Lib\EasyUIJsonParser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="RunIndicators">
+    <Reference Include="RunIndicators, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\组件\RunIndicators\RunIndicators\bin\Debug\RunIndicators.dll</HintPath>
     </Reference>
     <Reference Include="SqlServerDataAdapter">
@@ -68,7 +69,9 @@
     <Compile Include="EnergyConsumption\ProductionResult.cs" />
     <Compile Include="EnergyDataManualInput\EnergyDataManualInputService.cs" />
     <Compile Include="EquipmentAccount\EquipmentAccountService.cs" />
+    <Compile Include="KpiDefinition\KPIndexService.cs" />
     <Compile Include="KpiDefinition\KpiService.cs" />
+    <Compile Include="KpiDefinition\ProdunctionService.cs" />
     <Compile Include="MachineHaltReasons\MachineHaltReasonsService.cs" />
     <Compile Include="MasterSlaveMachine\MasterSlaveMachinedescription.cs" />
     <Compile Include="MasterSlaveMachine\OrganizationInstrumentation.cs" />

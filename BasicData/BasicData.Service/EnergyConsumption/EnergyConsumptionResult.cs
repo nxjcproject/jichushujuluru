@@ -101,11 +101,22 @@ namespace BasicData.Service.EnergyConsumption
                             from plan_EnergyConsumptionYearlyPlan, tz_Plan 
                             where plan_EnergyConsumptionYearlyPlan.KeyID = tz_Plan.KeyID 
                             and tz_Plan.Date = '{0}' and tz_Plan.OrganizationID='{1}'
+                            and tz_Plan.PlanType = 'Energy'
                             order by plan_EnergyConsumptionYearlyPlan.DisplayIndex";
                     m_Temp1Sql = string.Format(m_Temp1Sql, myPlanYear, Convert.ToString(dr["OrganizationID"]));
                     temp1 = _dataFactory.Query(m_Temp1Sql);
-                    if (temp1.Rows.Count > 0)  //存在计划
+                    if (temp1 !=null &&temp1.Rows.Count > 0)  //存在计划
                     {
+                        for (int m = 0; m < temp1.Rows.Count; m++)
+                        {
+                            for (int n = No_Col; n < No_Col + 13; n++)
+                            {
+                                if (temp1.Rows[m][n] == DBNull.Value)
+                                {
+                                    temp1.Rows[m][n] = 0.0d;
+                                }
+                            }
+                        }
                         if (Convert.ToInt32(dr["Type"]) == 1)
                         {   //孰料
                             //从生产线信息表中获得生熟料比v_RawBatchClinker
@@ -178,7 +189,9 @@ namespace BasicData.Service.EnergyConsumption
                             temp_dr["QuotasID"] = "水泥耗电量";
                             for (int i = No_Col; i < No_Col + 13; i++)
                             {  //1月到年度
-                                temp_dr[i] = Convert.ToDouble(temp1.Rows[No1_Row][i]) * Convert.ToDouble(temp1.Rows[No2_Row][i]);
+                                double m_Temp1No1 = temp1.Rows[No1_Row][i] != DBNull.Value ? Convert.ToDouble(temp1.Rows[No1_Row][i]) : 0;
+                                double m_Temp1No2 = temp1.Rows[No2_Row][i] != DBNull.Value ? Convert.ToDouble(temp1.Rows[No2_Row][i]) : 0;
+                                temp_dr[i] = m_Temp1No1 * m_Temp1No2;
                             }
                             temp1.Rows.Add(temp_dr);
 
@@ -188,7 +201,9 @@ namespace BasicData.Service.EnergyConsumption
                             temp_dr["QuotasID"] = "水泥磨耗电量";
                             for (int i = No_Col; i < No_Col + 13; i++)
                             {  //1月到年度
-                                temp_dr[i] = Convert.ToDouble(temp1.Rows[No1_Row][i]) * Convert.ToDouble(temp1.Rows[No2_Row][i]);
+                                double m_Temp1No1 = temp1.Rows[No1_Row][i] != DBNull.Value ? Convert.ToDouble(temp1.Rows[No1_Row][i]) : 0;
+                                double m_Temp1No2 = temp1.Rows[No2_Row][i] != DBNull.Value ? Convert.ToDouble(temp1.Rows[No2_Row][i]) : 0;
+                                temp_dr[i] = m_Temp1No1 * m_Temp1No2;
                             }
                             temp1.Rows.Add(temp_dr);
                         }
@@ -216,6 +231,19 @@ namespace BasicData.Service.EnergyConsumption
 
             //合并计划
             temp = EnergyConsumptionResultHelper.MyTotalOn(temp_plan, "QuotasID", "January,February,March,April,May,June,July,August,September,October,November,December,Totals");
+            if (temp != null)
+            {
+                for (int m = 0; m < temp.Rows.Count; m++)
+                {
+                    for (int n = No_Col; n < No_Col + 13; n++)
+                    {
+                        if (temp.Rows[m][n] == DBNull.Value)
+                        {
+                            temp.Rows[m][n] = 0.0d;
+                        }
+                    }
+                }
+            }
             if (EnergyConsumptionResultHelper.GetNoRow(temp, "QuotasID", "熟料产量") != -1)
             {  //存在熟料计划
                 //计算吨熟料发电量

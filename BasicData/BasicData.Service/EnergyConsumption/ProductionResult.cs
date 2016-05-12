@@ -25,10 +25,11 @@ namespace BasicData.Service.EnergyConsumption
         public static DataTable GetEquipmentInfo(string myOrganizationId)
         {
             string m_Sql = @"Select distinct A.EquipmentCommonId as EquipmentCommonId, 
-                A.EquipmentCommonId as EquipmentCommonName
-	            from equipment_EquipmentDetail A 
+                B.Name as EquipmentCommonName
+	            from equipment_EquipmentDetail A, equipment_EquipmentCommonInfo B
                 where A.OrganizationId = @OrganizationID
-                and A.Enabled = 1";
+                and A.Enabled = 1
+                and A.EquipmentCommonId = B.EquipmentCommonId";
             try
             {
                 SqlParameter[] m_Parameters = { new SqlParameter("@OrganizationID", myOrganizationId) };
@@ -103,7 +104,8 @@ namespace BasicData.Service.EnergyConsumption
 				            from plan_ProductionYearlyPlan C, tz_Plan D
 				            where C.KeyID = D.KeyID
 				            and D.OrganizationID=@OrganizationID
-				            and D.Date=@Date) N on M.EquipmentId = N.EquipmentId and M.QuotasID = N.QuotasID
+				            and D.Date=@Date
+                            and D.PlanType = 'Production') N on M.EquipmentId = N.EquipmentId and M.QuotasID = N.QuotasID
 	            order by M.EquipmentIndex, M.TemplateIndex";
             try
             {
@@ -123,44 +125,8 @@ namespace BasicData.Service.EnergyConsumption
         {
             if (myQuotasType == MaterialWeight && myProductionQuotasId.Contains("台时产量"))   //台时产量
             {
-                DataTable m_WeightTable = RunIndicators.MaterialWeightResult.GetMaterialWeightResultByDenominatorPerMonth(myProductionQuotasId, myOrganizationId, myPlanYear, myEquipmentCommonId, _dataFactory);
-                DataTable m_RunTimeTable = RunIndicators.EquipmentRunIndicators.GetEquipmentUtilizationPerMonth(myProductionQuotasId, myOrganizationId, myPlanYear, myEquipmentCommonId, _dataFactory);
-                if (m_WeightTable != null && m_RunTimeTable != null)
-                {
-                    bool m_ContainRunTimeRow = false;
-                    for (int i = 0; i < m_WeightTable.Rows.Count; i++)
-                    {
-                        m_ContainRunTimeRow = false;
-                        for (int j = 0; j < m_RunTimeTable.Rows.Count; j++)
-                        {
-                            if (m_WeightTable.Rows[i]["EquipmentId"].ToString() == m_RunTimeTable.Rows[i]["EquipmentId"].ToString())
-                            {
-                                for (int w = 1; w <= 12; w++)
-                                {
-                                    decimal m_m_RunTimeTemp = (decimal)m_RunTimeTable.Rows[i][w];
-                                    if (m_m_RunTimeTemp > 0)
-                                    {
-                                        m_WeightTable.Rows[i][w] = (decimal)m_WeightTable.Rows[i][w] / m_m_RunTimeTemp;
-                                    }
-                                    else
-                                    {
-                                        m_WeightTable.Rows[i][w] = 0.0m;
-                                    }
-                                }
-                                m_ContainRunTimeRow = true;
-                                break;
-                            }
-                        }
-                        if (m_ContainRunTimeRow == false)          //如果运行时间没有找到,则整行数据全都为0
-                        {
-                            for (int w = 1; w <= 12; w++)
-                            {
-                                m_WeightTable.Rows[i][w] = 0.0m;
-                            }
-                        }
-                    }
-                }
-                return m_WeightTable;
+                DataTable m_MachineHourCapacityTable = RunIndicators.EquipmentRunIndicators.GetMachineHourCapacityPerMonth(myProductionQuotasId, myOrganizationId, myPlanYear, myEquipmentCommonId, _dataFactory);
+                return m_MachineHourCapacityTable;
             }
             else if (myQuotasType == MaterialWeight)                 //产量
             {

@@ -20,7 +20,7 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             {
                 ////////////////////调试用,自定义的数据授权
 #if DEBUG
-                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_ychc" };
+                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc_byf", "zc_nxjc_ychc" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
                 mPageOpPermission = "1111";
 #elif RELEASE
@@ -62,15 +62,15 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             DataTable m_ProductionPlanInfo = BasicData.Service.EnergyConsumption.ProductionResult.GetProductionPlanInfo(myProductionQuotasId, myOrganizationId, myPlanYear, myEquipmentCommonId);
             if (m_ProductionPlanInfo != null)
             {
-                DataTable m_ProductionResultTable = BasicData.Service.EnergyConsumption.ProductionResult.GetProductionResultInfo(myProductionQuotasId, myQuotasType, myOrganizationId, myPlanYear, myEquipmentCommonId);;
-               
+                DataTable m_ProductionResultTable = BasicData.Service.EnergyConsumption.ProductionResult.GetProductionResultInfo(myProductionQuotasId, myQuotasType, myOrganizationId, myPlanYear, myEquipmentCommonId); ;
+
                 int m_TableRowCount = m_ProductionPlanInfo.Rows.Count;
                 for (int i = 0; i < m_TableRowCount; i++)
                 {
                     DataRow m_DataRow = m_ProductionPlanInfo.NewRow();
                     m_DataRow[3] = "实绩";
                     bool m_ContainProductionResultTemp = false;
-                    if(m_ProductionResultTable != null)
+                    if (m_ProductionResultTable != null)
                     {
                         for (int j = 0; j < m_ProductionResultTable.Rows.Count; j++)
                         {
@@ -79,8 +79,9 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                                 m_DataRow[16] = 0;
                                 for (int z = 0; z < 12; z++)
                                 {
-                                    m_DataRow[z + 4] = m_ProductionResultTable.Rows[j][z + 1];
-                                    m_DataRow[16] = (decimal)m_ProductionResultTable.Rows[j][z + 1] + (decimal)m_DataRow[16];
+                                    decimal m_ProductionResultData = m_ProductionResultTable.Rows[j][z + 1] != DBNull.Value ? (decimal)m_ProductionResultTable.Rows[j][z + 1] : 0.0m;
+                                    m_DataRow[z + 4] = m_ProductionResultData;
+                                    m_DataRow[16] = m_ProductionResultData + (decimal)m_DataRow[16];
                                 }
                                 m_ContainProductionResultTemp = true;
                                 break;
@@ -95,7 +96,7 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                             m_DataRow[z + 4] = 0;
                         }
                     }
-                    
+
                     m_ProductionPlanInfo.Rows.InsertAt(m_DataRow, i * 2 + 1);
                 }
             }

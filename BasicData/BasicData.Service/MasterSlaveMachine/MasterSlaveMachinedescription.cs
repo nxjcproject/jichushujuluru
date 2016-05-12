@@ -97,6 +97,7 @@ namespace BasicData.Service.MasterSlaveMachine
             }
             catch (Exception e)
             {
+                var m_e = e;
                 return -1;
             }
         }
@@ -289,6 +290,7 @@ namespace BasicData.Service.MasterSlaveMachine
             }
             catch (Exception e)
             {
+                var m_e = e;
                 return -1;
             }
         }

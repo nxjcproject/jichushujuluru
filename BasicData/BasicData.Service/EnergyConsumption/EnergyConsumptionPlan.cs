@@ -55,6 +55,7 @@ namespace BasicData.Service.EnergyConsumption
                                and D.PlanType = @PlanType) B on A.QuotasID = B.QuotasID
                     where A.ProductionLineType = @ProductionLineType
                     and (A.OrganizationID is null or A.OrganizationID = @OrganizationID)
+                    and A.PlanType = @PlanType
 					order by A.DisplayIndex";
             try
             {
@@ -67,6 +68,7 @@ namespace BasicData.Service.EnergyConsumption
             }
             catch (Exception e)
             {
+                var m_e = e;
                 return null;
             }
         }

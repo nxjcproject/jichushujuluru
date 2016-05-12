@@ -116,7 +116,7 @@
                         <option value="InternationalStandard">国际标准</option>
                         <option value="NationalStandard">国家标准</option>
                         <option value="IndustryStandard">行业标准</option>
-                        <option value="EnterpriseStandard">企业标准</option>
+                        <option value="EnterpriseStandard">企业标准</option> 
                     </select>
 	    		</td>
 	    	</tr>
