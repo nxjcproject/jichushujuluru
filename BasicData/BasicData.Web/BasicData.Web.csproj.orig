@@ -1613,9 +1613,13 @@
     <Content Include="UI_BasicData\js\page\ShiftArrangement\ShiftArrangementEdit.js" />
     <Content Include="UI_BasicData\Material\WorkingTeamAndShift\Edit.js" />
     <Content Include="UI_BasicData\KpiDefinition\KpiList.aspx" />
+<<<<<<< HEAD
     <Content Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx" />
     <Content Include="UI_BasicData\KpiDefinition\KPIndexProduction.aspx" />
     <Content Include="UI_BasicData\MachineHaltReasons\Edit.aspx" />
+=======
+    <Content Include="UI_BasicData\Material\MachineHaltReasons\Edit.aspx" />
+>>>>>>> efefa8e2df72d0acc66f95f86559fe64ea48da27
     <Content Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx" />
     <Content Include="UI_BasicData\Material\CoefficientUpdater.aspx" />
     <Content Include="UI_BasicData\Material\MaterialList.aspx" />
@@ -1716,6 +1720,7 @@
     <Compile Include="UI_BasicData\KpiDefinition\KpiList.aspx.designer.cs">
       <DependentUpon>KpiList.aspx</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx.cs">
       <DependentUpon>KPIndexEnergy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1731,6 +1736,9 @@
       <DependentUpon>KPIndexProduction.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.cs">
+=======
+    <Compile Include="UI_BasicData\Material\MachineHaltReasons\Edit.aspx.cs">
+>>>>>>> efefa8e2df72d0acc66f95f86559fe64ea48da27
       <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
