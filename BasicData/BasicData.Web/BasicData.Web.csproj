@@ -78,6 +78,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebUserContorls.Web.dll</HintPath>
     </Reference>
+    <Reference Include="WebUserControls.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\WebUserControls.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="WebUserControls.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\WebUserControls.Service.dll</HintPath>
@@ -1609,9 +1613,8 @@
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Detail.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\Edit.js" />
     <Content Include="UI_BasicData\js\page\PeakValleyFlat\List.js" />
-    <Content Include="UI_BasicData\js\page\SectionDescription\SectionDefine.js" />
     <Content Include="UI_BasicData\js\page\ShiftArrangement\ShiftArrangementEdit.js" />
-    <Content Include="UI_BasicData\Material\WorkingTeamAndShift\Edit.js" />
+    <Content Include="UI_BasicData\js\page\WorkingTeamAndShift\Edit.js" />
     <Content Include="UI_BasicData\KpiDefinition\KpiList.aspx" />
     <Content Include="UI_BasicData\KpiDefinition\KPIndexEnergy.aspx" />
     <Content Include="UI_BasicData\KpiDefinition\KPIndexProduction.aspx" />
@@ -1622,7 +1625,6 @@
     <Content Include="UI_BasicData\PeakValleyFlat\Detail.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\Edit.aspx" />
     <Content Include="UI_BasicData\PeakValleyFlat\List.aspx" />
-    <Content Include="UI_BasicData\SectionDescription\SectionDefine.aspx" />
     <Content Include="UI_BasicData\ShiftArrangement\ShiftArrangementEdit.aspx" />
     <Content Include="UI_BasicData\StaffInfo\Edit.aspx" />
     <Content Include="UI_BasicData\WorkingTeamAndShift\Edit.aspx" />
@@ -1734,7 +1736,7 @@
       <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UI_BasicData\Material\MachineHaltReasons\Edit.aspx.designer.cs">
+    <Compile Include="UI_BasicData\MachineHaltReasons\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\MasterSlaveMachine\MasterSlaveMachinedescription.aspx.cs">
@@ -1778,13 +1780,6 @@
     </Compile>
     <Compile Include="UI_BasicData\PeakValleyFlat\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UI_BasicData\SectionDescription\SectionDefine.aspx.cs">
-      <DependentUpon>SectionDefine.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI_BasicData\SectionDescription\SectionDefine.aspx.designer.cs">
-      <DependentUpon>SectionDefine.aspx</DependentUpon>
     </Compile>
     <Compile Include="UI_BasicData\ShiftArrangement\ShiftArrangementEdit.aspx.cs">
       <DependentUpon>ShiftArrangementEdit.aspx</DependentUpon>
