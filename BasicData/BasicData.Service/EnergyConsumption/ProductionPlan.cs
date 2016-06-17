@@ -155,21 +155,21 @@ namespace BasicData.Service.EnergyConsumption
         public static int InsertTzPlan(string myKeyId, string myOrganizationId, string myPlanYear, string myModifierId, string myPlanType)
         {
             string m_Sql = @" Insert into tz_Plan 
-                ( KeyID, OrganizationID, Date, ProductionLineType, PlanType, TableName, CreationDate, Version, ModifierID, Statue, Remarks) 
-                select @KeyID, @OrganizationID, @Date, Type, @PlanType, @TableName, @CreationDate, @Version, @ModifierID, @Statue, @Remarks from system_Organization where OrganizationID = @OrganizationID";
-            SqlParameter[] m_Parameters = { new SqlParameter("@KeyID", myKeyId),
-                                          new SqlParameter("@OrganizationID", myOrganizationId),
-                                          new SqlParameter("@Date", myPlanYear),
-                                          new SqlParameter("@PlanType", myPlanType),
-                                          new SqlParameter("@TableName", "plan_EnergyConsumptionYearlyPlan"),
-                                          new SqlParameter("@CreationDate", DateTime.Now),
-                                          new SqlParameter("@Version", DateTime.Now),
-                                          new SqlParameter("@ModifierID", myModifierId),
-                                          new SqlParameter("@Statue", 1),
-                                          new SqlParameter("@Remarks", "")};
+                ( KeyID, OrganizationID, [Date], ProductionLineType, PlanType, TableName, CreationDate, [Version], ModifierID, Statue, Remarks) 
+                (select '{0}', '{1}', '{2}', [Type], '{3}', '{4}', {5}, {6}, '{7}', {8}, '{9}' from system_Organization where OrganizationID = '{1}')";
+            m_Sql = m_Sql.Replace("{0}",myKeyId);
+            m_Sql = m_Sql.Replace("{1}",myOrganizationId);
+            m_Sql = m_Sql.Replace("{2}",myPlanYear);
+            m_Sql = m_Sql.Replace("{3}",myPlanType);
+            m_Sql = m_Sql.Replace("{4}","plan_EnergyConsumptionYearlyPlan");
+            m_Sql = m_Sql.Replace("{5}","getdate()");
+            m_Sql = m_Sql.Replace("{6}","getdate()");
+            m_Sql = m_Sql.Replace("{7}",myModifierId);
+            m_Sql = m_Sql.Replace("{8}", "1");
+            m_Sql = m_Sql.Replace("{9}", "");
             try
             {
-                return _dataFactory.ExecuteSQL(m_Sql, m_Parameters);
+                return _dataFactory.ExecuteSQL(m_Sql);
             }
             catch (Exception)
             {

@@ -40,8 +40,8 @@
                                     <input id="TextBox_OrganizationText" class="easyui-textbox" data-options="editable:false, readonly:true" style="width: 180px;" />
                                 </td>
                                 <td>类型</td>
-                                <td>
-                                    <select id="drpDisplayType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'">
+                                <td style="width: 200px;">
+                                    <select id="drpDisplayType" class="easyui-combobox" data-options="editable:false,panelHeight:'auto'" style="width: 180px;">
                                         <option value="MaterialWeight">产量计划</option>
                                         <option value="EquipmentUtilization">设备利用计划</option>
                                     </select>

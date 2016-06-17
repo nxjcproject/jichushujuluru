@@ -21,7 +21,7 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
             {
                 ////////////////////调试用,自定义的数据授权
 #if DEBUG
-                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_ychc","zc_nxjc_byc" };
+                List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_ychc", "zc_nxjc_byc", "zc_nxjc_qtx" };
                 AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
                 mPageOpPermission = "1111";
 #elif RELEASE
@@ -116,7 +116,7 @@ namespace BasicData.Web.UI_BasicData.EnergyConsumption
                 }
                 ///////////////tz表里查找是否已经存在////////////////
                 string m_KeyId = BasicData.Service.EnergyConsumption.ProductionPlan.GetKeyIdFromTz(myPlanYear, myOrganizationId, myPlanType);
-                if (m_KeyId != "")               //表示计划已经存在
+                if (m_KeyId.Trim() != "")               //表示计划已经存在
                 {
                     BasicData.Service.EnergyConsumption.ProductionPlan.UpdateTzPlan(m_KeyId, mUserId);    //更新TZ引领表
                 }
