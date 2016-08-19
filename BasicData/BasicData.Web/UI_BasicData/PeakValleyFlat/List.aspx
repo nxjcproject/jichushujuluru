@@ -31,11 +31,11 @@
                 <tr>
                     <td>产线名称:</td>
                     <td><input id="organizationName" class="easyui-textbox" style="width:100px"/></td>
-                    <td>启用时间:</td>
+                   <%-- <td>启用时间:</td>
                     <td>
                         <input id="selectedDate" style="width: 100px;" />
-                    </td>
-                    <td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="loadGridData('first')">查询</a></td>
+                    </td>--%>
+                    <td><a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="loadGridData('first')">查询</a></td>
                 </tr>
             </table>
             <table id="dg" class="easyui-datagrid" title="" style="width: 100%; height: auto">
@@ -127,7 +127,7 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#edit').dialog('close')">取消</a>
 	</div>
 
-    <div id="detailDialog" class="easyui-dialog" title="编辑" data-options="iconCls:'icon-edit',closed:true," style="width: 800px; height: 400px; padding: 10px">
+    <div id="detailDialog" class="easyui-dialog" title="编辑" data-options="iconCls:'icon-edit',closed:true," style="width: 800px; height: 300px; padding: 10px">
         <table id="detaildg" class="easyui-datagrid" title="" style="width:100%;height:auto">
 	    </table>
     </div>

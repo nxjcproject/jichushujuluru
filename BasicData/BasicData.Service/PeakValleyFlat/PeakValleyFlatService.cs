@@ -40,7 +40,7 @@ namespace BasicData.Service.PeakValleyFlat
 
         public static DataTable GetPVFDetail(string keyId)
         {
-            string queryStr = @"SELECT * FROM system_PVF_Detail WHERE KeyID=@keyid";
+            string queryStr = @"SELECT * FROM system_PVF_Detail WHERE KeyID=@keyid order by [StartTime]";
             DataTable result = _dataFactory.Query(queryStr, new SqlParameter("@keyid", keyId));
             return result;
         }

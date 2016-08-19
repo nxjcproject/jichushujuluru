@@ -22,12 +22,13 @@ namespace BasicData.Web.UI_BasicData.PeakValleyFlat
             //AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
             this.OrganisationTree.Organizations = GetDataValidIdGroup("ProductionOrganization");                 //向web用户控件传递数据授权参数
             this.OrganisationTree.PageName = "List.aspx";
+            this.OrganisationTree.LeveDepth = 5;
 #if DEBUG
             ////////////////////调试用,自定义的数据授权
-            List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc" };
+            List<string> m_DataValidIdItems = new List<string>() { "zc_nxjc_byc", "zc_nxjc_qtx_tys" };
             AddDataValidIdGroup("ProductionOrganization", m_DataValidIdItems);
             //页面操作权限控制
-            mPageOpPermission = "0100";
+            mPageOpPermission = "1111";
 #endif
         }
         /// <summary>

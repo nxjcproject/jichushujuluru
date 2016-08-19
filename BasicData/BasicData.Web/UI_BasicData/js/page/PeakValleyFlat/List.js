@@ -61,18 +61,19 @@ function InitializePage() {
         //formatter: $.dateFormatter,
         //parser: $.dateParser
     });
-    $('#selectedDate').datetimespinner({
-        //required: "true",
-        //value: $.dateFormatter(new Date()),
-        selections: [[0, 4], [5, 7], [8, 10]],
-        formatter: $.dateFormatter,
-        parser: $.dateParser
-    });
+    //$('#selectedDate').datetimespinner({
+    //    //required: "true",
+    //    //value: $.dateFormatter(new Date()),
+    //    selections: [[0, 4], [5, 7], [8, 10]],
+    //    formatter: $.dateFormatter,
+    //    parser: $.dateParser
+    //});
+    //$('#selectedDate').timespinner('setValue', '2014-01-01');
 }
 
 function loadGridData(myLoadType) {
-    var selectedDate = $('#selectedDate').datetimespinner('getValue');
-
+  //  var selectedDate = $('#selectedDate').datetimespinner('getValue');
+    var selectedDate = "";
     $.ajax({
         type: "POST",
         url: "List.aspx/GetPVFList",
@@ -92,6 +93,7 @@ function loadGridData(myLoadType) {
         }
     });
 }
+var test01;
 function InitializeGrid(myData) {
     $('#dg').datagrid({
         data: myData,
@@ -125,17 +127,25 @@ function InitializeGrid(myData) {
                 formatter: function (value, row, index) {
                     //var s = '<a href="Detail.aspx?keyid=' + row['KeyID'] + '">详细</a> ';
                     //detailItem(row['KeyID']);
-                    var s = '<a href="javascript:void(0)" onclick="detailItem()">详细</a> ';
+                    var s = '<a href="javascript:void(0)" onclick="detailItem(' + index + ')">详细</a> ';
                     return s;
                 }
             }
         ]]
+        //,
+        //onClickCell: function (index, field, value) {
+        //    test01 = index;
+        //    var test02 = field;
+        //    var test03 = value;
+         
+        //}
     });
 }
 
-function detailItem(myKeyId) {
-    var row = $("#dg").datagrid('getSelected');
-    publicData.editRow = row;
+function detailItem(mIndex) {
+    //var row = $("#dg").datagrid('getSelected');
+    var row = $('#dg').datagrid('getData').rows[mIndex];
+    //publicData.editRow = row;
     if (row == null) {
         alert('请选中目标行！');
     }
